@@ -20,7 +20,7 @@ TalentVault is a MERN Stack based web app which helps in streamlining the flow o
 ## Team Members 
 
 | #   | Name                       | ID        | Role       | Github Username                                                           |
-| --- | :-------------------       | :-------- | ID         | :----------------------------------------                                 |
+| --- | :-------------------       | :-------- | :--------  | :----------------------------------------                                 |
 | 1   | Ali Noureddine             | 40159265  | Full-Stack |[Alinoureddine1](https://github.com/Alinoureddine1 "Github user's profile")|                                               
 | 2   | Jad Hanna                  | 40132590  | Front-End  |  [JXOXO](https://github.com/JXOXO       "Github user's profile")          |
 | 3   | Lauren Rigante (Team Lead) | 40188593  | Front-End  |  [laurenrigante](https://github.com/laurenrigante "Github user's profile")|
