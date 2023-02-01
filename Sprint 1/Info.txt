@@ -1,0 +1,7 @@
+This folder will hold all media associated with Sprint 1.
+
+Included you will find
+
+1) Figma designs
+2) User stories
+3) Task breakdown of user stories
