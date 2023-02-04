@@ -6,6 +6,7 @@ const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const errorHandler = require('./middleware/errorHandler')
 const { logger, logEvents } = require('./middleware/logger')
+const PORT = 3000
 
 
 app.use(logger)
