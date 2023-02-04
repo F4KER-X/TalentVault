@@ -4,7 +4,11 @@ const path = require('path')
 const app = express()
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
-const PORT = process.env.PORT || 3000
+const errorHandler = require('./middleware/errorHandler')
+const { logger, logEvents } = require('./middleware/logger')
+
+
+app.use(logger)
 
 app.use(cors(corsOptions))
 
@@ -29,6 +33,8 @@ app.all('*', (req, res) => {
     }
 })
 
+
+app.use(errorHandler)
 
 
 app.listen(PORT, () => console.log(`Server is listening to PORT ${PORT}`))
