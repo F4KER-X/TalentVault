@@ -6,11 +6,11 @@ const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const errorHandler = require('./middleware/errorHandler')
 const { logger, logEvents } = require('./middleware/logger')
-const PORT = process.env.PORT || 3000
 
-const PORT = process.env.PORT || 3000
 
 app.use(logger)
+
+app.use(cors(corsOptions))
 
 app.use(express.json())
 
