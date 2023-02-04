@@ -2,6 +2,8 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const app = express()
+const cors = require('cors')
+const corsOptions = require('./config/corsOptions')
 const PORT = process.env.PORT || 3000
 
 app.use(cors(corsOptions))
@@ -9,6 +11,8 @@ app.use(cors(corsOptions))
 app.use(express.json())
 
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use('/', require('./routes/root'))
 
 app.use('/users', require('./routes/userRoutes'))
 
