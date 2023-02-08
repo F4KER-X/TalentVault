@@ -1,0 +1,22 @@
+
+===========================================Little guide=====================================================================
+How to run react in vscode
+
+1) make sure you have installed Node JS
+https://nodejs.org/en/download/
+
+2) To start the react app, run npm start (make sure u run this in the talentvault folder)
+
+
+The react app is called talentvault, inside that folder you will find lots of goodies
+
+you DO NOT have to touch:
+1) the node_modules folder
+2) any of the package.json files
+3) the .gitignore
+
+The readme contains relevant info about the commands you can run, but
+you can always just type npm help in the console and itll show u the available commands
+
+
+The work we will do will be in the src folder
