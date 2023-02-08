@@ -7,7 +7,6 @@ https://nodejs.org/en/download/
 
 2) To start the react app, run npm start (make sure u run this in the talentvault folder)
 
-
 The react app is called talentvault, inside that folder you will find lots of goodies
 
 you DO NOT have to touch:
