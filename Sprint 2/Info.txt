@@ -7,8 +7,17 @@ https://nodejs.org/en/download/
 
 2) To start the react app, run npm start (make sure u run this in the talentvault folder)
 
-The react app is called talentvault, inside that folder you will find lots of goodies
+3) if you want, you can download this extension for react on vscode : 
+Name: ES7 React/Redux/GraphQL/React-Native snippets
+Id: rodrigovallades.es7-react-js-snippets
+Description: Simple extensions for React, Redux and Graphql in JS/TS with ES7 syntax (forked from dsznajder)
+Version: 1.9.3
+Publisher: rodrigovallades
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=rodrigovallades.es7-react-js-snippets
 
+
+
+The react app is called talentvault, inside that folder you will find lots of goodies
 you DO NOT have to touch:
 1) the node_modules folder
 2) any of the package.json files
@@ -19,3 +28,30 @@ you can always just type npm help in the console and itll show u the available c
 
 
 The work we will do will be in the src folder
+I have created a folder called pages- this is where the main pages will be.
+
+ABOUT- first page of the website, info about our website and services --> the home page
+LOGIN- the login page
+SIGNUP- the sign up page
+DASHBOARD- the pages w all job postings, can only be accessed once logged into account 
+
+I have created a folder called components- this is where the COMMON COMPONENTS will be
+things like headers, footers, icons.... etc
+
+
+*****Most of the comments i have left in the code will be deleted once were more familiar with react,
+i just left them kind of as a guide so we can understand the code as we are learning it
+
+
+
+
+
+Things i have installed
+npm install bootstrap
+
+npm install react-router-dom
+for the routing
+
+npm install react-icons
+all different icons that are available for use
+https://react-icons.github.io/react-icons
