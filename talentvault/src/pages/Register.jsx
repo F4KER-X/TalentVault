@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-
+import '../index.css';
 
 
 function Register() {
@@ -37,13 +37,14 @@ function Register() {
      <form className="signup-form" onSubmit={{onSubmit}}>
          <div className="form-content">
          <h3 className="form-title">Sign Up</h3>
+         <p className="form-subtitle"> Already have an account?  <a className="form-signin" href="#">Sign In</a></p>
 
        
-         <div className="form-group mt-3">
+         <div className="form-group">
          <label>First Name</label>
          <input
            type="text"
-           className="form-control mt-1"
+           className="form-control"
            placeholder="Enter your first name"
            name="firstname"
            id="firstname"
@@ -52,12 +53,12 @@ function Register() {
          />
        </div>
 
-       <div className="form-group mt-3">
+       <div className="form-group">
          <label>Last Name</label>
          <input
            type="text"
-           className="form-control mt-1"
-           placeholder="e.g Doe"
+           className="form-control"
+           placeholder="Enter your last name"
            name="lastname"
            id="lastname"
            value={lastname}
@@ -65,11 +66,11 @@ function Register() {
          />
        </div>
 
-       <div className="form-group mt-3">
+       <div className="form-group">
          <label>Email address</label>
          <input
            type="email"
-           className="form-control mt-1"
+           className="form-control"
            placeholder="JaneDoe@email.com"
            name="email"
            id="email"
@@ -78,11 +79,11 @@ function Register() {
          />
        </div>
 
-       <div className="form-group mt-3">
+       <div className="form-group">
          <label>Password</label>
          <input
            type="password"
-           className="form-control mt-1"
+           className="form-control"
            placeholder="Password"
            name="password"
            id="password"
@@ -91,11 +92,11 @@ function Register() {
          />
        </div>
 
-       <div className="form-group mt-3">
+       <div className="form-group ">
          <label>Confirm Password</label>
          <input
            type="password"
-           className="form-control mt-1"
+           className="form-control"
            placeholder=" Confirm Password"
            name="confirmpassword"
            id="confirmpassword"
@@ -104,14 +105,14 @@ function Register() {
          />
        </div>
 
-       <div className="d-grid gap-2 mt-3">
-         <button type="submit" className="btn btn-primary">
+       <div className="btndiv">
+         <button type="submit" className="btn">
            Submit
          </button>
        </div>
 
-       <p className="text-center mt-2">
-         Forgot <a href="#">password?</a>
+       <p className="forgotpassword">
+         Forgot <a className="form-forgot-pwd" href="#">password?</a>
        </p>
      </div>
      
