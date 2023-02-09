@@ -43,7 +43,11 @@ things like headers, footers, icons.... etc. anything that will/should be reused
 i just left them kind of as a guide so you can understand the code as we are learning it
 
 
+THINGS TO NOTE!!!!
+take a look at Ali's Figma designs (on our discord front end chat), to have an idea of what our pages should looklike
 
+our accent color is a purple/blue by the code : #4540DB
+our font is Roboto ( i have imported this using a link in the index.html file in the public folder)
 
 
 Things i have installed
