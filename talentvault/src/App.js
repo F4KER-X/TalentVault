@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Profile from './pages/Profile';
+import ApplicantRegister from './pages/ApplicantRegister';
+import RecruiterRegister from './pages/RecruiterRegister';
 
 //here i am setting up the routes, connecting the pages together
 
@@ -37,7 +39,9 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/profile' element={<Register/>} />
+          <Route path='/profile' element={<Profile/>} />
+          <Route path='/applicantregister' element={<ApplicantRegister/>} />
+          <Route path='/recruiterregister' element={<RecruiterRegister/>} />
         </Routes>
       </div>
     </Router>
