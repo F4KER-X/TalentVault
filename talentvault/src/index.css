@@ -156,3 +156,26 @@ label {
   font-weight:bold;
   text-decoration:none;
 }
+
+/*=======================================JOB POSTING PAGE========================== */
+option{
+  font-family: Roboto;
+}
+
+
+textarea{
+  width:100%;
+  min-height: 200px;
+  font-family: Roboto;
+
+}
+
+textarea:focus{
+  outline:none !important;
+}
+
+.form-control-text-area{
+ resize:none;
+
+}
+
