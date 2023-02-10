@@ -97,9 +97,7 @@ function Register() {
          </button>
        </div>
 
-       <p className="forgotpassword">
-         Forgot <a className="form-forgot-pwd" href="#">password?</a>
-       </p>
+      
      </div>
      
      
