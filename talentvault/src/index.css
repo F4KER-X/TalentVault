@@ -82,6 +82,21 @@
  font-family:Roboto;
 }
 
+.form-control-checkbox{
+ position:relative;
+ vertical-align:middle ;
+}
+
+#usertype{
+  color:#4540db;
+  
+}
+
+
+#checkboxlabel{
+  display:inline-block;
+  padding-right:15px;
+}
 label {
   font-family: Roboto;
   font-size: 14px;

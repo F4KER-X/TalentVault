@@ -4,15 +4,14 @@ import '../index.css';
 
 function Register() {
   const [formData, setFormData]=useState({
-    firstname: '',
-    lastname: '',
+    usertype: '',
     email:'',
     password:'',
     confirmpassword:''
    })
 
    
- const {firstname, lastname,email,password,confirmpassword}= formData
+ const {usertype,email,password,confirmpassword}= formData
 
  const onChange= (e) => {
   setFormData((prevState)=>({
@@ -31,7 +30,8 @@ function Register() {
 
   return (
    
-    <>
+    <>    
+
     <div className="form-container">
 
      <form className="signup-form" onSubmit={{onSubmit}}>
@@ -39,32 +39,18 @@ function Register() {
          <h3 className="form-title">Sign Up</h3>
          <p className="form-subtitle"> Already have an account?  <a className="form-signin" href="#">Sign In</a></p>
 
-       
-         <div className="form-group">
-         <label>First Name</label>
-         <input
-           type="text"
-           className="form-control"
-           placeholder="Enter your first name"
-           name="firstname"
-           id="firstname"
-           value={firstname}
-           onChange={onChange}
-         />
-       </div>
-
-       <div className="form-group">
-         <label>Last Name</label>
-         <input
-           type="text"
-           className="form-control"
-           placeholder="Enter your last name"
-           name="lastname"
-           id="lastname"
-           value={lastname}
-           onChange={onChange}
-         />
-       </div>
+        <div className="form-group">
+          <label id="checkboxlabel">I am a recruiter </label>
+          <input 
+          type="checkbox"
+          className="form-control-checkbox"
+          name="usertype"
+          id="usertype"
+          value={usertype}
+          onChange={onChange}
+          unchecked
+          /> 
+        </div>
 
        <div className="form-group">
          <label>Email address</label>
