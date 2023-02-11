@@ -156,3 +156,10 @@ label {
   font-weight:bold;
   text-decoration:none;
 }
+
+/*===================================PROFILE CSS===================== */
+
+.file-control{
+  width:95%;
+  font-family:Roboto;
+}
