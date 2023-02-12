@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const applicantSchema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: [true, 'User ID is required'],
         ref: 'User'
     },
     firstName: {

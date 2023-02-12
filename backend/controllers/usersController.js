@@ -1,110 +1,146 @@
 const User = require('../models/User')
-const bcrypt = require('bcrypt')
+const Recruiter = require('../models/Recruiter')
+const Applicant = require('../models/Applicant')
 
-// @desc Get all users
-// @route GET /users
+const asyncHandler = require('express-async-handler')
+
+
+// @desc Get info of the user
+// @route GET /user
 // @access Private
-const getAllUsers = async (req, res) => {
-    const users = await User.find().select('-password').lean()
-    if (!users) {
-        return res.status(400).json({ message: 'No users found' })
-    }
-    res.json(users)
-}
+const getUserInfo = asyncHandler(async (req, res) => {
 
-// @desc POST new user
-// @route POST /users
-// @access Private
-const createNewUser = async (req, res) => {
-    try {
-        const { email, password, firstName, lastName, role, idAdmin } = req.body
+    const user = req.user
 
-        const userObject = { email, password, firstName, lastName, role, idAdmin }
-
-        const user = await User.create(userObject)
-
-        res.status(201).json({ message: `${user.email} has been added` })
-
-    } catch (error) {
-        if (error.name === 'ValidationError') {
-            let errors = {}
-            Object.keys(error.errors).forEach((key) => {
-                errors[key] = error.errors[key].message
-            });
-            return res.status(400).send(errors)
+    if (user.role === 'recruiter') {
+        const recruiter = await Recruiter.findOne({ userId: user._id }).exec()
+        if (!recruiter) {
+            res.status(404)
+            throw new Error('User not found')
         }
-        res.status(500).send("Something went wrong")
-
-    }
-}
-
-// @desc GET one user
-// @route GET /users/:id
-// @access Private
-const getOneUser = async (req, res) => {
-    const user = await User.findById(req.params['id']).select('-password -isAdmin')
-    if (!user) {
-        return res.status(400).json({ message: 'User does not exist' })
-    }
-    res.json(user)
-}
-
-// @desc PATCH user
-// @route PTACH /users/:id
-// @access Private
-const updateUser = async (req, res) => {
-    // const user = await User.findById(req.params['id'])
-    // if (!user) {
-    //     return res.status(400).json({ message: 'User does not exist' })
-    // }
-
-    // const { email, password, firstName, lastName, isAdmin } = req.body
-
-    // user.email = email
-    // user.password = password
-    // user.firstName = firstName
-    // user.lastName = lastName
-    // user.isAdmin = isAdmin
-
-    // //custome validation
-    // if (user.email) {
-    //     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email)) {
-    //         const duplicate = await User.findOne({ email }).lean().exec()
-    //         if (duplicate?.duplicate._id != user._id) {
-    //             return res.status(400).json({ message: `${user.email} already exists` })
-    //         }
-    //     } else {
-    //         return res.status(400).json({ message: `${user.email} is not a valid email` })
-    //     }
-    // }
-
-
-    user.save({ validateBeforeSave: false, skipValidation: { email: true } }, function (error) {
-        if (error) {
-            console.error(error);
+        res.status(200).json(recruiter)
+    } else {
+        const applicant = await Applicant.findOne({ userId: user._id }).exec()
+        if (!applicant) {
+            res.status(404)
+            throw new Error('User not found')
         } else {
-            console.log('User saved successfully');
-            res.json({ message: "updated" })
+            res.status(200).json(applicant)
         }
-    });
-
-
-}
-
-// @desc DELETE user
-// @route DELETE /users/:id
-// @access Private
-const deleteUser = async (req, res) => {
-    //have to check if the user has any jobs application or created any open jobs once we implement the jobs model
-
-    const user = await User.findById(req.params['id']).exec()
-    if (!user) {
-        return res.status(400).json({ message: 'User does not exist' })
     }
 
-    const result = await user.deleteOne()
+})
 
-    res.status(201).json({ message: `${result._id} with email ${result.email} has been deleted` })
-}
 
-module.exports = { getAllUsers, createNewUser, getOneUser, updateUser, deleteUser }
+// @desc update user personal info
+// @route PATCH /user
+// @access Private
+const updateUserInfo = asyncHandler(async (req, res) => {
+    const user = req.user
+    const data = req.body
+
+    if (user.type === 'recruiter') {
+        const recruiter = await Recruiter.findOne({ userId: user._id }).exec()
+        if (recruiter) {
+            if (data.companyName) {
+                recruiter.companyName = data.companyName
+            }
+            if (data.profilePicUrl) {
+                recruiter.profilePicUrl = data.profilePicUrl
+            }
+            if (data.phoneNumber) {
+                recruiter.phoneNumber = data.phoneNumber
+            }
+
+            const updatedRecruiuter = await recruiter.save()
+
+            //may not be necessary - check laster
+            if (updatedRecruiuter && !updatedRecruiuter === recruiter) {
+                res.status(200).json({ message: 'User updated!' })
+            } else {
+                res.status(500)
+                throw new Error('No changes')
+            }
+
+        } else {
+            res.status(400)
+            throw new Error('User does not exist')
+        }
+    } else {
+        const applicant = await Applicant.findOne({ userId: user._id }).exec()
+        if (applicant) {
+            if (data.firstName) {
+                applicant.firstName = data.firstName
+            }
+            if (data.lastName) {
+                applicant.lastName = data.lastName
+            }
+            if (data.phoneNumber) {
+                applicant.phoneNumber = data.phoneNumber
+            }
+            if (data.resume) {
+                applicant.resume = data.resume
+            }
+            if (data.profilePicUrl) {
+                applicant.profilePicUrl = data.profilePicUrl
+            }
+
+            const updatedApplicant = await applicant.save()
+
+            //may not be necessary - check laster
+            if (updatedApplicant) {
+                res.status(200).json({ message: 'User updated!' })
+            } else {
+                res.status(500)
+                throw new Error('Something went wrong')
+            }
+
+        } else {
+            res.status(400)
+            throw new Error('User does not exist')
+        }
+    }
+
+})
+
+// @desc delete user
+// @route DELETE /user
+// @access Private
+const deleteUser = asyncHandler(async (req, res) => {
+
+    const user = req.user
+
+    const deletedUser = await User.findByIdAndDelete(user._id).exec()
+    if (deletedUser) {
+        if (deletedUser.role === 'recruiter') {
+            const deletedRecruiter = await Recruiter.findOneAndDelete({ userId: user._id }).exec()
+            console.log(user._id);
+            if (deletedRecruiter) {
+                res.status(200).json({ meesage: "User deleted" })
+            } else {
+                res.status(400)
+                console.log(user._id);
+                throw new Error('Could not delete user')
+            }
+        } else {
+            const deletedApplicant = await Applicant.findOneAndDelete({ userId: user._id })
+            if (deletedApplicant) {
+                res.status(200).json({ meesage: "User deleted" })
+            } else {
+                res.status(400)
+                console.log(user._id);
+                console.log("applicant");
+                throw new Error('Could not delete user')
+            }
+
+        }
+    } else {
+        res.status(400)
+        throw new Error('User not found')
+    }
+})
+
+
+
+module.exports = { getUserInfo, updateUserInfo, deleteUser }
+
