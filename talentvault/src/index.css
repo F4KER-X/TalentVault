@@ -162,12 +162,10 @@ option{
   font-family: Roboto;
 }
 
-
 textarea{
   width:100%;
   min-height: 200px;
   font-family: Roboto;
-
 }
 
 textarea:focus{

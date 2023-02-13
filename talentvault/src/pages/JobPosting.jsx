@@ -96,7 +96,7 @@ function JobPosting() {
          aria-required="true"
        >
        <option  className="dropdown_options" value="full_time">Full-Time</option>
-       <option  className="dropdown_options"  value="part_time">Part-Time</option>
+       <option  className="dropdown_options" value="part_time">Part-Time</option>
        <option  className="dropdown_options" value="contractor">Contractor</option>
        <option  className="dropdown_options" value="temporary">Temporary</option>
        <option  className="dropdown_options" value="other">Other</option>

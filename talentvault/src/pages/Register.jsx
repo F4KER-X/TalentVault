@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import '../index.css';
 
 
@@ -25,6 +26,22 @@ function Register() {
   e.preventDefault()
 
  }
+
+
+ const checkBox= document.querySelector('#usertype');
+ const navigate = useNavigate();
+ const navigateToPage= () => {
+  if(checkBox.checked){
+     navigate("/recruiterregister");
+  }
+  else{
+    navigate("/applicantregister");
+  }
+ }
+
+
+
+ 
 
 
 
@@ -92,7 +109,7 @@ function Register() {
        </div>
 
        <div className="btndiv">
-         <button type="submit" className="btn">
+         <button id="submitbtn" type="submit" className="btn" onClick={navigateToPage}>
            Submit
          </button>
        </div>
@@ -104,7 +121,11 @@ function Register() {
      </form>
      </div>
     
+
+   
+
      </>
+    
 
   )
 }
