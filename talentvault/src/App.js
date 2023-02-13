@@ -14,6 +14,7 @@ import ApplicantRegister from "./pages/ApplicantRegister";
 import RecruiterRegister from "./pages/RecruiterRegister";
 import JobPosting from "./pages/JobPosting";
 import Landing from "./pages/Landing";
+import Error from "./pages/Error";
 
 //here i am setting up the routes, connecting the pages together
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/applicantregister" element={<ApplicantRegister />} />
             <Route path="/recruiterregister" element={<RecruiterRegister />} />
             <Route path="/jobposting" element={<JobPosting />} />
+            <Route path="*" element={<Error />} />
           </Routes>
         </div>
       </Router>
