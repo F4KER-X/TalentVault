@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import '../index.css';
 
 
@@ -26,6 +27,14 @@ function ApplicantRegister() {
   e.preventDefault()
 
  }
+
+ 
+ 
+ const navigate = useNavigate();
+ const navigateToPage= () => {
+     navigate("/dashboard");
+ }
+
 
 
 
@@ -66,7 +75,7 @@ function ApplicantRegister() {
   </div>
 
   <div className="btndiv">
-    <button type="submit" className="btn">
+    <button type="submit" className="btn" onClick={navigateToPage}>
       Submit
     </button>
   </div>
