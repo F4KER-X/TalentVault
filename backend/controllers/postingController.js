@@ -68,40 +68,41 @@ const getOnePosting = async (req, res) => {
 // @route PTACH /postings/:id
 // @access Private
 const updatePosting = async (req, res) => {
+  const data = req.body;
+
   const posting = await Posting.findById(req.params["id"]);
   if (!posting) {
     return res.status(400).json({ message: "Job posting does not exist" });
   }
 
-  const {
-    employerId,
-    jobTitle,
-    companyName,
-    salary,
-    jobDescription,
-    jobType,
-    jobRequirements,
-  } = req.body;
+  if (data.employerId) posting.employerId = data.employerId;
+  if (data.jobTitle) posting.jobTitle = data.jobTitle;
+  if (data.companyName) posting.companyName = data.companyName;
+  if (data.salary) posting.salary = data.salary;
+  if (data.jobDescription) posting.jobDescription = data.jobDescription;
+  if (data.jobType) posting.jobType = data.jobType;
+  if (data.jobRequirements) posting.jobRequirements = data.jobRequirements;
 
-  posting.employerId = employerId;
-  posting.jobTitle = jobTitle;
-  posting.companyName = companyName;
-  posting.salary = salary;
-  posting.jobDescription = jobDescription;
-  posting.jobType = jobType;
-  posting.jobRequirements = jobRequirements;
+  const updatedPosting = await posting.save();
 
-  posting.save(
-    { validateBeforeSave: false, skipValidation: { email: true } },
-    function (error) {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log("Posting saved successfully");
-        res.json({ message: "updated" });
-      }
-    }
-  );
+  if (updatedPosting && !updatedPosting === recruiter) {
+    res.status(200).json({ message: "User updated!" });
+  } else {
+    res.status(500);
+    throw new Error("No changes");
+  }
+
+  // posting.save(
+  //   { validateBeforeSave: false, skipValidation: { email: true } },
+  //   function (error) {
+  //     if (error) {
+  //       console.error(error);
+  //     } else {
+  //       console.log("Posting saved successfully");
+  //       res.json({ message: "updated" });
+  //     }
+  //   }
+  // );
 };
 
 // @desc DELETE posting
