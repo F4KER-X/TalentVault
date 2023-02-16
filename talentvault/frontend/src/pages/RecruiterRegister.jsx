@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../index.css";
 import Wrapper from "../assets/styling/RegisterPage";
+import FormRow from "../components/FormRow";
 function RecruiterRegister() {
   const [formData, setFormData] = useState({
     companyname: "",
@@ -25,24 +26,20 @@ function RecruiterRegister() {
         <div className="form-content">
           <h3 className="form-title">Tell Us About Your Company</h3>
 
-          <div className="form-group">
-            <label>Company Name</label>
-            <input
+        <FormRow
               type="text"
-              className="form-control"
-              placeholder="Company name"
+              labelText="Company Name"
               name="companyname"
-              id="companyname"
               value={companyname}
               onChange={onChange}
-            />
-          </div>
+             />
 
-          <div className="btndiv">
-            <button type="submit" className="btn">
+
+      
+            <button type="submit" className="btn btn-block">
               Submit
             </button>
-          </div>
+        
         </div>
       </form>
     </Wrapper>

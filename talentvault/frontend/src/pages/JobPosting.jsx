@@ -29,35 +29,31 @@ function JobPosting() {
       <form className="form" onSubmit={{ onSubmit }}>
         <h3 className="form-title">Your Job Posting</h3>
 
-        <div className="form-group">
-          <label>Job Title</label>
-          <input
+       
+          <FormRow
             type="text"
+            labelText="Job Title"
             className="form-control"
             placeholder="Enter job title"
             name="jobtitle"
-            id="jobtitle"
             value={jobtitle}
             onChange={onChange}
           />
-        </div>
 
-        <div className="form-group">
-          <label>Job Location</label>
-          <input
+          <FormRow
             type="text"
+            labelText="Job Location"
             className="form-control"
             placeholder="Enter job title"
             name="jobloc"
-            id="jobloc"
             value={jobloc}
             onChange={onChange}
           />
-        </div>
+    
 
         <div className="form-group">
           <label id="checkboxlabel">
-            This role can be performed as a "remote work from home" job
+            This role can be performed remotely
           </label>
           <input
             type="checkbox"
@@ -109,11 +105,11 @@ function JobPosting() {
           />
         </div>
 
-        <div className="btndiv">
-          <button type="submit" className="btn">
+  
+          <button type="submit" className="btn btn-block">
             Save and Continue
           </button>
-        </div>
+       
       </form>
     </Wrapper>
   );

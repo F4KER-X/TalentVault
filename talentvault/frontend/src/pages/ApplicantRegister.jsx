@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import FormRow from "../components/FormRow";
 import "../index.css";
 
 function ApplicantRegister() {
@@ -40,31 +41,25 @@ function ApplicantRegister() {
           <div className="form-content">
             <h3 className="form-title">Please enter your information</h3>
 
-            <div className="form-group">
-              <label>First Name</label>
-              <input
+              <FormRow
                 type="text"
+                labelText="First name"
                 className="form-control"
                 placeholder="Please enter your first name"
                 name="firstname"
-                id="firstname"
                 value={firstname}
                 onChange={onChange}
               />
-            </div>
-
-            <div className="form-group">
-              <label>Last Name</label>
-              <input
+          
+              <FormRow
                 type="text"
+                labelText="Last name"
                 className="form-control"
                 placeholder="Please enter your last name"
                 name="lastname"
-                id="lastname"
                 value={lastname}
                 onChange={onChange}
               />
-            </div>
 
             <div className="file-group">
          <label>Add Resume</label>
@@ -79,11 +74,11 @@ function ApplicantRegister() {
        </div> 
 
 
-            <div className="btndiv">
-              <button type="submit" className="btn" onClick={navigateToPage}>
+            
+              <button type="submit" className="btn btn-block" onClick={navigateToPage}>
                 Submit
               </button>
-            </div>
+      
           </div>
         </form>
       </div>
