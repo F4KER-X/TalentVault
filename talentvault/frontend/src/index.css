@@ -254,6 +254,7 @@ html {
 }
 
 body {
+  overflow: hidden;
   background: var(--backgroundColor);
   font-family: var(--bodyFont);
   font-weight: 400;

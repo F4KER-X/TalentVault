@@ -54,11 +54,8 @@ function Register() {
       return;
     }
     const currentUser = { email, password };
-    if (isUser) {
-      console.log("already  a member");
-    } else {
-      registerUser(currentUser);
-    }
+
+    registerUser(currentUser);
   };
 
   return (
@@ -82,6 +79,14 @@ function Register() {
             onChange={onChange}
           />
         </div>
+
+        <FormRow
+          type="text"
+          labelText="Full Name"
+          name="name"
+          value={formData.name}
+          onChange={onChange}
+        />
 
         <FormRow
           type="email"

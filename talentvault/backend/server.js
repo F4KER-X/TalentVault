@@ -9,7 +9,7 @@ const errorHandler = require("./middleware/errorHandler");
 const { logger, logEvents } = require("./middleware/logger");
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConnection");
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 mongoose.set("strictQuery", false);
 connectDB();
@@ -29,6 +29,8 @@ app.use("/user", require("./routes/userRoutes"));
 //app.use('/jobs', require('./routes/jobRoutes'))
 
 app.use("/auth", require("./routes/authRoutes"));
+
+app.use("/jobs", require("./routes/postingRoutes"));
 
 app.all("*", (req, res) => {
   res.status(404);
