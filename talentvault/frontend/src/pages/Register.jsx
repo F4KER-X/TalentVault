@@ -81,14 +81,6 @@ function Register() {
         </div>
 
         <FormRow
-          type="text"
-          labelText="Full Name"
-          name="name"
-          value={formData.name}
-          onChange={onChange}
-        />
-
-        <FormRow
           type="email"
           labelText="Email Address"
           name="email"
