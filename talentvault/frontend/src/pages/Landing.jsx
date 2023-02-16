@@ -24,7 +24,9 @@ const Landing = () => {
             <Link to="/Register" className="btn1 btn-hero">
               Login/Register
             </Link>
-            <Link className="btn1 btn-hero">Post a job</Link>
+            <Link to="/jobposting" className="btn1 btn-hero">
+              Post a job
+            </Link>
           </div>
           {/* <button className="btn btn-hero">Login/Register</button> */}
         </div>

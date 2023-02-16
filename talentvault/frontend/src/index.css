@@ -1,3 +1,9 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
 .App {
   background-color: white;
 }
@@ -27,7 +33,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
+  width: 100vw;
   height: 100vh;
 }
 
@@ -43,15 +49,6 @@
 .form-content {
   padding-left: 12%;
   padding-right: 12%;
-}
-
-.form-title {
-  text-align: center;
-  margin-bottom: 1em;
-  font-size: 24px;
-  color: rgb(34, 34, 34);
-  font-weight: 800;
-  font-family: "Roboto";
 }
 
 .form-subtitle {
@@ -114,18 +111,34 @@
   color: #4540db;
 }
 
-#checkboxlabel {
-  display: inline-block;
-  padding-right: 15px;
+/* TESTING NEW CHECKBOX */
+
+INPUT[type="form-label"]:focus {
+  outline: 1px solid rgba(0, 0, 0, 0.2);
 }
+
+INPUT[type="form-label"] {
+  background-color: #ddd;
+  border-radius: 2px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+}
+
+INPUT[type="form-label"]:checked {
+  background-color: #4540db;
+  background: #4540db
+    url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==")
+    3px 3px no-repeat;
+}
+
 label {
   font-family: Roboto;
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(34, 34, 34);
-  display: block;
-  padding-top: 10px;
-  padding-bottom: 3px;
 }
 
 .btndiv {
@@ -133,8 +146,9 @@ label {
 }
 .btn {
   background-color: #4540db;
+
   color: white;
-  width: 97%;
+  width: 1ref;
   border-radius: 10px;
   padding: 10px;
   border: none;
@@ -171,8 +185,8 @@ textarea:focus {
 .form-control-text-area {
   resize: none;
 }
-
-/*=======================================GENERAL CSS STYLING========================================= */
+/*=======================================General CSS resource========================== */
+/* fonts */
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
@@ -240,6 +254,7 @@ html {
 }
 
 body {
+  overflow: hidden;
   background: var(--backgroundColor);
   font-family: var(--bodyFont);
   font-weight: 400;
@@ -475,4 +490,27 @@ ul {
 }
 .full-page {
   min-height: 100vh;
+}
+
+.coffee-info {
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+  letter-spacing: var(--letterSpacing);
+}
+.coffee-info span {
+  display: block;
+}
+.coffee-info a {
+  color: var(--primary-500);
+}
+
+@media screen and (min-width: 992px) {
+  .coffee-info {
+    text-align: left;
+  }
+  .coffee-info span {
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
 }
