@@ -7,9 +7,10 @@ function ApplicantRegister() {
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
+    telnumber: ""
   });
 
-  const { firstname, lastname } = formData;
+  const { firstname, lastname, telnumber } = formData;
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -60,6 +61,14 @@ function ApplicantRegister() {
                 value={lastname}
                 onChange={onChange}
               />
+
+        <FormRow
+          type= "tel"
+          labelText="Phone Number"
+          name="telnumber"
+          value={telnumber}
+          onChange={onChange}
+        />
 
             <div className="file-group">
          <label>Add Resume</label>

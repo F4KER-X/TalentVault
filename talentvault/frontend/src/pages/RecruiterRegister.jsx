@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import "../index.css";
 import Wrapper from "../assets/styling/RegisterPage";
 import FormRow from "../components/FormRow";
+
+
+
+
 function RecruiterRegister() {
   const [formData, setFormData] = useState({
     companyname: "",
+    telnumber:""
   });
 
-  const { companyname } = formData;
+  const { companyname,telnumber } = formData;
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -32,13 +37,19 @@ function RecruiterRegister() {
               name="companyname"
               value={companyname}
               onChange={onChange}
-             />
+         />
 
-
+        <FormRow
+          type= "tel"
+          labelText="Phone Number"
+          name="telnumber"
+          value={telnumber}
+          onChange={onChange}
+        />
       
-            <button type="submit" className="btn btn-block">
-              Submit
-            </button>
+         <button type="submit" className="btn btn-block">
+          Submit
+         </button>
         
         </div>
       </form>
