@@ -51,7 +51,7 @@ function JobPosting() {
           />
     
 
-        <div className="form-group">
+        <div className="form-group" id="remotejobcheckbox">
           <label id="checkboxlabel">
             This role can be performed remotely
           </label>
@@ -59,19 +59,17 @@ function JobPosting() {
             type="checkbox"
             className="form-control-checkbox"
             name="remotejob"
-            id="remotejob"
             value={remotejob}
             onChange={onChange}
             unchecked
           />
         </div>
 
-        <div className="form-group">
-          <label>Employment Type:</label>
+        <div className="form-group" id="custom-select">
+          <label>Employment Type</label>
           <select
             name="employment_type"
             className="form-control"
-            id="employmenttype"
             value={employmenttype}
             onChange={onChange}
             aria-required="true"
@@ -100,7 +98,6 @@ function JobPosting() {
             type="textarea"
             className="form-control-text-area"
             name="jobdescription"
-            id="jobdescription"
             placeholder="Please paste your job description here"
           />
         </div>
