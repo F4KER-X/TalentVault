@@ -26,6 +26,13 @@ function ApplicantRegister() {
     navigate("/dashboard");
   };
 
+  const [fileData, setFile]=useState()
+  function handleChange(e) {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+  }
+ 
+ 
   return (
     <>
       <div className="form-container">
@@ -58,6 +65,19 @@ function ApplicantRegister() {
                 onChange={onChange}
               />
             </div>
+
+            <div className="file-group">
+         <label>Add Resume</label>
+         <input 
+            type="file"
+            className="file-control" 
+            name="resume"
+            id="resume"
+            onChange={handleChange}
+         />         
+           {/* <img src={file} />  */}
+       </div> 
+
 
             <div className="btndiv">
               <button type="submit" className="btn" onClick={navigateToPage}>
