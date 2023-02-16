@@ -9,6 +9,8 @@ import { useAppContext } from "../context/appContext";
 //Local state
 const initialState = {
   name: "",
+  firstname: "",
+  lastname: "",
   usertype: "",
   email: "",
   password: "",
@@ -43,7 +45,15 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const { email, password, isUser, confirmpassword } = formData;
+    const {
+      email,
+      password,
+      role,
+      firstname,
+      lastname,
+      isUser,
+      confirmpassword,
+    } = formData;
     if (!email || !password || !confirmpassword) {
       displayAlert();
       return;
@@ -53,7 +63,13 @@ function Register() {
       PasswordAlert();
       return;
     }
-    const currentUser = { email, password };
+
+    const fullName = formData.name;
+    const nameParts = fullName.split(" ");
+    formData.firstname = nameParts[0];
+    formData.lastname = nameParts.slice(1).join(" ");
+
+    const currentUser = { email, password, role, firstname, lastname };
 
     registerUser(currentUser);
   };
