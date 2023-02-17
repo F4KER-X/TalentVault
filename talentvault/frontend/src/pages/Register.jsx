@@ -5,12 +5,12 @@ import Alert from "../components/Alert";
 import "../index.css";
 import Wrapper from "../assets/styling/RegisterPage";
 import { useAppContext } from "../context/appContext";
-
+import { useNavigate } from "react-router-dom";
 //Local state
 const initialState = {
   name: "",
-  firstname: "",
-  lastname: "",
+  firstName: "",
+  lastName: "",
   usertype: "",
   email: "",
   password: "",
@@ -20,12 +20,19 @@ const initialState = {
 };
 
 function Register() {
+  const navigate = useNavigate();
   //local state
   const [formData, setFormData] = useState(initialState);
 
   //Global state
-  const { isLoading, showAlert, displayAlert, registerUser, PasswordAlert } =
-    useAppContext();
+  const {
+    user,
+    isLoading,
+    showAlert,
+    displayAlert,
+    registerUser,
+    PasswordAlert,
+  } = useAppContext();
 
   const toggle = () => {
     setFormData({ ...formData, isUser: !formData.isUser });
@@ -49,8 +56,8 @@ function Register() {
       email,
       password,
       role,
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       isUser,
       confirmpassword,
     } = formData;
@@ -64,15 +71,17 @@ function Register() {
       return;
     }
 
-    const fullName = formData.name;
-    const nameParts = fullName.split(" ");
-    formData.firstname = nameParts[0];
-    formData.lastname = nameParts.slice(1).join(" ");
-
-    const currentUser = { email, password, role, firstname, lastname };
+    const currentUser = { email, password, role, firstName, lastName };
 
     registerUser(currentUser);
   };
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   return (
     <Wrapper className="full-page">
@@ -98,12 +107,18 @@ function Register() {
 
         <FormRow
           type="text"
-          labelText="Full Name"
-          name="name"
-          value={formData.name}
+          labelText="first Name"
+          name="firstName"
+          value={formData.firstName}
           onChange={onChange}
         />
-
+        <FormRow
+          type="text"
+          labelText="Last Name"
+          name="lastName"
+          value={formData.lastName}
+          onChange={onChange}
+        />
         <FormRow
           type="email"
           labelText="Email Address"
