@@ -12,10 +12,10 @@ const uniqueEmail = async function (email) {
         return false;
     }
 }
-// const emailValidators = [
-//     { validator: correctEmail, message: props => `${props.value} is not a valid email` },
-//     { validator: uniqueEmail, message: props => `${props.value} already exists` }
-// ]
+const emailValidators = [
+    { validator: correctEmail, message: props => `${props.value} is not a valid email` },
+    { validator: uniqueEmail, message: props => `${props.value} already exists` }
+]
 
 //password validation
 const validLength = async pwd => {
@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema({
         trim: true,
         lowercase: true,
         required: [true, 'email is required'],
-        //validate: emailValidators
+        validate: emailValidators
     },
     password: {
         type: String,
@@ -56,21 +56,21 @@ const userSchema = mongoose.Schema({
     timestamps: true
 })
 
-// userSchema.pre("create", function (next) {
-//     let user = this;
+userSchema.pre("create", function (next) {
+    let user = this;
 
-//     // if the data is not modified
-//     if (!user.isModified("password")) {
-//         return next();
-//     }
+    // if the data is not modified
+    if (!user.isModified("password")) {
+        return next();
+    }
 
-//     bcrypt.hash(user.password, 10, (err, hash) => {
-//         if (err) {
-//             return next(err);
-//         }
-//         user.password = hash;
-//         next();
-//     });
-// });
+    bcrypt.hash(user.password, 10, (err, hash) => {
+        if (err) {
+            return next(err);
+        }
+        user.password = hash;
+        next();
+    });
+});
 
 module.exports = mongoose.model('User', userSchema)

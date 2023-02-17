@@ -13,17 +13,15 @@ const getUserInfo = asyncHandler(async (req, res) => {
     const user = req.user
 
     if (user.role === 'recruiter') {
-        const recruiter = await Recruiter.findOne({ userId: user._id }).exec()
+        const recruiter = await Recruiter.findOne({ userId: user._id }).lean().exec()
         if (!recruiter) {
-            res.status(404)
-            throw new Error('User not found')
+            return res.status(404).json({ message: 'User not found' })
         }
         res.status(200).json(recruiter)
     } else {
-        const applicant = await Applicant.findOne({ userId: user._id }).exec()
+        const applicant = await Applicant.findOne({ userId: user._id }).lean().exec()
         if (!applicant) {
-            res.status(404)
-            throw new Error('User not found')
+            return res.status(404).json({ message: 'User not found' })
         } else {
             res.status(200).json(applicant)
         }
@@ -54,17 +52,15 @@ const updateUserInfo = asyncHandler(async (req, res) => {
 
             const updatedRecruiuter = await recruiter.save()
 
-            //may not be necessary - check laster
-            if (updatedRecruiuter && !updatedRecruiuter === recruiter) {
-                res.status(200).json({ message: 'User updated!' })
+            //may not be necessary - check later
+            if (updatedRecruiuter) {
+                res.status(200).json({ message: 'User info updated!' })
             } else {
-                res.status(500)
-                throw new Error('No changes')
+                res.status(400).json({ message: 'update request faild' })
             }
 
         } else {
-            res.status(400)
-            throw new Error('User does not exist')
+            return res.status(404).json({ message: 'User does not exist' })
         }
     } else {
         const applicant = await Applicant.findOne({ userId: user._id }).exec()
@@ -87,17 +83,16 @@ const updateUserInfo = asyncHandler(async (req, res) => {
 
             const updatedApplicant = await applicant.save()
 
-            //may not be necessary - check laster
+            //may not be necessary - check later
             if (updatedApplicant) {
-                res.status(200).json({ message: 'User updated!' })
+                res.status(200).json({ message: 'User info updated!' })
             } else {
-                res.status(500)
-                throw new Error('Something went wrong')
+                res.status(400).json({ message: 'update request faild' })
+
             }
 
         } else {
-            res.status(400)
-            throw new Error('User does not exist')
+            return res.status(404).json({ message: 'User does not exist' })
         }
     }
 
@@ -110,7 +105,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
     const user = req.user
 
-    const deletedUser = await User.findByIdAndDelete(user._id).exec()
+    const deletedUser = await User.findByIdAndDelete(user._id).lean().exec()
     if (deletedUser) {
         if (deletedUser.role === 'recruiter') {
             const deletedRecruiter = await Recruiter.findOneAndDelete({ userId: user._id }).exec()
@@ -118,28 +113,23 @@ const deleteUser = asyncHandler(async (req, res) => {
             if (deletedRecruiter) {
                 res.status(200).json({ meesage: "User deleted" })
             } else {
-                res.status(400)
-                console.log(user._id);
-                throw new Error('Could not delete user')
+                res.status(500).json({ message: 'Could not delete user' })
             }
         } else {
             const deletedApplicant = await Applicant.findOneAndDelete({ userId: user._id })
             if (deletedApplicant) {
                 res.status(200).json({ meesage: "User deleted" })
             } else {
-                res.status(400)
-                console.log(user._id);
-                console.log("applicant");
-                throw new Error('Could not delete user')
+                res.status(500).json({ message: 'Could not delete user' })
             }
 
         }
     } else {
-        res.status(400)
-        throw new Error('User not found')
+        res.status(404).json({ message: 'User not found' })
     }
 })
 
 
 
 module.exports = { getUserInfo, updateUserInfo, deleteUser }
+

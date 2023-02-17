@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const applicantSchema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: [true, 'User ID is required'],
+        required: true,
         ref: 'User'
     },
     firstName: {
@@ -16,13 +16,17 @@ const applicantSchema = mongoose.Schema({
     },
     profilePicUrl: {
         type: String,
+        //add validation
     },
     resume: {
         type: String
     },
     phoneNumber: {
         type: String
+        //add validation
     }
+}, {
+    timestamps: true
 })
 
 module.exports = mongoose.model('applicant', applicantSchema)
