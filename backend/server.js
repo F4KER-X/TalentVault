@@ -24,13 +24,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./routes/root"));
 
-app.use("/user", require("./routes/userRoutes"));
-
-//app.use('/jobs', require('./routes/jobRoutes'))
-
 app.use("/auth", require("./routes/authRoutes"));
 
-app.use("/jobs", require("./routes/postingRoutes"));
+app.use("/user", require("./routes/userRoutes"));
+
+app.use("/jobs", require("./routes/jobRoutes"));
 
 app.all("*", (req, res) => {
   res.status(404);

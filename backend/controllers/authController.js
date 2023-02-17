@@ -20,28 +20,22 @@ const registerUser = asyncHandler(async (req, res) => {
 
     //email validation
     const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-    const usedEmail = await User.findOne({ email }).exec()
-    console.log("jere");
+    const usedEmail = await User.findOne({ email }).lean().exec()
 
     //validation email
     if (!email) {
-        res.status(400)
-        throw new Error('Empty field')
+        return res.status(400).json({ message: 'Email was not provided' })
     } else if (!validEmail) {
-        res.status(400)
-        throw new Error(`${email} is not a valid email`)
+        return res.status(400).json({ message: `${email} is not a valid email` })
     } else if (usedEmail) {
-        res.status(400)
-        throw new Error(`${email} is already registered`)
+        return res.status(400).json({ message: `${email} is already registered` })
     }
 
     //validation pwd
     if (!password) {
-        res.status(400)
-        throw new Error('Empty field')
+        return res.status(400).json({ message: 'Empty field' })
     } else if (password.length < 8) {
-        res.status(400)
-        throw new Error('Make sure the password is not less than 8 characters')
+        return res.status(400).json({ message: 'Make sure the password is not less than 8 characters' })
     }
 
 
@@ -60,14 +54,13 @@ const registerUser = asyncHandler(async (req, res) => {
         if (user.role === 'recruiter') {
             if (!companyName) {
                 await user.delete()
-                res.status(400)
-                throw new Error('Required fields are empty')
+                return res.status(400).json({ message: 'Name is missing, signup unsuccessful' })
             }
             const recruiter = await Recruiter.create({
                 userId: user._id, companyName, profilePicUrl, phoneNumber
             })
             if (recruiter) {
-                res.status(201).json({
+                res.status(200).json({
                     message: "Recruiter was created successfully!",
                     token: generateToken(user.id, user.role)
                 })
@@ -75,22 +68,20 @@ const registerUser = asyncHandler(async (req, res) => {
         } else {
             if (!firstName || !lastName) {
                 await user.delete()
-                res.status(400)
-                throw new Error('Required fields are empty')
+                return res.status(400).json({ message: 'Name is missing, signup unsuccessful' })
             }
             const applicant = await Applicant.create({
                 userId: user._id, firstName, lastName, phoneNumber, profilePicUrl, resume
             })
             if (applicant) {
-                res.status(201).json({
+                res.status(200).json({
                     message: "Applicant was created successfully!",
                     token: generateToken(user.id, user.role)
                 })
             }
         }
     } else {
-        res.status(400)
-        throw new Error('Invalid user data')
+        return res.status(400).json({ message: 'Invalid user data' })
     }
 })
 
@@ -101,12 +92,19 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
 
+    if (!email) {
+        return res.status(400).json({ message: 'Email field can not be empty' })
+    }
+    if (!password) {
+        return res.status(400).json({ message: 'Password field can not be empty' })
+    }
+
     //check for user email
-    const user = await User.findOne({ email }).exec()
+    const user = await User.findOne({ email }).lean().exec()
 
     //check pwd
     if (user && (await bcrypt.compare(password, user.password))) {
-        res.status(201).json({
+        res.status(200).json({
             message: "Login successful",
             token: generateToken(user.id, user.role)
         })

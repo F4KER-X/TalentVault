@@ -8,14 +8,17 @@ const recruiterSchema = mongoose.Schema({
     },
     companyName: {
         type: String,
-        required: [true, 'Company Name is required']
+        required: [true, 'Company name is required']
     },
     profilePicUrl: {
         type: String
     },
     phoneNumber: {
         type: String
+        //add validator
     }
+}, {
+    timestamps: true
 })
 
 module.exports = mongoose.model('Recruiter', recruiterSchema)
