@@ -1,0 +1,7 @@
+20230216	15:35:40	1af870c6-a2a0-4f7d-aebb-5874920f443e	Error: Not allowed by CORS	undefined	OPTIONS	/public/auth/signup	http://localhost:3000
+20230216	15:37:31	ee398849-2472-4f0a-b1e0-fbad93315849	Error: Not allowed by CORS	undefined	OPTIONS	/public/auth/signup	http://localhost:3000
+20230216	16:08:37	97f1e78c-4822-4c99-b5e4-7595f0c20237	Error: Not allowed by CORS	undefined	OPTIONS	/auth/signup	http://localhost:3000
+20230216	16:09:37	f158a310-a919-4120-b3d7-f68f711dbea7	Error: Not allowed by CORS	undefined	OPTIONS	/auth/signup	http://localhost:3000
+20230216	16:12:05	36fc11e9-338a-44e4-9463-38ec2bbeb521	Error: Not allowed by CORS	undefined	OPTIONS	/auth/signup	http://localhost:3000
+20230216	16:12:46	32fb3280-9696-48ed-8d8d-900fe37b961b	Error: Make sure the password is not less than 8 characters	undefined	POST	/auth/signup	http://localhost:3000
+20230216	16:28:07	c944850a-7c56-4724-b8e7-25a6f7cd236b	Error: Not allowed by CORS	undefined	OPTIONS	/auth/signup	http://localhost:3000
