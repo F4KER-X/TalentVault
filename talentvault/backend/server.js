@@ -1,24 +1,34 @@
 require("dotenv").config();
-require("express-async-errors");
 const express = require("express");
-const path = require("path");
-const app = express();
+const mongoose = require("mongoose");
 const cors = require("cors");
-const corsOptions = require("./config/corsOptions");
+const path = require("path");
+const connectDB = require("./config/dbConnection");
+const cookieParser = require('cookie-parser')
 const errorHandler = require("./middleware/errorHandler");
 const { logger, logEvents } = require("./middleware/logger");
-const mongoose = require("mongoose");
-const connectDB = require("./config/dbConnection");
+const bodyParser = require("body-parser");
+
+
+
+const app = express();
+
 const PORT = process.env.PORT;
 
+//Middlewares
+app.use(logger);
+app.use(cookieParser())
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000',
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//mongo connection
 mongoose.set("strictQuery", false);
 connectDB();
-
-app.use(logger);
-
-app.use(cors(corsOptions));
-
-app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 

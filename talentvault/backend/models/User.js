@@ -56,21 +56,5 @@ const userSchema = mongoose.Schema({
     timestamps: true
 })
 
-userSchema.pre("create", function (next) {
-    let user = this;
-
-    // if the data is not modified
-    if (!user.isModified("password")) {
-        return next();
-    }
-
-    bcrypt.hash(user.password, 10, (err, hash) => {
-        if (err) {
-            return next(err);
-        }
-        user.password = hash;
-        next();
-    });
-});
 
 module.exports = mongoose.model('User', userSchema)

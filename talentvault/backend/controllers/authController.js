@@ -49,8 +49,13 @@ const registerUser = asyncHandler(async (req, res) => {
         email, password: hashedPwd, role
     })
 
+    //generate token
+
+
     if (user) {
         //now create either applicant or recruiter
+        const token = generateToken(user._id, user.role)
+        const { role } = user
         if (user.role === 'recruiter') {
             if (!companyName) {
                 await user.delete()
@@ -60,9 +65,22 @@ const registerUser = asyncHandler(async (req, res) => {
                 userId: user._id, companyName, profilePicUrl, phoneNumber
             })
             if (recruiter) {
+                const { userId, companyName, phoneNumber } = recruiter
+                // Send HTTP-only cookie
+                res.cookie("token", token, {
+                    path: "/",
+                    httpOnly: true,
+                    expires: new Date(Date.now() + 1000 * 86400), // 1 day
+                    sameSite: "none",
+                    secure: true,
+                });
                 res.status(200).json({
                     message: "Recruiter was created successfully!",
-                    token: generateToken(user.id, user.role)
+                    userId,
+                    role,
+                    companyName,
+                    phoneNumber,
+                    token
                 })
             }
         } else {
@@ -74,9 +92,23 @@ const registerUser = asyncHandler(async (req, res) => {
                 userId: user._id, firstName, lastName, phoneNumber, profilePicUrl, resume
             })
             if (applicant) {
+                const { userId, firstName, lastName, phoneNumber } = applicant
+                // Send HTTP-only cookie
+                res.cookie("token", token, {
+                    path: "/",
+                    httpOnly: true,
+                    expires: new Date(Date.now() + 1000 * 86400), // 1 day
+                    sameSite: "none",
+                    secure: true,
+                });
                 res.status(200).json({
                     message: "Applicant was created successfully!",
-                    token: generateToken(user.id, user.role)
+                    userId,
+                    role,
+                    firstName,
+                    lastName,
+                    phoneNumber,
+                    token
                 })
             }
         }
@@ -100,24 +132,73 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
     //check for user email
-    const user = await User.findOne({ email }).lean().exec()
+    const user = await User.findOne({ email })
 
-    //check pwd
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (!user) {
+        return res.status(400).json({ message: 'User not found, please signup' })
+    }
+
+    //user exists, check pass
+    const correctPwd = await bcrypt.compare(password, user.password)
+
+    const token = generateToken(user._id, user.role)
+
+
+    let userProfile
+    if (user.role === 'recruiter') {
+        userProfile = await Recruiter.findOne({ userId: user._id }).lean().exec()
+    } else {
+        userProfile = await Applicant.findOne({ userId: user._id }).lean().exec()
+    }
+
+    const { userId, firstName, lastName, companyName, phoneNumber, profilePicUrl, resume } = userProfile
+    const { role } = user
+
+    if (user && correctPwd) {
+        res.cookie("token", token, {
+            path: "/",
+            httpOnly: true,
+            expires: new Date(Date.now() + 1000 * 86400), // 1 day
+            sameSite: "none",
+            secure: true,
+        })
         res.status(200).json({
-            message: "Login successful",
-            token: generateToken(user.id, user.role)
+            message: 'Login succussfull', userId, role, firstName, lastName, companyName, phoneNumber, profilePicUrl, resume, token
         })
     } else {
-        res.status(400)
-        throw new Error('Invalid credentials')
+        res.status(400).json({ message: 'Invalid email or password' })
     }
+})
+
+const logoutUser = asyncHandler(async (req, res) => {
+    res.cookie("token", "", {
+        path: "/",
+        httpOnly: true,
+        expires: new Date(0),
+        sameSite: "none",
+        secure: true,
+    });
+    return res.status(200).json({ message: "Successfully Logged Out" });
+})
+
+const loggedinStatus = asyncHandler(async (req, res) => {
+    const token = req.cookies.token
+
+    if (!token) {
+        return res.json(false)
+    }
+
+    //verify token
+    const verified = jwt.verify(token, process.env.JWT_SECRET)
+
+    if (verified)
+        return res.json(true)
 })
 
 //Generate JWT token
 const generateToken = (id, role) => {
-    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '30d' })
+    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
 
 
-module.exports = { registerUser, loginUser }
+module.exports = { registerUser, loginUser, logoutUser, loggedinStatus }

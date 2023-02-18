@@ -1,7 +1,6 @@
 const User = require('../models/User')
 const Recruiter = require('../models/Recruiter')
 const Applicant = require('../models/Applicant')
-
 const asyncHandler = require('express-async-handler')
 
 
@@ -10,16 +9,17 @@ const asyncHandler = require('express-async-handler')
 // @access Private
 const getUserInfo = asyncHandler(async (req, res) => {
 
-    const user = req.user
+    const id = req.user._id
+    const role = req.user.role
 
-    if (user.role === 'recruiter') {
-        const recruiter = await Recruiter.findOne({ userId: user._id }).lean().exec()
+    if (role === 'recruiter') {
+        const recruiter = await Recruiter.findOne({ userId: id }).lean().exec()
         if (!recruiter) {
             return res.status(404).json({ message: 'User not found' })
         }
         res.status(200).json(recruiter)
     } else {
-        const applicant = await Applicant.findOne({ userId: user._id }).lean().exec()
+        const applicant = await Applicant.findOne({ userId: id }).lean().exec()
         if (!applicant) {
             return res.status(404).json({ message: 'User not found' })
         } else {
@@ -34,27 +34,28 @@ const getUserInfo = asyncHandler(async (req, res) => {
 // @route PATCH /user
 // @access Private
 const updateUserInfo = asyncHandler(async (req, res) => {
-    const user = req.user
-    const data = req.body
+    const { _id, role } = req.user
+    const { companyName, firstName, lastName, phoneNumber, profilePicUrl, resume } = req.body
+    console.log(_id);
 
-    if (user.type === 'recruiter') {
-        const recruiter = await Recruiter.findOne({ userId: user._id }).exec()
+    if (role === 'recruiter') {
+        const recruiter = await Recruiter.findOne({ userId: _id }).exec()
         if (recruiter) {
-            if (data.companyName) {
-                recruiter.companyName = data.companyName
+            if (companyName) {
+                recruiter.companyName = companyName
             }
-            if (data.profilePicUrl) {
-                recruiter.profilePicUrl = data.profilePicUrl
+            if (profilePicUrl) {
+                recruiter.profilePicUrl = profilePicUrl
             }
-            if (data.phoneNumber) {
-                recruiter.phoneNumber = data.phoneNumber
+            if (phoneNumber) {
+                recruiter.phoneNumber = phoneNumber
             }
 
             const updatedRecruiuter = await recruiter.save()
 
             //may not be necessary - check later
             if (updatedRecruiuter) {
-                res.status(200).json({ message: 'User info updated!' })
+                res.status(200).json({ message: 'User info updated!', _id, role, companyName, profilePicUrl, phoneNumber })
             } else {
                 res.status(400).json({ message: 'update request faild' })
             }
@@ -85,7 +86,7 @@ const updateUserInfo = asyncHandler(async (req, res) => {
 
             //may not be necessary - check later
             if (updatedApplicant) {
-                res.status(200).json({ message: 'User info updated!' })
+                res.status(200).json({ message: 'User info updated!', userId: user._id, role: user.role, firstName, lastName, profilePicUrl, resume })
             } else {
                 res.status(400).json({ message: 'update request faild' })
 
