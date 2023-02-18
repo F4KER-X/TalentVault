@@ -21,7 +21,7 @@ const Landing = () => {
             job listings, review applications, view resumes, and more.
           </p>
           <div className="btns-main">
-            <Link to="/Register" className="btn1 btn-hero">
+            <Link to="/register" className="btn1 btn-hero">
               Login/Register
             </Link>
             <Link to="/jobposting" className="btn1 btn-hero">

@@ -1,151 +1,19 @@
-20230210	05:59:36	c2dee1f9-5a7e-49a2-a329-e60b3e6c17dc	TypeError: res.josn is not a function	undefined	POST	/users	undefined
-20230210	06:13:42	4ff42b11-1512-4f22-87a9-750ab0dcf60a	CastError: Cast to ObjectId failed for value "1" (type string) at path "_id" for model "User"	undefined	GET	/users/1	undefined
-20230210	06:13:57	08a0d73a-241c-4e73-87a0-5b52bda27593	CastError: Cast to ObjectId failed for value "1342423423" (type string) at path "_id" for model "User"	undefined	GET	/users/1342423423	undefined
-20230210	06:14:29	67a73b84-b280-4475-94a1-b9f949f5b730	CastError: Cast to ObjectId failed for value "{ _id: '1342423423' }" (type Object) at path "_id" for model "User"	undefined	GET	/users/1342423423	undefined
-20230210	06:14:50	06cf0d26-b328-41dc-b601-d35edb978bb1	CastError: Cast to ObjectId failed for value "1342423423" (type string) at path "_id" for model "User"	undefined	GET	/users/1342423423	undefined
-20230210	06:14:59	5e827dac-8fe2-42ab-8bb4-37aca19c6bcd	CastError: Cast to ObjectId failed for value "1342423423" (type string) at path "_id" for model "User"	undefined	GET	/users/1342423423	undefined
-20230210	06:15:48	f38e41fa-ea1f-4506-bad1-0b9c60a009a9	CastError: Cast to ObjectId failed for value "1342423423" (type string) at path "_id" for model "User"	undefined	GET	/users/1342423423	undefined
-20230210	06:17:38	058b1a86-d5dc-4101-bfd3-4051d4b10da1	CastError: Cast to ObjectId failed for value "56" (type string) at path "_id" for model "User"	undefined	GET	/users/56	undefined
-20230210	06:17:52	b23a2118-752b-4014-9ef1-44e95f43bfc5	CastError: Cast to ObjectId failed for value "6d" (type string) at path "_id" for model "User"	undefined	GET	/users/6d	undefined
-20230210	06:20:18	26b4fd39-8cb2-46e3-a7ad-056cab30f876	CastError: Cast to ObjectId failed for value "63d41c876e754671" (type string) at path "_id" for model "User"	undefined	GET	/users/63d41c876e754671	undefined
-20230210	06:20:29	38410213-aa81-47e2-ae12-a09e2241f164	CastError: Cast to ObjectId failed for value "63d41c876e754671" (type string) at path "_id" for model "User"	undefined	GET	/users/63d41c876e754671	undefined
-20230210	06:20:30	9c0e4c5b-8075-49e9-a40a-d4e388762a98	CastError: Cast to ObjectId failed for value "63d41c876e754671" (type string) at path "_id" for model "User"	undefined	GET	/users/63d41c876e754671	undefined
-20230210	06:20:32	07a12efe-b9d8-4498-89df-1aacce068358	CastError: Cast to ObjectId failed for value "63d41c876e754671rtert" (type string) at path "_id" for model "User"	undefined	GET	/users/63d41c876e754671rtert	undefined
-20230210	06:22:21	d2580fa3-50df-4519-b0bc-2c114ab73bf1	TypeError: user.then is not a function	undefined	GET	/users/63d41c876e754671964401d7	undefined
-20230210	06:25:20	19b43f12-5f38-4975-aa08-b4ef715be799	Error: Cannot set headers after they are sent to the client	undefined	GET	/users/63d41c876e754671964401d7	undefined
-20230210	09:17:35	0f6e0512-7b4c-48a4-aadf-fc3da7de796e	ValidationError: User validation failed: firstName: First name is required, email: danny@test.com already exists	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:18:10	ece8c912-d4c2-44de-abcf-ec93c0f05c6b	ValidationError: User validation failed: email: danny@test.com already exists	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:22:57	248abbf4-59b3-4310-bdc8-978ad1ab18df	TypeError: Cannot use 'in' operator to search for 'strict' in M	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:24:28	ec8c6a47-c107-4e6c-a401-5580cac207d5	TypeError: Cannot read properties of undefined (reading '_id')	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:27:46	7214befc-3eee-495c-a989-71a332c9d4bb	MongoServerError: E11000 duplicate key error collection: 63d1d19b2847096d070396fd_test.users index: email_1 dup key: { email: "dannyd@test.com" }	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:29:06	b2952228-e5d5-4423-bf8d-590b30c15ec1	MongooseError: Query was already executed: User.updateOne({ email: 'dannyd@test.com' }, { '$set': { fir...	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:29:24	c9d00892-6b74-4823-a0bc-d7f7715c13fe	MongooseError: Query was already executed: User.updateOne({ firstName: 'Da' }, { '$set': { lastName: 'M...	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:40:06	9050b1c3-37ca-48dd-936c-dc37dfd28d8f	MongooseError: Query was already executed: User.updateOne({ firstName: 'Da' }, { '$set': { lastName: 'M...	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:45:33	ab27eed9-cb8c-407d-876b-46ec47e69550	ValidationError: User validation failed: email: day is not a valid email	undefined	PATCH	/users/63e6395765683306b44c0b98	undefined
-20230210	09:46:14	c8a2b249-0521-4114-904c-f32a3ced325b	ValidationError: User validation failed: email: dannyd@test.com already exists	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	09:46:18	1f531d00-d929-48d7-addf-183ce3140014	ValidationError: User validation failed: email: email is required	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:02:52	0f8b7efb-08f1-4965-b0b2-42400ae86bec	ValidationError: User validation failed: email: email is required	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:03:33	a5aff4f9-b584-411a-9d20-7fd58e144c5d	ValidationError: User validation failed: email: dannyd@test.com already exists	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:04:29	f752dd1e-011d-4faa-b822-a051ac746e90	ValidationError: User validation failed: email: dannyd@test.com already exists	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:07:03	e6306b00-ece6-4fd7-bfe7-28c1e89984b5	ReferenceError: userSchema is not defined	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:07:16	eb54b77c-b96f-4101-800a-4684a3cbc227	TypeError: User.path is not a function	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:08:37	c79e3afa-2329-4408-892c-222670840b8d	TypeError: Cannot read properties of undefined (reading 'path')	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:09:26	c0be1c9c-846f-484e-950a-a88c9e25eb9e	TypeError: user.path is not a function	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:10:06	54273fb4-29db-4179-8794-691b9028682c	TypeError: Cannot read properties of undefined (reading 'validate')	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:11:52	da93a980-5385-444f-8a22-ef650cf1bd5e	ValidationError: User validation failed: email: Validator failed for path `email` with value `dannyd@test.com`	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:12:26	4d7694ae-7896-44dc-a1af-a3ae59481869	ValidationError: User validation failed: email: dannyd@test.com already exists	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:12:39	928cfee5-6060-40d5-91c4-a9adb4ab9aa0	ValidationError: User validation failed: email: dannyd@test.com already exists	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:12:52	df118dbb-be3a-4199-aba2-c8e7bbbd97a8	ValidationError: User validation failed: email: dannyd@test.com already exists	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:14:57	b8f7e36b-ba9f-4630-a1a8-fea6f75de2f8	ParallelSaveError: Can't save() the same doc multiple times in parallel. Document: 63e63d54957aab5b940f95d2	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	10:16:29	61bfc04b-241f-4585-967f-cd1a4cc43341	ParallelSaveError: Can't save() the same doc multiple times in parallel. Document: 63e63d54957aab5b940f95d2	undefined	PATCH	/users/63e63d54957aab5b940f95d2	undefined
-20230210	23:44:33	fa8f01cf-0df2-42e5-a312-065554df536c	TypeError: user.save is not a function	undefined	POST	/auth/signup	undefined
-20230211	00:29:49	22a33e62-46a0-45a3-83da-6d296e63699c	SyntaxError: Unexpected string in JSON at position 88	undefined	POST	/auth/signup	undefined
-20230211	08:52:45	10d018fc-77af-470d-ba01-0c839e799cca	ReferenceError: id is not defined	undefined	GET	/users/user	undefined
-20230211	09:03:44	da097101-3d02-4759-a8f3-3278bac6043d	TypeError: Cannot read properties of undefined (reading 'userId')	undefined	PATCH	/users	undefined
-20230211	09:04:40	2956a82a-2bb1-48cb-a135-cacf34067cea	ReferenceError: userId is not defined	undefined	PATCH	/users	undefined
-20230211	09:25:16	fed7a59b-bc5a-4f1d-b5a8-815f12e97911	TypeError: Cannot destructure property 'userId' of 'req.data' as it is undefined.	undefined	DELETE	/user	undefined
-20230211	09:25:54	77cc2e73-b30c-4bbc-a197-bcf61f907485	TypeError: Cannot destructure property 'userId' of 'req.data' as it is undefined.	undefined	DELETE	/user	undefined
-20230211	09:26:14	f6618e1e-ab03-4832-b9f5-a5d263a37a56	TypeError: Cannot destructure property 'userId' of 'req.data' as it is undefined.	undefined	DELETE	/user	undefined
-20230211	19:54:41	d7b2059c-d129-4967-91eb-76e7f8a8d9db	Error: data and salt arguments required	undefined	POST	/auth/signup	undefined
-20230211	19:55:59	84aef0a3-891b-4e05-9110-1fe2d7dc8802	ValidationError: User validation failed: email: email is required, password: password is required, role: roles is required	undefined	POST	/auth/signup	undefined
-20230211	19:56:34	79af54b4-2e75-4166-8721-8b3971536bd9	ValidationError: User validation failed: email: email is required, password: password is required, role: roles is required	undefined	POST	/auth/signup	undefined
-20230211	19:56:59	b1c2eafc-cb5e-4987-966d-eb072dec27e9	ValidationError: User validation failed: email: email is required, password: password is required, role: roles is required	undefined	POST	/auth/signup	undefined
-20230211	19:57:03	cc1b0ba0-a600-4ce0-9621-c6e9b1755b89	ValidationError: User validation failed: email: email is required, password: password is required, role: roles is required	undefined	POST	/auth/signup	undefined
-20230211	19:58:27	cdc45dd5-c9e0-4ddf-9fe1-7dbccc51ead7	ValidationError: User validation failed: role: `recuiter` is not a valid enum value for path `role`., email: danny is not a valid email, password: password must be at least 8 characters	undefined	POST	/auth/signup	undefined
-20230211	19:58:34	c45bc624-5d0d-4da6-a2b0-e756724b0422	ValidationError: User validation failed: email: danny is not a valid email, password: password must be at least 8 characters	undefined	POST	/auth/signup	undefined
-20230211	20:24:59	815c7ec7-f64d-4865-a986-ffc9aa486c88	Error: dan@test.com is already registered	undefined	POST	/auth/signup	undefined
-20230211	20:25:30	34dc5461-4f2e-4ad0-b465-3faa337dc53d	Error: dan@test.com is already registered	undefined	POST	/auth/signup	undefined
-20230211	20:25:42	b9891499-2eb4-42f7-8bc2-bfdb93eca81d	Error: dan@test.com is already registereds	undefined	POST	/auth/signup	undefined
-20230211	20:27:16	bcaf14bd-df11-4004-9caf-95618ff4c8c5	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230211	20:27:39	aa0335c6-67a7-44e4-939c-70eddb8840f8	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230211	20:27:48	9941afa5-18df-46b0-8e36-41941022b344	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230211	20:58:16	be254071-ea77-4090-a219-36a2c5a151bc	Error: Not authorized, no token	undefined	GET	/auth/me	undefined
-20230211	20:58:49	a8038acc-6713-4213-98a5-0fb92218007f	Error: Not authorized, no token	undefined	POST	/auth/signup	undefined
-20230211	20:59:20	a1fcd136-0e00-422b-964f-f4ca724966d8	Error: dan@test.com is already registered	undefined	POST	/auth/signup	undefined
-20230211	21:01:13	144ee88a-fe35-4774-b56b-49e5c30709ea	Error: Not authorized, no token	undefined	GET	/auth/me	undefined
-20230211	21:01:15	bec2d983-0b07-4946-b4c7-4a57dd2351ad	Error: dan@test.com is already registered	undefined	POST	/auth/signup	undefined
-20230211	21:03:03	0b043f4f-77e1-4c74-afba-3fa7b8b1b404	Error: Not authorized	undefined	GET	/auth/me	undefined
-20230211	21:03:06	73c65dfb-58dc-4a44-8b8a-b0b528e008e4	Error: Not authorized	undefined	GET	/auth/me	undefined
-20230211	22:22:55	f280b3e2-68c9-4864-a617-2974fc356420	Error: Not authorized, no token	undefined	GET	/user	undefined
-20230211	22:23:20	b8c6c404-06ff-4c58-a116-989b0b928bb7	Error: Not authorized, no token	undefined	GET	/user	undefined
-20230211	22:45:27	63b4400b-9063-4848-87b4-8ad73c5bbb94	Error: dan@test.com is already registered	undefined	POST	/auth/signup	undefined
-20230211	22:45:46	73bbc6b6-1195-4f95-9fc6-a9cb42c3ffc9	Error: Required fields are empty	undefined	POST	/auth/signup	undefined
-20230211	22:46:03	2feb1a22-820f-4858-988d-b6214e593482	ValidationError: Recruiter validation failed: userId: User ID is required	undefined	POST	/auth/signup	undefined
-20230211	22:46:38	22d11583-0b64-4b24-8b90-2e65bebbc1bd	Error: dan@test.com is already registered	undefined	POST	/auth/signup	undefined
-20230211	22:47:31	55898b4e-7783-44ff-8a30-a144f0f5c894	Error: dan@test.com is already registered	undefined	POST	/auth/signup	undefined
-20230211	22:47:50	c5fb36f2-aad5-4d08-98ac-ce69c8d06bb1	Error: Required fields are empty	undefined	POST	/auth/signup	undefined
-20230211	22:47:58	3f8796f6-1838-4fcc-8a43-51d4967d58d2	Error: Required fields are empty	undefined	POST	/auth/signup	undefined
-20230211	22:49:49	0a033598-9e54-4301-bfb4-d7bcb5d7d6bd	Error: Not authorized, no token	undefined	GET	/user	undefined
-20230211	22:50:03	90704469-b9f8-44d5-82e6-4e4e91bfc16d	Error: User not found	undefined	GET	/user	undefined
-20230211	22:50:46	a8232288-db8c-4406-9d9e-44f9472bf842	ReferenceError: userId is not defined	undefined	GET	/user	undefined
-20230211	22:51:19	b5b417b5-5e98-4f56-b159-0252a0db4294	Error: User not found	undefined	GET	/user	undefined
-20230211	22:51:48	192fcba9-17b1-406e-8d7f-ea6843403341	Error: User not found	undefined	GET	/user	undefined
-20230211	22:51:54	06490a85-3e01-43c4-a840-518c4c4b3af7	Error: User not found	undefined	GET	/user	undefined
-20230211	22:52:19	c1f5781f-b85f-4eb0-ab4c-7a7bb05d2b61	Error: User not found	undefined	GET	/user	undefined
-20230211	22:56:20	c70c8080-7d05-410c-b17f-1f9db7e6283c	Error: User not found	undefined	GET	/user	undefined
-20230211	22:56:46	1da9dded-2d76-4b51-a0fc-3f3d91247fa3	Error: User not found	undefined	GET	/user	undefined
-20230211	22:57:25	35a4d3a6-a7ef-4f7a-a2c7-139c2bf594e4	Error: User not found	undefined	GET	/user	undefined
-20230211	23:00:25	7c52cf8f-40ab-45f8-8fb9-ddfe859659d1	Error: User not found	undefined	GET	/user	undefined
-20230211	23:00:51	4bcd0c62-6f95-4b69-a43f-fc928030bd7c	Error: User not found	undefined	GET	/user	undefined
-20230211	23:10:25	13c34aa9-abb6-4165-936a-b7ebf4ca228d	ReferenceError: application is not defined	undefined	GET	/user	undefined
-20230211	23:24:03	99431cc1-a1ed-4365-ab85-13057f4fb495	ReferenceError: user_id is not defined	undefined	DELETE	/user	undefined
-20230211	23:25:44	fe5c6ac2-30f4-4f13-8dc3-6aae05bcc1ef	Error: Could not delete user	undefined	DELETE	/user	undefined
-20230211	23:26:40	7ef4e53a-e696-4a14-9415-15a26dfd7d07	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230211	23:27:54	4d7b7341-404b-47c9-8189-7da1eaab3fef	Error: Could not delete user	undefined	DELETE	/user	undefined
-20230211	23:30:48	68fb27d3-5584-42f5-8d04-f4241c9a5299	Error: Could not delete user	undefined	DELETE	/user	undefined
-20230211	23:31:21	6b7edda3-def8-412c-ab06-d8840f3c43ed	Error: Could not delete user	undefined	DELETE	/user	undefined
-20230211	23:31:48	6753e7f1-aa4c-42d6-a464-8392f068a012	Error: Could not delete user	undefined	DELETE	/user	undefined
-20230211	23:32:10	156f3b31-8783-45a8-be52-e02c32a61806	Error: Could not delete user	undefined	DELETE	/user	undefined
-20230212	09:07:51	a99f35a4-9621-4065-923e-5bd0136a76a7	Error: Forbidden, no token	undefined	PATCH	/user	undefined
-20230212	09:07:59	cacd8c58-5cc4-4fc1-91e6-dea5c2108b7c	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230212	09:14:07	4b04d023-0459-4a22-90c1-c93f656780d1	Error: Not authorized	undefined	GET	/user	undefined
-20230212	09:38:21	45616eed-0108-4db4-8534-8a4f3b864209	TypeError: Cannot read properties of undefined (reading 'length')	undefined	POST	/auth/signup	undefined
-20230212	09:39:34	843a5ae5-5613-4fcf-810d-0e0b3a8cf2b2	TypeError: Cannot read properties of undefined (reading 'length')	undefined	POST	/auth/signup	undefined
-20230212	09:40:11	b86deed2-5c8d-4865-b903-a2680c4ef2d2	TypeError: Cannot read properties of undefined (reading 'length')	undefined	POST	/auth/signup	undefined
-20230212	09:40:55	4e432ffb-eaff-4277-a90f-69e537dc7f60	TypeError: Cannot read properties of undefined (reading 'length')	undefined	POST	/auth/signup	undefined
-20230212	09:42:06	e1aa9120-ca7c-485e-a2dd-fbbbf36a11e5	Error: dany is not a valid email	undefined	POST	/auth/signup	undefined
-20230212	09:42:23	223d4e76-6088-491b-a59a-d4771aaaecbb	Error: Empty field	undefined	POST	/auth/signup	undefined
-20230212	09:42:43	8b0d3250-d89b-4335-a88a-965976b25c30	Error: dannty is not a valid email	undefined	POST	/auth/signup	undefined
-20230212	09:42:54	5caf4aba-bc3d-467a-a7aa-01111717e0ca	Error: Empty field	undefined	POST	/auth/signup	undefined
-20230212	09:43:36	5a42d992-b3f7-418e-97b5-00677c1aeab4	TypeError: Cannot read properties of undefined (reading 'length')	undefined	POST	/auth/signup	undefined
-20230212	09:43:50	8026a959-1c1b-41f9-83eb-d2cf01f2855f	Error: Empty field	undefined	POST	/auth/signup	undefined
-20230212	09:44:04	e4a78c28-7f15-4113-9e87-a6b04b1680c5	Error: Make sure the password is not less than 8 characters	undefined	POST	/auth/signup	undefined
-20230212	09:44:08	e92f01d6-8b90-4e7c-98d1-682648d96be9	ValidationError: User validation failed: role: roles is required	undefined	POST	/auth/signup	undefined
-20230212	09:44:21	74c67dba-c2cf-4748-9c1a-dbee04d595d5	Error: Required fields are empty	undefined	POST	/auth/signup	undefined
-20230212	09:45:54	e39c6cfd-7715-4ebf-acd2-c6befa09e052	Error: dannty@weqe.co is already registered	undefined	POST	/auth/signup	undefined
-20230212	09:47:07	a8b7a197-0399-48d7-bed4-81711cab0e75	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230212	09:47:15	3801abfd-04af-4112-9024-379fbc16a831	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230212	09:47:33	30a289b6-ed03-4f30-9823-d3650352c13a	Error: Not authorized	undefined	GET	/user	undefined
-20230212	09:47:36	5b5e2805-9455-4017-b298-150d49bde458	Error: Forbidden, no token	undefined	GET	/user	undefined
-20230212	09:48:48	4551cf82-aaaa-4b55-bece-0df280a4f5df	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:48:54	9d721fac-49e1-47c1-84e6-b59fcc325de0	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:49:14	8d3304ed-5e12-4b3b-81aa-1bd48ec53a66	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:50:02	efa291ad-a223-4c10-9fef-103faa1e6d41	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:50:35	fb2edcd8-9de8-4dde-87c0-97841aed8c5b	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:51:17	42b3cd60-173c-4c82-9d21-9c148d51195d	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:51:34	db2c8645-1105-44d8-84b0-f34d260b46a4	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:53:00	852b3e63-3f59-499b-9610-4acd3a5be595	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:53:20	14774c40-7fcd-4586-a789-0202467fa624	Error: User does not exist	undefined	PATCH	/user	undefined
-20230212	09:56:39	0ac952f0-4d29-4599-9a9d-f2f5982d16f1	Error: No changes	undefined	PATCH	/user	undefined
-20230212	09:57:08	1c4c8f97-2cbc-4fb2-b9d7-4f559bc616b9	Error: No changes	undefined	PATCH	/user	undefined
-20230212	09:57:42	e2edb46d-e04e-41cb-877d-65d17f5b3693	Error: No changes	undefined	PATCH	/user	undefined
-20230212	14:53:38	5fff8f06-3552-418a-9c56-6163075665a6	Error: Not authorized	undefined	GET	/user	undefined
-20230213	13:31:30	961abffb-be28-4e1c-9164-0b6a6827ac52	Error: Forbidden, no token	undefined	GET	/user	undefined
-20230213	20:24:50	d418b280-5222-4fea-929b-c101172226f5	Error: danny1 is not a valid email	undefined	POST	/auth/signup	undefined
-20230213	20:32:24	6ef4c5fa-cdeb-4046-b460-76385ebdb57c	Error: Make sure the password is not less than 8 characters	undefined	POST	/auth/signup	undefined
-20230213	20:33:11	42c48a4b-8331-4abc-b4eb-3df7e6c3e613	Error: Not authorized	undefined	GET	/user	undefined
-20230215	15:04:35	4d2b9a78-9603-4d78-b6bc-1e09f96055e3	Error: Not authorized	undefined	GET	/user	undefined
-20230215	15:04:42	132d08cd-55c4-403e-b54a-2e9921c5d1f9	Error: Forbidden, no token	undefined	GET	/user	undefined
-20230215	15:05:07	37e62232-44a3-43d3-9724-2e2b1ec1a887	Error: danny is not a valid email	undefined	POST	/auth/signup	undefined
-20230215	15:05:15	2755819f-0fe1-4225-a03c-c594935b365a	Error: Make sure the password is not less than 8 characters	undefined	POST	/auth/signup	undefined
-20230215	15:05:19	4326af50-ff9c-4c6e-bbe2-559c03985a28	ValidationError: User validation failed: role: roles is required	undefined	POST	/auth/signup	undefined
-20230215	15:05:31	d63167a7-c443-441e-a489-2b26bf26e08e	Error: Required fields are empty	undefined	POST	/auth/signup	undefined
-20230215	15:05:47	9988bab0-41ee-4caf-adad-1141bb488b85	Error: Required fields are empty	undefined	POST	/auth/signup	undefined
-20230215	19:42:38	016dfe5b-092c-425f-921f-2139466726c1	ValidationError: User validation failed: email: danny is not a valid email	undefined	POST	/auth/signup	undefined
-20230215	19:55:48	2987b620-1811-430b-af60-51cd7000deb0	TypeError: User.findOne(...).exec(...).lean is not a function	undefined	POST	/auth/signup	undefined
-20230215	20:23:11	ea41f7dc-2cf1-4564-88ba-86649fa9cf49	Error: Forbidden, no token	undefined	GET	/user	undefined
-20230215	20:23:15	2a0e5a94-55fd-423e-a64c-efe5c9a6ea36	Error: Not authorized	undefined	GET	/user	undefined
-20230215	20:25:32	cf0871ad-1b80-4723-9cea-14a2ecb3c5e3	Error: Not authorized	undefined	GET	/user	undefined
-20230215	20:26:12	b7435556-9d3f-4962-b78a-bd772d54c3dd	Error: Not authorized	undefined	GET	/user	undefined
-20230215	22:26:48	84f06249-efde-4fec-9518-81a943c345c4	Error: Invalid credentials	undefined	POST	/auth/login	undefined
-20230215	22:44:35	77d0c376-bd03-48f5-81e5-758a49baa3f9	Error: Invalid credentials	undefined	POST	/auth/login	undefined
+20230217	19:25:37	7b51e1ed-914b-4c35-9a8a-f9182e11be43	TypeError: Recruiter.findOne(...).exec(...).lean is not a function	undefined	POST	/auth/login	undefined
+20230217	19:25:49	8ec4b006-180d-41e7-a968-3ca4d931b2de	TypeError: Assignment to constant variable.	undefined	POST	/auth/login	undefined
+20230217	19:25:58	2e900526-61c2-4870-be8e-8b77a9a358a5	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	19:26:53	da2dc130-3838-420a-96f5-06af79ef368c	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	http://localhost:3000
+20230217	19:34:39	7037365a-b7a9-442f-a234-f03fbf8fea2b	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	22:19:43	c4276a97-e092-4e12-8d94-f2eb514011b4	Error: Invalid credentials	undefined	POST	/auth/login	undefined
+20230217	22:20:10	d6509565-8a3d-4f99-a0c6-997dc80a8d64	Error: Invalid credentials	undefined	POST	/auth/login	undefined
+20230217	22:20:37	a16943c1-966f-4e11-a4a2-fa78a2d04b7a	TypeError: Cannot read properties of null (reading 'password')	undefined	POST	/auth/login	undefined
+20230217	22:22:44	469ca340-779f-44eb-a581-4fa7b0ca7ca4	Error: Invalid credentials	undefined	POST	/auth/login	undefined
+20230217	22:24:08	20e304c4-ef6c-4181-afe9-31fa242911be	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	22:24:47	5320bfba-c6f8-4ac9-b122-42fab34598d8	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	22:25:37	f5e2b0f7-fae6-4402-bdfc-76ef7d698f8c	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	22:26:23	aacbfc61-d9d1-45b0-8fc5-de8bc9ea4a97	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	22:27:23	16255e48-37c1-4363-8d4a-bd4ac2ff0b87	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	22:45:13	c5fde9c9-684c-49ce-8c44-f2279b274a6e	TypeError: Cannot read properties of undefined (reading 'cookie')	undefined	POST	/auth/login	undefined
+20230217	22:45:30	e7c94730-a510-42e7-95a7-6fde8dacf275	Error: Cannot set headers after they are sent to the client	undefined	POST	/auth/login	undefined
+20230217	23:14:50	fbb77d66-cc8d-4dee-ba57-842ba574bbf3	ReferenceError: userId is not defined	undefined	PATCH	/user	undefined
+20230217	23:15:25	1c982923-dc09-466b-a4c4-fb6e08f0ef29	ReferenceError: companyName is not defined	undefined	PATCH	/user	undefined
+20230217	23:19:32	390a297b-c9f0-4d86-a812-7f4bd126f6ba	ReferenceError: id is not defined	undefined	PATCH	/user	undefined
