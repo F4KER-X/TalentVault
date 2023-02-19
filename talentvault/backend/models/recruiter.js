@@ -3,19 +3,29 @@ const mongoose = require('mongoose')
 const recruiterSchema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: [true, 'User ID is required'],
+        required: true,
         ref: 'User'
+    },
+    firstName: {
+        type: String,
+        required: [true, 'First name is required']
+    },
+    lastName: {
+        type: String,
+        required: [true, 'Last name is required']
     },
     companyName: {
         type: String,
         required: [true, 'Company name is required']
+    },
+    bio: {
+        type: String
     },
     profilePicUrl: {
         type: String
     },
     phoneNumber: {
         type: String
-        //add validator
     }
 }, {
     timestamps: true

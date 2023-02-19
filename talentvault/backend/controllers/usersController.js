@@ -2,6 +2,7 @@ const User = require('../models/User')
 const Recruiter = require('../models/Recruiter')
 const Applicant = require('../models/Applicant')
 const asyncHandler = require('express-async-handler')
+const multer = require('multer')
 
 
 // @desc Get info of the user
@@ -35,8 +36,7 @@ const getUserInfo = asyncHandler(async (req, res) => {
 // @access Private
 const updateUserInfo = asyncHandler(async (req, res) => {
     const { _id, role } = req.user
-    const { companyName, firstName, lastName, phoneNumber, profilePicUrl, resume } = req.body
-    console.log(_id);
+    const { companyName, firstName, lastName, phoneNumber, profilePicUrl, resume, bio } = req.body
 
     if (role === 'recruiter') {
         const recruiter = await Recruiter.findOne({ userId: _id }).exec()
@@ -44,18 +44,24 @@ const updateUserInfo = asyncHandler(async (req, res) => {
             if (companyName) {
                 recruiter.companyName = companyName
             }
-            if (profilePicUrl) {
-                recruiter.profilePicUrl = profilePicUrl
-            }
             if (phoneNumber) {
                 recruiter.phoneNumber = phoneNumber
+            }
+            if (firstName) {
+                recruiter.firstName = firstName
+            }
+            if (lastName) {
+                recruiter.lastName = lastName
+            }
+            if (bio) {
+                recruiter.bio = bio
             }
 
             const updatedRecruiuter = await recruiter.save()
 
             //may not be necessary - check later
             if (updatedRecruiuter) {
-                res.status(200).json({ message: 'User info updated!', _id, role, companyName, profilePicUrl, phoneNumber })
+                res.status(200).json({ message: 'User info updated!', _id, role })
             } else {
                 res.status(400).json({ message: 'update request faild' })
             }
@@ -64,29 +70,26 @@ const updateUserInfo = asyncHandler(async (req, res) => {
             return res.status(404).json({ message: 'User does not exist' })
         }
     } else {
-        const applicant = await Applicant.findOne({ userId: user._id }).exec()
+        const applicant = await Applicant.findOne({ userId: _id }).exec()
         if (applicant) {
-            if (data.firstName) {
-                applicant.firstName = data.firstName
+            if (firstName) {
+                applicant.firstName = firstName
             }
-            if (data.lastName) {
-                applicant.lastName = data.lastName
+            if (lastName) {
+                applicant.lastName = lastName
             }
-            if (data.phoneNumber) {
-                applicant.phoneNumber = data.phoneNumber
+            if (phoneNumber) {
+                applicant.phoneNumber = phoneNumber
             }
-            if (data.resume) {
-                applicant.resume = data.resume
-            }
-            if (data.profilePicUrl) {
-                applicant.profilePicUrl = data.profilePicUrl
+            if (bio) {
+                applicant.bio = bio
             }
 
             const updatedApplicant = await applicant.save()
 
             //may not be necessary - check later
             if (updatedApplicant) {
-                res.status(200).json({ message: 'User info updated!', userId: user._id, role: user.role, firstName, lastName, profilePicUrl, resume })
+                res.status(200).json({ message: 'User info updated!', _id, role })
             } else {
                 res.status(400).json({ message: 'update request faild' })
 
@@ -110,7 +113,6 @@ const deleteUser = asyncHandler(async (req, res) => {
     if (deletedUser) {
         if (deletedUser.role === 'recruiter') {
             const deletedRecruiter = await Recruiter.findOneAndDelete({ userId: user._id }).exec()
-            console.log(user._id);
             if (deletedRecruiter) {
                 res.status(200).json({ meesage: "User deleted" })
             } else {
@@ -131,6 +133,29 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 
+const storage = multer.diskStorage({
+    destination: function (req, res, cb) {
+        cb(null, 'public/uploads')
+    },
+    filename: function (req, res, cb) {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + "-" + file.originalname)
+    }
+})
+function fileFilter(req, file, cb) {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
 
-module.exports = { getUserInfo, updateUserInfo, deleteUser }
+}
+
+const upload = multer({ storage, fileFilter })
+
+
+let fileData = {}
+
+
+
+module.exports = { getUserInfo, updateUserInfo, deleteUser, upload }
 

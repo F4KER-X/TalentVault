@@ -14,16 +14,17 @@ const applicantSchema = mongoose.Schema({
         type: String,
         required: [true, 'Last name is required']
     },
+    bio: {
+        type: String
+    },
     profilePicUrl: {
         type: String,
-        //add validation
     },
     resume: {
         type: String
     },
     phoneNumber: {
         type: String
-        //add validation
     }
 }, {
     timestamps: true

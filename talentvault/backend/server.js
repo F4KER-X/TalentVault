@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 mongoose.set("strictQuery", false);
 connectDB();
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/uploads")));
 
 app.use("/", require("./routes/root"));
 

@@ -10,4 +10,5 @@ router.route('/')
   .delete(usersController.deleteUser)
   .get(usersController.getUserInfo);
 
+
 module.exports = router;

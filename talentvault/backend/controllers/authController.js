@@ -13,10 +13,8 @@ const asyncHandler = require('express-async-handler')
 const registerUser = asyncHandler(async (req, res) => {
 
     //for user registration
-    const { email, password, role } = req.body
+    const { email, password, role, companyName, firstName, lastName } = req.body
 
-    //for recruiter/applicant registration
-    const { companyName, profilePicUrl, phoneNumber, firstName, lastName, resume } = req.body
 
     //email validation
     const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
@@ -59,13 +57,18 @@ const registerUser = asyncHandler(async (req, res) => {
         if (user.role === 'recruiter') {
             if (!companyName) {
                 await user.delete()
-                return res.status(400).json({ message: 'Name is missing, signup unsuccessful' })
+                return res.status(400).json({ message: 'Company name is missing, signup unsuccessful' })
+            }
+            if (!lastName || !firstName) {
+                await user.delete()
+                return res.status(400).json({ message: 'Full name is missing, signup unsuccessful' })
             }
             const recruiter = await Recruiter.create({
-                userId: user._id, companyName, profilePicUrl, phoneNumber
+                userId: user._id, companyName, firstName, lastName
             })
+
             if (recruiter) {
-                const { userId, companyName, phoneNumber } = recruiter
+                const { userId, companyName, firstName, lastName } = recruiter
                 // Send HTTP-only cookie
                 res.cookie("token", token, {
                     path: "/",
@@ -78,15 +81,15 @@ const registerUser = asyncHandler(async (req, res) => {
                     message: "Recruiter was created successfully!",
                     userId,
                     role,
-                    companyName,
-                    phoneNumber,
+                    firstName,
+                    lastName,
                     token
                 })
             }
         } else {
             if (!firstName || !lastName) {
                 await user.delete()
-                return res.status(400).json({ message: 'Name is missing, signup unsuccessful' })
+                return res.status(400).json({ message: 'Full name is missing, signup unsuccessful' })
             }
             const applicant = await Applicant.create({
                 userId: user._id, firstName, lastName, phoneNumber, profilePicUrl, resume
