@@ -5,6 +5,7 @@ const Applicant = require('../models/Applicant')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
+const { validEmail, usedEmail, validPassword } = require('./userValidation')
 
 
 // @desc Authenticate a user
@@ -16,23 +17,19 @@ const registerUser = asyncHandler(async (req, res) => {
     const { email, password, role, companyName, firstName, lastName } = req.body
 
 
-    //email validation
-    const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-    const usedEmail = await User.findOne({ email }).lean().exec()
-
     //validation email
     if (!email) {
         return res.status(400).json({ message: 'Email was not provided' })
-    } else if (!validEmail) {
+    } else if (!validEmail(email)) {
         return res.status(400).json({ message: `${email} is not a valid email` })
-    } else if (usedEmail) {
+    } else if (await usedEmail(email)) {
         return res.status(400).json({ message: `${email} is already registered` })
     }
 
     //validation pwd
     if (!password) {
         return res.status(400).json({ message: 'Empty field' })
-    } else if (password.length < 8) {
+    } else if (validPassword(password)) {
         return res.status(400).json({ message: 'Make sure the password is not less than 8 characters' })
     }
 
@@ -81,6 +78,7 @@ const registerUser = asyncHandler(async (req, res) => {
                     message: "Recruiter was created successfully!",
                     userId,
                     role,
+                    companyName,
                     firstName,
                     lastName,
                     token
@@ -92,10 +90,10 @@ const registerUser = asyncHandler(async (req, res) => {
                 return res.status(400).json({ message: 'Full name is missing, signup unsuccessful' })
             }
             const applicant = await Applicant.create({
-                userId: user._id, firstName, lastName, phoneNumber, profilePicUrl, resume
+                userId: user._id, firstName, lastName
             })
             if (applicant) {
-                const { userId, firstName, lastName, phoneNumber } = applicant
+                const { userId, firstName, lastName } = applicant
                 // Send HTTP-only cookie
                 res.cookie("token", token, {
                     path: "/",
@@ -110,7 +108,6 @@ const registerUser = asyncHandler(async (req, res) => {
                     role,
                     firstName,
                     lastName,
-                    phoneNumber,
                     token
                 })
             }

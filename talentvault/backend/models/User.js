@@ -1,33 +1,8 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
-//email validation
-const correctEmail = async email => {
-    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-}
-
-const uniqueEmail = async function (email) {
-    const user = await this.constructor.findOne({ email })
-    if (user) {
-        return false;
-    }
-}
-const emailValidators = [
-    { validator: correctEmail, message: props => `${props.value} is not a valid email` },
-    { validator: uniqueEmail, message: props => `${props.value} already exists` }
-]
-
-//password validation
-const validLength = async pwd => {
-
-    return !(pwd.length < 8)
-}
 
 
-
-const passwordValidators = [
-    { validator: validLength, message: 'password must be at least 8 characters' }
-]
 
 
 const userSchema = mongoose.Schema({
@@ -36,12 +11,12 @@ const userSchema = mongoose.Schema({
         trim: true,
         lowercase: true,
         required: [true, 'email is required'],
-        validate: emailValidators
+
     },
     password: {
         type: String,
         required: [true, 'password is required'],
-        validate: passwordValidators
+
     },
     role: {
         type: String,
@@ -56,5 +31,16 @@ const userSchema = mongoose.Schema({
     timestamps: true
 })
 
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        return next();
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    next();
+});
 
 module.exports = mongoose.model('User', userSchema)
