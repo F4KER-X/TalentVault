@@ -85,6 +85,7 @@ const registerUser = asyncHandler(async (req, res) => {
                 })
             }
         } else {
+            //applicant
             if (!firstName || !lastName) {
                 await user.delete()
                 return res.status(400).json({ message: 'Full name is missing, signup unsuccessful' })

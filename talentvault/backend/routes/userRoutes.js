@@ -11,5 +11,6 @@ router.route('/')
   .get(usersController.getUserInfo);
 
 router.route('/updatePassword')
-  .post(usersController.updatePasword)
+  .post(usersController.updatePassword)
+
 module.exports = router;
