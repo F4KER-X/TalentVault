@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  align-items: flex-end;
+  margin: 0px;
+}
+img {
+  margin-right: 5px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+p {
+  margin-bottom: 10px;
+}

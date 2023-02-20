@@ -19,6 +19,7 @@ const applicantSchema = mongoose.Schema({
     },
     profilePicUrl: {
         type: String,
+        default: 'https://i.ibb.co/4pDNDk1/avatar.png'
     },
     resume: {
         type: String

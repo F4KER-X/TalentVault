@@ -7,7 +7,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, validateEmail } from "../services/authService";
-import { SET_LOGIN, SET_NAME } from "../redux/features/auth/authSlice";
+import {
+  SET_LOGIN,
+  SET_NAME,
+  SET_PHOTO,
+} from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
 
 const initialState = {
@@ -53,6 +57,7 @@ export default function Login() {
       const data = await loginUser(userData);
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(data.firstName));
+      await dispatch(SET_PHOTO(data.profilePicUrl));
       navigate("/test");
       setIsLoading(false);
     } catch (error) {

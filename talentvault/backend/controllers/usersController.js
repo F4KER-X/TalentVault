@@ -58,6 +58,9 @@ const updateUserInfo = asyncHandler(async (req, res) => {
             if (bio) {
                 recruiter.bio = bio
             }
+            if (profilePicUrl) {
+                recruiter.profilePicUrl = profilePicUrl
+            }
 
             const updatedRecruiuter = await recruiter.save()
 
@@ -85,6 +88,9 @@ const updateUserInfo = asyncHandler(async (req, res) => {
             }
             if (bio) {
                 applicant.bio = bio
+            }
+            if (profilePicUrl) {
+                applicant.profilePicUrl = profilePicUrl
             }
 
             const updatedApplicant = await applicant.save()

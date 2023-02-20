@@ -38,6 +38,9 @@ function ProfileLogicPage() {
           <p>something went wrong</p>
         ) : (
           <div>
+            <span>
+              <img src={profile?.profilePicUrl} alt="profilepic" />
+            </span>
             <p>First name: {profile?.firstName}</p>
             <p>Last name: {profile?.lastName}</p>
             {profile?.role === "recruiter" && (
@@ -46,6 +49,8 @@ function ProfileLogicPage() {
             <p>{profile?.resume}</p>
             <p>Phone number: {profile?.phoneNumber}</p>
             <p>Bio: {profile?.bio}</p>
+            <p>Joined: {profile?.createdAt.split("T")[0]}</p>
+            <p>Last updated: {profile?.updatedAt.split("T")[0]}</p>
           </div>
         )}
       </>
