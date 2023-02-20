@@ -7,9 +7,12 @@ const initialState = {
     isLoggedIn: false,
     name: name ? name : "",
     user: {
-        name: "",
+        firstName: "",
+        lastName: "",
+        companyNamy: "",
+        resume: "",
         phoneNumber: "",
-        photo: "",
+        profilePicUrl: "",
     },
     userId: ""
 }

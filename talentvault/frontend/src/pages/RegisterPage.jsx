@@ -7,11 +7,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { registerUser, validateEmail } from "../services/authService";
 import { useNavigate } from "react-router-dom";
-import {
-  SET_LOGIN,
-  SET_USER,
-  SET_NAME,
-} from "../redux/features/auth/authSlice";
+import { SET_LOGIN, SET_NAME } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
 
 //Local state
@@ -52,12 +48,17 @@ function Register() {
   const register = async (ev) => {
     ev.preventDefault();
 
-    if (!firstName || !email || !password || !lastName) {
+    if (!firstName || !email || !password || !lastName || !confirmpassword) {
       return toast.error("All fields are required");
     }
     if (
       role === "recruiter" &&
-      (!firstName || !email || !password || !lastName)
+      (!firstName ||
+        !email ||
+        !password ||
+        !lastName ||
+        !companyName ||
+        !confirmpassword)
     ) {
       return toast.error("All fields are required");
     }
@@ -86,8 +87,8 @@ function Register() {
     setIsLoading(true);
 
     try {
-      const data = await registerUser(userData);
-      //console.log(data);
+      await registerUser(userData);
+
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(firstName));
 

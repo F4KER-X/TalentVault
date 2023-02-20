@@ -14,7 +14,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { getLoginStatus } from './services/authService'
 import { SET_LOGIN } from './redux/features/auth/authSlice'
-import Profile from "./pages/Profile";
+import ProfileLogicPage from "./pages/ProfileLogicPage";
 
 
 
@@ -45,9 +45,8 @@ function App() {
         <Route path="/applicantregister" element={<ApplicantRegisterPage />} />
         <Route path="/recruiterregister" element={<RecruiterRegisterPage />} />
         <Route path="/jobposting" element={<JobPosting />} />
+        <Route path="/profile" element={<ProfileLogicPage />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/profile" element={<Profile />} />
-
         <Route path="*" element={<Error />} />
 
       </Routes>

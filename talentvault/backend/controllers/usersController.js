@@ -4,6 +4,7 @@ const Applicant = require('../models/Applicant')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const { validPassword } = require('./userValidation')
+
 // @desc Get info of the user
 // @route GET /user
 // @access Private
@@ -17,12 +18,14 @@ const getUserInfo = asyncHandler(async (req, res) => {
         if (!recruiter) {
             return res.status(404).json({ message: 'User not found' })
         }
+        recruiter.role = role
         res.status(200).json(recruiter)
     } else {
         const applicant = await Applicant.findOne({ userId: id }).lean().exec()
         if (!applicant) {
             return res.status(404).json({ message: 'User not found' })
         } else {
+            applicant.role = role
             res.status(200).json(applicant)
         }
     }

@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectName, SET_LOGIN } from "../redux/features/auth/authSlice";
 import { logoutUser } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShowOnLogin } from "../components/protect/hiddenLinks";
 import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
@@ -24,6 +24,9 @@ export default function Test() {
         <button onClick={logout} className="--btn --btn-danger">
           Logout
         </button>
+        <Link to="/profile">
+          <button>Profile</button>
+        </Link>
       </ShowOnLogin>
       <div>Name: {firstName}</div>
     </div>
