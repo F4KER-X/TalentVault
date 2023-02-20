@@ -21,6 +21,7 @@ const initialState = {
   email: "",
   password: "",
   confirmpassword: "",
+  companyName: "",
   role: "applicant",
 };
 
@@ -31,16 +32,17 @@ function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setformData] = useState(initialState);
 
-  const { firstName, lastName, email, password, confirmpassword, role } =
-    formData;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmpassword,
+    role,
+    companyName,
+  } = formData;
 
   const handleInputChange = (ev) => {
-    if (ev.target.checked) {
-      setformData({ role: "recruiter" });
-    } else {
-      setformData({ role: "applicant" });
-    }
-
     const { name, value } = ev.target;
     setformData({
       ...formData,
@@ -51,6 +53,12 @@ function Register() {
     ev.preventDefault();
 
     if (!firstName || !email || !password || !lastName) {
+      return toast.error("All fields are required");
+    }
+    if (
+      role === "recruiter" &&
+      (!firstName || !email || !password || !lastName)
+    ) {
       return toast.error("All fields are required");
     }
 
@@ -72,6 +80,7 @@ function Register() {
       email,
       password,
       role,
+      companyName,
     };
 
     setIsLoading(true);
@@ -80,7 +89,7 @@ function Register() {
       const data = await registerUser(userData);
       //console.log(data);
       await dispatch(SET_LOGIN(true));
-      await dispatch(SET_NAME(data.firstName));
+      await dispatch(SET_NAME(firstName));
 
       navigate("/test");
       setIsLoading(false);
@@ -106,8 +115,13 @@ function Register() {
             name="role"
             className="check"
             id="role"
-            value={role}
-            onChange={handleInputChange}
+            checked={formData.role === "recruiter"}
+            onChange={() =>
+              setformData({
+                ...formData,
+                role: formData.role === "applicant" ? "recruiter" : "applicant",
+              })
+            }
           />
         </div>
 
@@ -125,6 +139,17 @@ function Register() {
           value={lastName}
           onChange={handleInputChange}
         />
+
+        {formData.role === "recruiter" && (
+          <FormRow
+            type="text"
+            labelText="Company Name"
+            name="companyName"
+            value={companyName}
+            onChange={handleInputChange}
+          />
+        )}
+
         <FormRow
           type="email"
           labelText="Email Address"

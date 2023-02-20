@@ -5,11 +5,11 @@ const protect = require("../middleware/authVerification");
 
 router.use(protect);
 
-router.route('/')
+router
+  .route("/")
   .patch(usersController.updateUserInfo)
   .delete(usersController.deleteUser)
   .get(usersController.getUserInfo);
 
-router.route('/updatePassword')
-  .post(usersController.updatePasword)
+// router.route("/updatePassword").post(usersController.updatePassword);
 module.exports = router;
