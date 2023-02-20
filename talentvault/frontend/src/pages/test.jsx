@@ -34,9 +34,9 @@ export default function Test() {
           <button>Profile</button>
         </Link>
       </ShowOnLogin>
-      <div className="container">
-        <img src={photo} alt="should be a photo"></img>
-        <p>Welcome {firstName}</p>
+      <div className="container1">
+        <img src={photo} alt="hmm.jpg" className="img1"></img>
+        <p className="p1">Welcome {firstName}</p>
       </div>
     </div>
   );
