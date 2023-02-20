@@ -11,11 +11,8 @@ router
   .delete(usersController.deleteUser)
   .get(usersController.getUserInfo);
 
-<<<<<<< HEAD
-// router.route("/updatePassword").post(usersController.updatePassword);
-=======
 router.route('/updatePassword')
   .post(usersController.updatePassword)
 
->>>>>>> be85c17a7cd117fa9d3c1424f8f12f54e4cf35ba
+
 module.exports = router;
