@@ -2,9 +2,8 @@ const User = require('../models/User')
 const Recruiter = require('../models/Recruiter')
 const Applicant = require('../models/Applicant')
 const asyncHandler = require('express-async-handler')
-const multer = require('multer')
-
-
+const bcrypt = require('bcrypt')
+const { validPassword } = require('./userValidation')
 // @desc Get info of the user
 // @route GET /user
 // @access Private
@@ -132,30 +131,45 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
 })
 
+const updatePassword = asyncHandler(async (req, res) => {
 
-const storage = multer.diskStorage({
-    destination: function (req, res, cb) {
-        cb(null, 'public/uploads')
-    },
-    filename: function (req, res, cb) {
-        cb(null, new Date().toISOString().replace(/:/g, '-') + "-" + file.originalname)
+
+    const user = await User.findById(req.user._id)
+    if (!user) {
+        return res.status(404).json("User not found")
     }
-})
-function fileFilter(req, file, cb) {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
-        cb(null, true)
+
+    const { oldPassword, newPassword } = req.body
+
+
+    if (!oldPassword || !newPassword) {
+        return res.status(400).json("Please make sure you enter the old and new password")
+    }
+    if (validPassword(newPassword)) {
+        return res.status(400).json({ message: 'Make sure the password is not less than 8 characters' })
+    }
+
+    const correctPwd = await bcrypt.compare(oldPassword, user.password)
+
+
+    const salt = await bcrypt.genSalt(10)
+    const hashedPwd = await bcrypt.hash(newPassword, salt)
+
+
+    if (user && correctPwd) {
+        user.password = hashedPwd
+        await user.save()
+        res.status(200).json({ message: 'Password updated successfully' })
     } else {
-        cb(null, false)
+        res.status(400).json({ message: 'Current password is incorrect' })
     }
 
-}
 
-const upload = multer({ storage, fileFilter })
-
-
-let fileData = {}
+})
 
 
 
-module.exports = { getUserInfo, updateUserInfo, deleteUser, upload }
+
+
+module.exports = { getUserInfo, updateUserInfo, deleteUser, updatePassword }
 
