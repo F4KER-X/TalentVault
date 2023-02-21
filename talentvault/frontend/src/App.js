@@ -18,7 +18,7 @@ import ProfileLogicPage from "./pages/ProfileLogicPage";
 
 
 
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://talentvault-api.onrender.com';
 axios.defaults.withCredentials = true;
 
 
