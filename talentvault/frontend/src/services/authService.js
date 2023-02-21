@@ -1,7 +1,7 @@
 import axios from "axios"
 import { toast } from 'react-toastify'
 
-export const BACKEND_URL = 'http://localhost:3001'
+export const BACKEND_URL = 'https://talentvault-api.onrender.com'
 
 export const validateEmail = (email) => {
     return email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
