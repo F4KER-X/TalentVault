@@ -1,20 +1,22 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
+const jobsController = require('../controllers/jobsController')
+const protect = require("../middleware/authVerification");
 
-router
-  .route("/")
+router.use(protect)
+
+router.route("/")
   //get all jobs
-  .get()
+  .get(jobsController.getAllJobs)
   //create job
-  .post();
+  .post(jobsController.createNewJob);
 
-router
-  .route("/:id")
+router.route("/:id")
   //get a job
-  .get()
+  .get(jobsController.getOneJob)
   //update a job
-  .patch()
+  .patch(jobsController.updateJob)
   //delete a job
-  .delete();
+  .delete(jobsController.deleteJob);
 
 module.exports = router;

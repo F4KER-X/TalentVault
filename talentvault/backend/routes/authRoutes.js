@@ -9,4 +9,10 @@ router.route('/signup')
 router.route('/login')
     .post(authController.loginUser)
 
+router.route('/logout')
+    .get(authController.logoutUser)
+
+router.route('/loggedinStatus')
+    .get(authController.loggedinStatus)
+
 module.exports = router

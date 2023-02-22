@@ -1,36 +1,33 @@
-//shell of a header, will need work
+import { UserContext } from "../context/UserContext";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-import {FaSignInAlt,FaSignOutAlt,FaUser} from 'react-icons/fa'
-import {Link} from 'react-router-dom'
-import '../index.css';
-import logo from'./logo.jpg';
+export default function Header() {
+  // const { user, SetUser } = useContext(UserContext);
 
-function Header() {
-  return (
-    <header className="header">
-    <div className='header-item-holder'>
-        <div className="Our-logo">
-            <Link to='/'>
-                <img src={logo} alt="TalentVault Logo"  width="110" height="40"></img>
-            </Link>
-        </div>
-        
-            <div className='login-ref'>
-                <Link to='/login'>
-                    Log in
-                </Link>
-            </div>
+  // function logout() {}
 
-
-            <div className='register-ref'>
-                <Link to='/register'>
-                    <FaUser>Register</FaUser>
-                </Link>
-            </div>
-    </div>
-
-    </header>
-  )
+  // return (
+  //   <header>
+  //     <Link to="/" className="logo">
+  //       MyBlog
+  //     </Link>
+  //     <nav>
+  //       {username && (
+  //         <>
+  //           <Link to="/create">Create new post</Link>
+  //           <a onClick={logout}>Logout ({username})</a>
+  //         </>
+  //       )}
+  //       {!username && (
+  //         <>
+  //           <Link to="/login">Login</Link>
+  //           <Link to="/register">Register</Link>
+  //         </>
+  //       )}
+  //     </nav>
+  //   </header>
+  // );
+  return <></>;
 }
-
-export default Header

@@ -1,29 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const usersController = require('../controllers/usersController')
-const protect = require('../middleware/authVerification')
+const express = require("express");
+const router = express.Router();
+const usersController = require("../controllers/usersController");
+const protect = require("../middleware/authVerification");
 
-router.use(protect)
-router.route('/')
-    //get all users
-    //.get(usersController.getAllUsers)
-    .patch(usersController.updateUserInfo)
-    .delete(usersController.deleteUser)
-    .get(usersController.getUserInfo)
+router.use(protect);
 
-//create new user
-//     .post()
+router
+  .route("/")
+  .patch(usersController.updateUserInfo)
+  .delete(usersController.deleteUser)
+  .get(usersController.getUserInfo);
 
-
-// router.route('/:id')
-//     //get specific user
-//     .get()
-//     //update user
-//     .patch()
-//     //delete user
-//     .delete()
+router.route('/updatePassword')
+  .post(usersController.updatePassword)
 
 
-
-
-module.exports = router
+module.exports = router;
