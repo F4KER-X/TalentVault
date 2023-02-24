@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectName,
   selectPhoto,
+  selectRole,
   SET_LOGIN,
 } from "../redux/features/auth/authSlice";
 import { logoutUser } from "../services/authService";
@@ -17,6 +18,9 @@ export default function Test() {
   const navigate = useNavigate();
   const firstName = useSelector(selectName);
   const photo = useSelector(selectPhoto);
+  const role = useSelector(selectRole);
+
+  console.log(role);
 
   const logout = async () => {
     await logoutUser();
@@ -37,6 +41,11 @@ export default function Test() {
       <div className="container1">
         <img src={photo} alt="hmm.jpg" className="img1"></img>
         <p className="p1">Welcome {firstName}</p>
+        {role === "recruiter" ? (
+          <p>This is a recruiter</p>
+        ) : (
+          <p>this is an applicant</p>
+        )}
       </div>
     </div>
   );

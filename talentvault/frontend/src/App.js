@@ -11,9 +11,9 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Test from './pages/test'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { getLoginStatus } from './services/authService'
-import { SET_LOGIN } from './redux/features/auth/authSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { getLoginStatus, getUserRole } from './services/authService'
+import { selectIsLoggedIn, SET_LOGIN, SET_ROLE } from './redux/features/auth/authSlice'
 import ProfileLogicPage from "./pages/ProfileLogicPage";
 
 
@@ -33,6 +33,19 @@ function App() {
     }
     loginStatus()
   }, [dispatch])
+
+  //get user role
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+
+  useEffect(() => {
+    async function userRole() {
+      const status = await getUserRole()
+      dispatch(SET_ROLE(status))
+    }
+    if (isLoggedIn)
+      userRole()
+  }, [dispatch, isLoggedIn])
+
 
   return (
 

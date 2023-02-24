@@ -4,6 +4,7 @@ const name = JSON.parse(localStorage.getItem("name"))
 const photo = JSON.parse(localStorage.getItem("photo"))
 
 
+
 const initialState = {
 
     isLoggedIn: false,
@@ -16,7 +17,8 @@ const initialState = {
         phoneNumber: "",
         profilePicUrl: "",
     },
-    photo: photo ? photo : ""
+    photo: photo ? photo : "",
+    role: ""
 }
 const authSlide = createSlice({
     name: 'auth',
@@ -39,17 +41,22 @@ const authSlide = createSlice({
         SET_PHOTO(state, action) {
             localStorage.setItem('photo', JSON.stringify(action.payload))
             state.photo = action.payload
+        },
+        SET_ROLE(state, action) {
+            state.role = action.payload
+
         }
     }
 })
 
-export const { SET_LOGIN, SET_NAME, SET_USER, SET_PHOTO } = authSlide.actions
+export const { SET_LOGIN, SET_NAME, SET_USER, SET_PHOTO, SET_ROLE } = authSlide.actions
 
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn
 export const selectName = (state) => state.auth.name
 export const selectUser = (state) => state.auth.user
 export const selectPhoto = (state) => state.auth.photo
+export const selectRole = (state) => state.auth.role
 
 
 export default authSlide.reducer

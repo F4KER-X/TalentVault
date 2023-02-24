@@ -13,6 +13,7 @@ import {
   SET_PHOTO,
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
+import UserRedirectLoggedInUser from "../hook/userRedirectLoggedInUser";
 
 const initialState = {
   email: "",
@@ -20,6 +21,7 @@ const initialState = {
 };
 
 export default function Login() {
+  UserRedirectLoggedInUser("/test");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

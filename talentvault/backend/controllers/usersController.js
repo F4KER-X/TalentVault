@@ -4,6 +4,7 @@ const Applicant = require('../models/Applicant')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const { validPassword } = require('./userValidation')
+const { off } = require('../models/User')
 
 // @desc Get info of the user
 // @route GET /user
@@ -176,9 +177,21 @@ const updatePassword = asyncHandler(async (req, res) => {
 
 })
 
+const getUserRole = asyncHandler(async (req, res) => {
+    const id = req.user._id
+    const user = await User.findById(id).lean().exec()
+
+    if (user) {
+        return res.status(200).json(user.role)
+    } else {
+        return res.status(400).json({ message: 'User not found' })
+    }
+
+})
 
 
 
 
-module.exports = { getUserInfo, updateUserInfo, deleteUser, updatePassword }
+
+module.exports = { getUserInfo, updateUserInfo, deleteUser, updatePassword, getUserRole }
 

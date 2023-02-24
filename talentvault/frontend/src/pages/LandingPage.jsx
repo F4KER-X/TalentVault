@@ -2,7 +2,9 @@ import main from "../assets/images/main.svg";
 import Logo from "../components/Logo";
 import Wrapper from "../assets/styling/LandingPage";
 import { Link } from "react-router-dom";
+import UserRedirectLoggedInUser from "../hook/userRedirectLoggedInUser";
 const Landing = () => {
+  UserRedirectLoggedInUser("/test");
   return (
     <Wrapper>
       <nav>
