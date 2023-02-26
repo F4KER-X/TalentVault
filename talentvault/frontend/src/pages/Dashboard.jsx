@@ -1,12 +1,19 @@
 //this is a skeleton of a react component. you will add detail and make changes inside the return
 
-
+import Navbar from "../components/Navbar";
+import Jobs from "../components/Jobs";
+import Sidebar from "../components/SideBar";
 function Dashboard() {
   return (
-    <div>
-      Dashboard page
-    </div>
-  )
+    <>
+      <div>
+        <Navbar />
+        <Sidebar />
+      </div>
+
+      <div></div>
+    </>
+  );
 }
 
-export default Dashboard
+export default Dashboard;
