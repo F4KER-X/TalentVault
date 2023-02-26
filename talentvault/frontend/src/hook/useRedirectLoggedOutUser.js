@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SET_LOGIN } from "../redux/features/auth/authSlice";
-import { getLoginStatus } from "../services/authService";
+import { getLoginStatus } from '../redux/features/auth/authService'
 
-const UserRedirectLoggedOutUser = (path) => {
+const UseRedirectLoggedOutUser = (path) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -27,4 +27,4 @@ const UserRedirectLoggedOutUser = (path) => {
 
 }
 
-export default UserRedirectLoggedOutUser
+export default UseRedirectLoggedOutUser

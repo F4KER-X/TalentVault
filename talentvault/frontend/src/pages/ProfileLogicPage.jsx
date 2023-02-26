@@ -9,7 +9,7 @@ import {
   SET_NAME,
   SET_USER,
 } from "../redux/features/auth/authSlice";
-import { getUserProfile } from "../services/authService";
+import { getUserProfile } from "../redux/features/auth/authService";
 
 function ProfileLogicPage() {
   UserRedirectLoggedOutUser("/login");

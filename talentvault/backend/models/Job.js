@@ -34,6 +34,7 @@ const jobSchema = mongoose.Schema({
   jobRequirements: {
     //requirements like "must have degree in finance"
     type: String,
+    required: true
   },
   jobLocation: {
     province: { type: String, required: true },

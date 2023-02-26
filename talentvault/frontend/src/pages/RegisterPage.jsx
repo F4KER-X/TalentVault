@@ -5,7 +5,10 @@ import FormRow from "../components/FormRow";
 import "../index.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { registerUser, validateEmail } from "../services/authService";
+import {
+  registerUser,
+  validateEmail,
+} from "../redux/features/auth/authService";
 import { useNavigate } from "react-router-dom";
 import {
   SET_LOGIN,
@@ -13,7 +16,7 @@ import {
   SET_PHOTO,
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
-import UserRedirectLoggedInUser from "../hook/userRedirectLoggedInUser";
+import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 
 //Local state
 const initialState = {
@@ -27,7 +30,7 @@ const initialState = {
 };
 
 function Register() {
-  UserRedirectLoggedInUser("/test");
+  UseRedirectLoggedInUser("/test");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
