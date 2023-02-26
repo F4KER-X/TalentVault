@@ -6,7 +6,7 @@ const asyncHandler = require('express-async-handler')
 // @access Private
 const getAllJobs = asyncHandler(async (req, res) => {
   const jobsData = await Jobs.find().lean().exec();
-  if (!postings) {
+  if (!jobsData) {
     return res.status(404).json({ message: "No jobs found" });
   }
   res.status(200).json(jobsData)
@@ -28,6 +28,19 @@ const createNewJob = asyncHandler(async (req, res) => {
     jobRequirements,
     jobLocation,
   } = req.body
+
+  if (!recruiterId || !jobTitle || !companyName || !maxSalary || !minSalary || !jobDescription || !jobType || !jobRequirements || !jobLocation) {
+    return res.status(400).json({ message: 'Please make sure all fields are filled out' })
+  }
+
+  if (minSalary < 0 || maxSalary < 0) {
+    return res.status(400).json({ message: 'Salaries can not be negative' })
+  }
+
+  if (minSalary >= maxSalary) {
+    return res.status(400).json({ message: 'Make sure Max and Min salaries are correct' })
+  }
+
 
   const jobObject = {
     recruiterId,

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import RecruiterRegisterPage from "./pages/RecruiterRegisterPage";
@@ -12,9 +12,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import Test from './pages/test'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginStatus, getUserRole } from './services/authService'
-import { selectIsLoggedIn, SET_LOGIN, SET_ROLE } from './redux/features/auth/authSlice'
+import { getLoginStatus, getUserRole } from './redux/features/auth/authService'
+import { selectIsLoggedIn, SET_COMPANY, SET_ID, SET_LOGIN, SET_ROLE } from './redux/features/auth/authSlice'
 import ProfileLogicPage from "./pages/ProfileLogicPage";
+import CreateJob from "./pages/createJob";
 
 
 
@@ -40,7 +41,9 @@ function App() {
   useEffect(() => {
     async function userRole() {
       const status = await getUserRole()
-      dispatch(SET_ROLE(status))
+      dispatch(SET_ROLE(status.role))
+      dispatch(SET_ID(status.id))
+      dispatch(SET_COMPANY(status.companyName))
     }
     if (isLoggedIn)
       userRole()
@@ -60,6 +63,7 @@ function App() {
         <Route path="/jobposting" element={<JobPosting />} />
         <Route path="/profile" element={<ProfileLogicPage />} />
         <Route path="/test" element={<Test />} />
+        <Route path="/create-job" element={<CreateJob />} />
         <Route path="*" element={<Error />} />
 
       </Routes>
