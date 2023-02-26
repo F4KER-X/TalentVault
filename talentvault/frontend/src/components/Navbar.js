@@ -7,7 +7,7 @@ import {
   selectRole,
   SET_LOGIN,
 } from "../redux/features/auth/authSlice";
-import { logoutUser } from "../services/authService";
+import { logoutUser } from "../redux/features/auth/authService";
 import { Link, useNavigate } from "react-router-dom";
 import user from "../assets/images/user.png";
 import edit from "../assets/images/edit.png";

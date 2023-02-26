@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import RecruiterRegisterPage from "./pages/RecruiterRegisterPage";
@@ -15,11 +15,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLoginStatus, getUserRole } from "./redux/features/auth/authService";
 import {
   selectIsLoggedIn,
+  SET_COMPANY,
+  SET_ID,
   SET_LOGIN,
   SET_ROLE,
 } from "./redux/features/auth/authSlice";
 import ProfileLogicPage from "./pages/ProfileLogicPage";
 import CreateJob from "./pages/createJob";
+import Dashboard from "./pages/Dashboard";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
