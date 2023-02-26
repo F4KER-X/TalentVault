@@ -8,7 +8,14 @@
   background-color: white;
 }
 /*=====================================HEADER CSS==================================== */
-
+:root {
+  --primary-bg: #242526;
+  --secondary-bg: #fff;
+  --primary-text-color: #555;
+  --secondary-text-color: #cecece;
+  --border-radius: 8px;
+  --speed: 500ms;
+}
 .header {
   width: 100%;
   height: 10%px;
@@ -16,7 +23,9 @@
 .header-item-holder {
   display: inline-block;
 }
-
+.logo {
+  cursor: pointer;
+}
 .login-ref {
   font-family: Roboto;
   color: black;
@@ -491,27 +500,4 @@ ul {
 }
 .full-page {
   min-height: 100vh;
-}
-
-.coffee-info {
-  text-align: center;
-  text-transform: capitalize;
-  margin-bottom: 1rem;
-  letter-spacing: var(--letterSpacing);
-}
-.coffee-info span {
-  display: block;
-}
-.coffee-info a {
-  color: var(--primary-500);
-}
-
-@media screen and (min-width: 992px) {
-  .coffee-info {
-    text-align: left;
-  }
-  .coffee-info span {
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
 }

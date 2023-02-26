@@ -6,13 +6,14 @@ import Wrapper from "../assets/styling/RegisterPage";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginUser, validateEmail } from "../services/authService";
+import { loginUser, validateEmail } from "../redux/features/auth/authService";
 import {
   SET_LOGIN,
   SET_NAME,
   SET_PHOTO,
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
+import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 
 const initialState = {
   email: "",
@@ -20,6 +21,7 @@ const initialState = {
 };
 
 export default function Login() {
+  UseRedirectLoggedInUser("/test");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

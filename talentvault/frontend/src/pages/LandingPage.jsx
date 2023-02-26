@@ -2,7 +2,9 @@ import main from "../assets/images/main.svg";
 import Logo from "../components/Logo";
 import Wrapper from "../assets/styling/LandingPage";
 import { Link } from "react-router-dom";
+import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 const Landing = () => {
+  UseRedirectLoggedInUser("/test");
   return (
     <Wrapper>
       <nav>
@@ -22,10 +24,10 @@ const Landing = () => {
           </p>
           <div className="btns-main">
             <Link to="/register" className="btn1 btn-hero">
-              Login/Register
+            Register
             </Link>
-            <Link to="/jobposting" className="btn1 btn-hero">
-              Post a job
+            <Link to="/Login" className="btn1 btn-hero">
+            Login
             </Link>
           </div>
           {/* <button className="btn btn-hero">Login/Register</button> */}

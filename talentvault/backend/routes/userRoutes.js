@@ -14,5 +14,8 @@ router
 router.route('/updatePassword')
   .post(usersController.updatePassword)
 
+router.route('/role')
+  .get(usersController.getUserRole)
+
 
 module.exports = router;

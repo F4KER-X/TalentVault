@@ -65,7 +65,7 @@ const registerUser = asyncHandler(async (req, res) => {
             })
 
             if (recruiter) {
-                const { userId, companyName, firstName, lastName } = recruiter
+                const { firstName, lastName, profilePicUrl } = recruiter
                 // Send HTTP-only cookie
                 res.cookie("token", token, {
                     path: "/",
@@ -76,11 +76,9 @@ const registerUser = asyncHandler(async (req, res) => {
                 });
                 res.status(200).json({
                     message: "Recruiter was created successfully!",
-                    userId,
-                    role,
-                    companyName,
                     firstName,
                     lastName,
+                    profilePicUrl,
                     token
                 })
             }
@@ -94,7 +92,7 @@ const registerUser = asyncHandler(async (req, res) => {
                 userId: user._id, firstName, lastName
             })
             if (applicant) {
-                const { userId, firstName, lastName } = applicant
+                const { firstName, lastName, profilePicUrl } = applicant
                 // Send HTTP-only cookie
                 res.cookie("token", token, {
                     path: "/",
@@ -105,10 +103,9 @@ const registerUser = asyncHandler(async (req, res) => {
                 });
                 res.status(200).json({
                     message: "Applicant was created successfully!",
-                    userId,
-                    role,
                     firstName,
                     lastName,
+                    profilePicUrl,
                     token
                 })
             }
@@ -152,8 +149,7 @@ const loginUser = asyncHandler(async (req, res) => {
         userProfile = await Applicant.findOne({ userId: user._id }).lean().exec()
     }
 
-    const { userId, firstName, lastName, companyName, phoneNumber, profilePicUrl, resume } = userProfile
-    const { role } = user
+    const { firstName, lastName, profilePicUrl } = userProfile
 
     if (user && correctPwd) {
         res.cookie("token", token, {
@@ -164,7 +160,7 @@ const loginUser = asyncHandler(async (req, res) => {
             secure: true,
         })
         res.status(200).json({
-            message: 'Login succussfull', userId, role, firstName, lastName, companyName, phoneNumber, profilePicUrl, resume, token
+            message: 'Login succussfull', firstName, lastName, profilePicUrl, token
         })
     } else {
         res.status(400).json({ message: 'Invalid email or password' })

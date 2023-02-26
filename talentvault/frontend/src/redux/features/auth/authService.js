@@ -16,6 +16,7 @@ export const registerUser = async (userData) => {
         toast.success("Registered successfully")
         return response.data
 
+
     } catch (err) {
         const message = (
             err.response && err.response.data && err.response.data.message
@@ -67,6 +68,22 @@ export const getLoginStatus = async () => {
 
     try {
         const response = await axios.get(`${BACKEND_URL}/auth/loggedinStatus`)
+        return response.data
+
+    } catch (err) {
+        const message = (
+            err.response && err.response.data && err.response.data.message
+        ) || err.message || err.toString()
+        toast.error(message)
+        throw err
+    }
+}
+
+//get user role
+export const getUserRole = async () => {
+
+    try {
+        const response = await axios.get('/user/role')
         return response.data
 
     } catch (err) {

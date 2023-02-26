@@ -5,10 +5,18 @@ import FormRow from "../components/FormRow";
 import "../index.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { registerUser, validateEmail } from "../services/authService";
+import {
+  registerUser,
+  validateEmail,
+} from "../redux/features/auth/authService";
 import { useNavigate } from "react-router-dom";
-import { SET_LOGIN, SET_NAME } from "../redux/features/auth/authSlice";
+import {
+  SET_LOGIN,
+  SET_NAME,
+  SET_PHOTO,
+} from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
+import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 
 //Local state
 const initialState = {
@@ -22,6 +30,7 @@ const initialState = {
 };
 
 function Register() {
+  UseRedirectLoggedInUser("/test");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -87,10 +96,11 @@ function Register() {
     setIsLoading(true);
 
     try {
-      await registerUser(userData);
+      const user = await registerUser(userData);
 
       await dispatch(SET_LOGIN(true));
-      await dispatch(SET_NAME(firstName));
+      await dispatch(SET_NAME(user.firstName));
+      await dispatch(SET_PHOTO(user.profilePicUrl));
 
       navigate("/test");
       setIsLoading(false);
@@ -107,7 +117,7 @@ function Register() {
         <h3>Sign up</h3>
 
         <div className="form-row checkbox">
-          <label htmlFor="name" className="form-label ">
+          <label htmlFor="role" className="form-label ">
             I'm a recruiter
           </label>
           <input
@@ -128,7 +138,7 @@ function Register() {
 
         <FormRow
           type="text"
-          labelText="first Name"
+          labelText="First Name"
           name="firstName"
           value={firstName}
           onChange={handleInputChange}
