@@ -23,11 +23,11 @@ const Landing = () => {
             job listings, review applications, view resumes, and more.
           </p>
           <div className="btns-main">
-            <Link to="/register" className="btn1 btn-hero">
-            Register
+            <Link to="/login" className="btn1 btn-hero">
+              Login
             </Link>
-            <Link to="/Login" className="btn1 btn-hero">
-            Login
+            <Link to="/register" className="btn1 btn-hero">
+              Register
             </Link>
           </div>
           {/* <button className="btn btn-hero">Login/Register</button> */}

@@ -21,6 +21,7 @@ import {
   SET_ROLE,
 } from "./redux/features/auth/authSlice";
 import ProfileLogicPage from "./pages/ProfileLogicPage";
+import FullJobDetails from "./pages/FullJobDetails";
 import CreateJob from "./pages/createJob";
 import Dashboard from "./pages/Dashboard";
 
@@ -63,6 +64,7 @@ function App() {
         <Route path="/recruiterregister" element={<RecruiterRegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobposting" element={<JobPosting />} />
+        <Route path="/fulljobdetails" element={<FullJobDetails/>} />
         <Route path="/profile" element={<ProfileLogicPage />} />
         <Route path="/test" element={<Test />} />
         <Route path="/create-job" element={<CreateJob />} />

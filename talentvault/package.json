@@ -1,6 +1,9 @@
 {
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "bootstrap": "^5.2.3",
+    "font-awesome": "^4.7.0",
     "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
@@ -9,7 +12,6 @@
   "scripts": {
     "server": "npm run start --prefix backend --ignore frontend",
     "frontend": "npm start --prefix frontend",
-    //"start": "concurrently --kill-others-on-fail \" nodemon server\" \"npm run frontend\""
-    "start" : "npm backend/server.js"
+    "start": "concurrently --kill-others-on-fail \" nodemon server\" \"npm run frontend\""
   }
 }

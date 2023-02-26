@@ -155,8 +155,18 @@ label {
 }
 .btn {
   background-color: #4540db;
-
+ 
   color: white;
+  width: 1ref;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+}
+
+.btnReverse{
+  background-color: var(--grey-50);
+
+  color: #4540db;
   width: 1ref;
   border-radius: 10px;
   padding: 10px;
@@ -176,6 +186,7 @@ label {
   text-decoration: none;
 }
 
+
 /*=======================================JOB POSTING PAGE========================== */
 option {
   font-family: Roboto;
@@ -185,6 +196,9 @@ textarea {
   width: 100%;
   min-height: 200px;
   font-family: Roboto;
+  border-radius: var(--borderRadius);
+    background: #e2ebf4;
+    border: 1px solid var(--grey-200);
 }
 
 textarea:focus {
@@ -194,6 +208,27 @@ textarea:focus {
 .form-control-text-area {
   resize: none;
 }
+
+#remotejobcheckbox{
+  padding-bottom:10px;
+}
+
+#custom-select{
+padding-bottom:15px;
+}
+
+#custom-select select{
+  border-radius: var(--borderRadius);
+  background: #e2ebf4;
+  border: 1px solid var(--grey-200);
+  height:25px;
+  text-align:center;
+  font-family: Roboto;
+  width:100%;
+  
+}
+
+
 /*=======================================General CSS resource========================== */
 /* fonts */
 

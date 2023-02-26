@@ -5,13 +5,15 @@ import FormRow from "../components/FormRow";
 
 function JobPosting() {
   const [formData, setFormData] = useState({
-    jobtitle: "",
+    jobTitle: "",
+    companyName:"",
     remotejob: "",
     employmenttype: "",
-    jobloc: "",
+    province: "",
+    city: "",
   });
 
-  const { jobtitle, remotejob, employmenttype, jobloc } = formData;
+  const { jobTitle, companyName,remotejob, employmenttype, province,city } = formData;
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -29,53 +31,106 @@ function JobPosting() {
       <form className="form" onSubmit={{ onSubmit }}>
         <h3 className="form-title">Your Job Posting</h3>
 
-        <div className="form-group">
-          <label>Job Title</label>
-          <input
+       
+          <FormRow
             type="text"
+            labelText="Job Title"
             className="form-control"
-            placeholder="Enter job title"
-            name="jobtitle"
-            id="jobtitle"
-            value={jobtitle}
+            name="jobTitle"
+            value={jobTitle}
             onChange={onChange}
           />
-        </div>
-
-        <div className="form-group">
-          <label>Job Location</label>
-          <input
+          <FormRow
             type="text"
+            labelText="Company Name"
             className="form-control"
-            placeholder="Enter job title"
-            name="jobloc"
-            id="jobloc"
-            value={jobloc}
+            name="companyName"
+            value={companyName}
             onChange={onChange}
           />
+
+       
+
+            <FormRow
+            type="text"
+            labelText="City"
+            className="form-control"
+            name="city"
+            value={city}
+            onChange={onChange}
+          />
+
+     
+      <div className="form-group" id="custom-select">
+          <label>Province</label>
+          <select
+            name="province"
+            className="form-control"
+            value={province}
+            onChange={onChange}
+            aria-required="true"
+          >
+            <option className="dropdown_options" value="alberta">
+              AB
+            </option>
+            <option className="dropdown_options" value="british_columbia">
+             BC
+            </option>
+            <option className="dropdown_options" value="prince_edward_island">
+             PE
+            </option>
+            <option className="dropdown_options" value="manitoba">
+              MB
+            </option>
+            <option className="dropdown_options" value="new_brunswick">
+              NB
+            </option>
+            <option className="dropdown_options" value="newfoundland_labrador">
+              NL
+            </option>
+            <option className="dropdown_options" value="northwest_territories">
+              NW
+            </option>
+            <option className="dropdown_options" value="nova_scotia">
+              NS
+            </option>
+            <option className="dropdown_options" value="nunavut">
+              NU
+            </option>
+            <option className="dropdown_options" value="ontario">
+              ON
+            </option>
+            <option className="dropdown_options" value="saskatchewan">
+              SK
+            </option>
+            <option className="dropdown_options" value="quebec">
+              QC
+            </option>
+            <option className="dropdown_options" value="yukon">
+              YT
+            </option>
+          </select>
         </div>
 
-        <div className="form-group">
+        <div className="form-group" id="remotejobcheckbox">
           <label id="checkboxlabel">
-            This role can be performed as a "remote work from home" job
+            This role can be performed remotely
           </label>
           <input
             type="checkbox"
             className="form-control-checkbox"
             name="remotejob"
-            id="remotejob"
             value={remotejob}
             onChange={onChange}
             unchecked
           />
         </div>
 
-        <div className="form-group">
-          <label>Employment Type:</label>
+        <div className="form-group" id="custom-select">
+          <label>Employment Type</label>
           <select
             name="employment_type"
             className="form-control"
-            id="employmenttype"
             value={employmenttype}
             onChange={onChange}
             aria-required="true"
@@ -104,16 +159,15 @@ function JobPosting() {
             type="textarea"
             className="form-control-text-area"
             name="jobdescription"
-            id="jobdescription"
             placeholder="Please paste your job description here"
           />
         </div>
 
-        <div className="btndiv">
-          <button type="submit" className="btn">
+  
+          <button type="submit" className="btn btn-block">
             Save and Continue
           </button>
-        </div>
+       
       </form>
     </Wrapper>
   );
