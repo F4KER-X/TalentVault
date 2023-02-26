@@ -5,7 +5,7 @@ const Logo_no_text = () => {
     <img
       src={logo}
       onClick={() => {
-        window.location.href = "/login";
+        window.location.href = "/";
       }}
       alt="TalentVault"
       className="logo"
