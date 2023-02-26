@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Test from "./pages/test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginStatus, getUserRole } from "./services/authService";
+import { getLoginStatus, getUserRole } from "./redux/features/auth/authService";
 import {
   selectIsLoggedIn,
   SET_LOGIN,
