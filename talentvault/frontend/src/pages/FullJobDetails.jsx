@@ -1,6 +1,7 @@
 import "../index.css";
 import Wrapper from "../assets/styling/RegisterPage";
-import {FaBriefcase,FaBuilding,FaRegBuilding, FaExternalLinkAlt} from 'react-icons/fa';
+import {FaBriefcase,FaRegBuilding, FaExternalLinkAlt} from 'react-icons/fa';
+import Logo from "../components/Logo";
 
 function FullJobDetails() {
 
@@ -9,6 +10,7 @@ function FullJobDetails() {
     <>
     <Wrapper className="full-page">
     <div className="form">
+    <Logo />
     <h3 className="form-title">Insert Job Title Here</h3>
     <h5 className="form-title">Insert company * City, Province </h5>
 
