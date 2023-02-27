@@ -8,7 +8,10 @@ function Dashboard() {
     <>
       <div>
         <Navbar />
-        <Sidebar />
+        <div className="dashb">
+          <Jobs />
+          <Jobs />
+        </div>
       </div>
 
       <div></div>

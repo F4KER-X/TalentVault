@@ -68,7 +68,7 @@ const Navbar = () => {
           </div>
           <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
             <h3>
-              {firstName} <br />
+              Hello {firstName}! <br />
               <span>{role}</span>
             </h3>
             <u1>
