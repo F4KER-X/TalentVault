@@ -5,10 +5,10 @@ import {FaBriefcase,FaRegBuilding, FaMapMarkerAlt } from 'react-icons/fa';
 function About() {
   return (
     <>
-   
-	  <div>
+	
+	<div>
 		  <div className='top-container'>
-      <Logo />
+      		  <Logo />
 			  <h2>Explore Our Jobs!</h2>
 		</div>
 	</div>
@@ -16,7 +16,7 @@ function About() {
 
 
 
-<div className="container">
+<div className="container" >
 	
 	<div>
 		
@@ -24,48 +24,52 @@ function About() {
 			<li>
 				<div className="job-list-content">
 					<h4 className='jobTitle'>Job Title Here</h4>
-          <h5 className='companyName'>Company Name Here</h5>
+          			<h5 className='companyName'>Company Name Here</h5>
           
-          <div className='city-province'>
+          			<div className='city-province'>
 						<span> <FaMapMarkerAlt/> City</span>
 						<span> Province</span>
-				  </div>
+				 	 </div>
 
-          <div className='type-remote'> 
-          <span> <FaBriefcase/> Full-Time</span> </div>
-          <span> <FaRegBuilding/> Remote</span>
+          			<div className='type-remote'> 
+          				<span> <FaBriefcase/> Full-Time</span>
 					</div>
-			</li>
-      <li>
-				<div className="job-list-content">
-					<h4 className='jobTitle'>Job Title Here</h4>
-          <h5 className='companyName'>Company Name Here</h5>
-          
-          <div className='city-province'>
-						<span> <FaMapMarkerAlt/> City</span>
-						<span> Province</span>
-				  </div>
-
-          <div className='type-remote'> 
-          <span> <FaBriefcase/> Full-Time</span> </div>
-          <span> <FaRegBuilding/> Remote</span>
-					</div>
+          			<span> <FaRegBuilding/> Remote</span>
+				</div>
 			</li>
 
-      <li>
+      		<li>
 				<div className="job-list-content">
 					<h4 className='jobTitle'>Job Title Here</h4>
-          <h5 className='companyName'>Company Name Here</h5>
+          			<h5 className='companyName'>Company Name Here</h5>
           
-          <div className='city-province'>
+          			<div className='city-province'>
 						<span> <FaMapMarkerAlt/> City</span>
 						<span> Province</span>
-				  </div>
+				  	</div>
 
-          <div className='type-remote'> 
-          <span> <FaBriefcase/> Full-Time</span> </div>
-          <span> <FaRegBuilding/> Remote</span>
+          			<div className='type-remote'> 
+          				<span> <FaBriefcase/> Full-Time</span>
 					</div>
+          			<span> <FaRegBuilding/> Remote</span>
+				</div>
+			</li>
+
+     		 <li>
+				<div className="job-list-content">
+					<h4 className='jobTitle'>Job Title Here</h4>
+         				 <h5 className='companyName'>Company Name Here</h5>
+          
+          			<div className='city-province'>
+						<span> <FaMapMarkerAlt/> City</span>
+						<span> Province</span>
+				  	</div>
+
+         			 <div className='type-remote'> 
+          				<span> <FaBriefcase/> Full-Time</span>
+					 </div>
+          				<span> <FaRegBuilding/> Remote</span>
+				</div>
 			</li>
 
 
@@ -125,14 +129,9 @@ function About() {
 				</ul>
 			</nav>
 		</div>
-
 	</div>
-
-
-
 </div>
-    
-    </>
+ </>
   )
 }
 
