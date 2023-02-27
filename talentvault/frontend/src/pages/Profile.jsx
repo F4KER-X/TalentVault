@@ -1,14 +1,52 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "../assets/styling/RegisterPage";
 import FormRow from "../components/FormRow";
+
+import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { SpinnerImg } from "../components/Loader";
+import { ShowOnLogin } from "../components/protect/hiddenLinks";
+import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
+import {
+  SET_LOGIN,
+  SET_NAME,
+  SET_USER,
+} from "../redux/features/auth/authSlice";
+import { getUserProfile } from "../redux/features/auth/authService";
+
+
+
 function Profile() {
+
+    UserRedirectLoggedOutUser("/login");
+    const dispatch = useDispatch();
+  
+    const [profile, setProfile] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+  
+    useEffect(() => {
+      setIsLoading(true);
+      async function getUserData() {
+        const data = await getUserProfile();
+        setProfile(data);
+        setIsLoading(false);
+        dispatch(SET_USER(data));
+        dispatch(SET_NAME(data.firstName + " " + data.lastName));
+      }
+      getUserData();
+    }, [dispatch]);
+  
+
+
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
-    phonenumber: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    profilePicUrl: "",
+    resume: ""
   });
 
-  const { firstname, lastname, phonenumber } = formData;
+  const { firstName, lastName, phoneNumber } = formData;
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -30,70 +68,64 @@ function Profile() {
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={{ onSubmit }}>
-        <h3 className="form-title">Edit Profile</h3>
+        <h3 className="form-title">Profile</h3>
 
-        
+        <p>First name: {profile?.firstName}</p>
+
           <FormRow
-            type="firstname"
+            type="firstName"
             labelText="First name"
             className="form-control"
             placeholder="Jane"
-            name="firstname"
-            value={firstname}
+            name="firstName"
+            value={firstName}
             onChange={onChange}
           />
        
 
           <FormRow
-            type="lastname"
+            type="lastName"
             labelText="Last name"
             className="form-control"
             placeholder="Doe"
-            name="lastname"
-            value={lastname}
+            name="lastName"
+            value={lastName}
             onChange={onChange}
           />
        
 
         
           <FormRow
-            type="phonenumber"
+            type="phoneNumber"
             labelText="Phone number"
             className="form-control"
-            name="phonenumber"
-            value={phonenumber}
+            name="phoneNumber"
+            value={phoneNumber}
             onChange={onChange}
           />
         
 
-        <div className="file-group">
-          <label>Add Profile Picture</label>
-          <input
+          <FormRow
             type="file"
             labelText="Add Profile Pic"
             className="file-control"
-            name="picture"
-            id="picture"
-            onChange={handleChange}
+            name="profilePicUrl"
+            id="profilePicUrl"
+            onChange={onChange}
           />
-          {/* <img src={file} />   */}
-        </div>
+        
 
-        <div className="file-group">
-          <label>Add Resume</label>
-          <input
+          <FormRow
             type="file"
             className="file-control"
             name="resume"
             id="resume"
-            onChange={handleChange}
+            onChange={onChange}
           />
-          {/* <img src={file} />  */}
-        </div>
 
        
           <button type="submit" className="btn btn-block" >
-            Submit
+            Edit Profile
           </button>
        
       </form>
