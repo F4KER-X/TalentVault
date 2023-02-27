@@ -24,6 +24,7 @@ import ProfileLogicPage from "./pages/ProfileLogicPage";
 import FullJobDetails from "./pages/FullJobDetails";
 import CreateJob from "./pages/createJob";
 import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -69,6 +70,7 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/create-job" element={<CreateJob />} />
         <Route path="*" element={<Error />} />
+        <Route path="/about" element={<About/>} />
       </Routes>
     </BrowserRouter>
   );
