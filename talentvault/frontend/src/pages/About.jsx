@@ -23,6 +23,9 @@ function About() {
             <li>
               <Jobs />
             </li>
+			<l1>
+				<Jobs/>
+			</l1>
           </ul>
 
           <div className="pagination-container">

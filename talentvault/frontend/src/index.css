@@ -551,50 +551,7 @@ ul {
   font-family: Roboto;
   font-weight: bolder;
 }
-.jobTitle {
-  font-style: Roboto;
-  font-weight: bolder;
 
-  margin-bottom: 10px;
-}
-
-.companyName {
-  color: #4540db;
-  margin-bottom: 20px;
-}
-
-.city-province {
-  padding-bottom: 5px;
-}
-
-.type-remote {
-  padding-bottom: 5px;
-}
-
-.job-list li {
-  background-color: #fff;
-  border-top: 1px solid #e0e0e0;
-  position: relative;
-  z-index: 99;
-}
-
-/* every second job will have a darker bg*/
-.job-list li:nth-child(2n) {
-  background-color: rgba(69, 64, 219, 0.05);
-}
-
-.job-list li:hover {
-  background-color: rgba(69, 64, 219, 0.05);
-  border-color: rgba(69, 64, 219, 1);
-  z-index: 1011;
-}
-
-.job-list .job-list-content {
-  display: block;
-  margin-left: 50px;
-  position: relative;
-  padding: 25px 0;
-}
 
 /* ---------------------------------- */
 /* Pagination
