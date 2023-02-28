@@ -11,6 +11,7 @@ import {
   SET_LOGIN,
   SET_NAME,
   SET_PHOTO,
+  SET_ROLE,
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
@@ -21,7 +22,7 @@ const initialState = {
 };
 
 export default function Login() {
-  UseRedirectLoggedInUser("/test");
+  UseRedirectLoggedInUser("/dashboard");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -59,8 +60,9 @@ export default function Login() {
       const data = await loginUser(userData);
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(data.firstName));
-      await dispatch(SET_PHOTO(data.profilePicUrl));
-      navigate("/test");
+      await dispatch(SET_PHOTO(data.profilePicUrl.URL));
+      await dispatch(SET_ROLE(data.role));
+      navigate("/dashboard");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

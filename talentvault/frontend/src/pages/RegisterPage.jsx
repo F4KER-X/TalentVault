@@ -30,7 +30,7 @@ const initialState = {
 };
 
 function Register() {
-  UseRedirectLoggedInUser("/test");
+  UseRedirectLoggedInUser("/dashboard");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -100,9 +100,9 @@ function Register() {
 
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(user.firstName));
-      await dispatch(SET_PHOTO(user.profilePicUrl));
+      await dispatch(SET_PHOTO(user.profilePicUrl.URL));
 
-      navigate("/test");
+      navigate("/dashboard");
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);

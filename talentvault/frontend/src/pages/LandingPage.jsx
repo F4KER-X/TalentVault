@@ -4,7 +4,7 @@ import Wrapper from "../assets/styling/LandingPage";
 import { Link } from "react-router-dom";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 const Landing = () => {
-  UseRedirectLoggedInUser("/test");
+  UseRedirectLoggedInUser("/dashboard");
   return (
     <Wrapper>
       <nav>
@@ -24,10 +24,10 @@ const Landing = () => {
           </p>
           <div className="btns-main">
             <Link to="/register" className="btn1 btn-hero">
-            Register
+              Register
             </Link>
             <Link to="/Login" className="btn1 btn-hero">
-            Login
+              Login
             </Link>
           </div>
           {/* <button className="btn btn-hero">Login/Register</button> */}

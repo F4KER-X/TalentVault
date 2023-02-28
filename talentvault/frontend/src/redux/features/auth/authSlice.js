@@ -15,6 +15,7 @@ const initialState = {
         resume: "",
         phoneNumber: "",
         profilePicUrl: "",
+        bio: "",
     },
     photo: photo ? photo : "",
     role: "",

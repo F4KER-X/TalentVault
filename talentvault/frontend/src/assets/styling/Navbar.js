@@ -18,10 +18,12 @@ const Wrapper = styled.div`
 
   ul {
     list-style: none;
+    
   }
 
   a {
     text-decoration: none;
+    color: #4540db
   }
 
   .logout {
@@ -112,17 +114,17 @@ const Wrapper = styled.div`
     width: 1.3em;
     fill: #b4b4b4;
   }
-  .dropdown-menu {
+  .dropdown-menu-n {
     position: absolute;
     top: 115px;
     right: 25px;
     background-color: #fff;
     border-radius: var(--border-radius);
     padding: 10px 20px;
-    width: 200px;
+    width: 210px;
   }
 
-  .dropdown-menu::before {
+  .dropdown-menu-n::before {
     content: "";
     position: absolute;
     top: -5px;
@@ -133,14 +135,16 @@ const Wrapper = styled.div`
     transform: rotate(45deg);
   }
 
-  .dropdown-menu.active {
+  .dropdown-menu-n.active {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
     transition: var(--speed) ease;
+    position: absolute;
+    z-index: 9999;
   }
 
-  .dropdown-menu.inactive {
+  .dropdown-menu-n.inactive {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);
@@ -156,25 +160,28 @@ const Wrapper = styled.div`
     font-size: 18px;
     color: var(--primary-text-color);
     line-height: 1.2rem;
+    
   }
 
   h3 span {
     font-size: 14px;
     color: var(--secondary-text-color);
     font-weight: 400;
+    
   }
 
-  .dropdown-menu ul li {
+  .dropdown-menu-n ul li {
     padding: 10px 0;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
+
   }
 
-  .dropdown-menu ul li:hover a {
+  .dropdown-menu-n ul li:hover a {
     color: rgb(212, 33, 9);
     cursor: pointer;
   }
 
-  .dropdown-menu ul li:hover img {
+  .dropdown-menu-n ul li:hover img {
     opacity: 1;
     cursor: pointer;
   }
@@ -184,13 +191,8 @@ const Wrapper = styled.div`
     margin: 10px auto;
   }
 
-  .dropdownItem img {
-    max-width: 20px;
-    margin-right: 10px;
-    opacity: 0.5;
-    transition: var(--speed);
-  }
-  .navbar {
+  
+  .navbar-n {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -200,7 +202,7 @@ const Wrapper = styled.div`
   }
 
   .dropdownItem a {
-    max-width: 100px;
+    max-width: 200px;
     margin-left: 10px;
     transition: var(--speed);
   }
@@ -223,7 +225,7 @@ const Wrapper = styled.div`
     background: transparent;
     border-color: transparent;
   }
-  .btn {
+  .btn1 {
     cursor: pointer;
     display: flex;
     align-items: center;

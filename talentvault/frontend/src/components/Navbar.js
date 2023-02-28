@@ -18,6 +18,10 @@ import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import Logo from "./Logo_no_text";
 
 import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineHome } from "react-icons/ai"
+import { CiLogout } from "react-icons/ci"
+import { CgProfile } from "react-icons/cg"
+import { MdWorkOutline } from "react-icons/md"
 
 const Navbar = () => {
   UserRedirectLoggedOutUser("/login");
@@ -52,7 +56,7 @@ const Navbar = () => {
   };
   return (
     <Wrapper>
-      <nav className="navbar">
+      <nav className="navbar-n">
         <Logo className="logo" />
 
         <GiHamburgerMenu size={24} className="burger cursor-pointer" />
@@ -64,35 +68,36 @@ const Navbar = () => {
               setOpen(!open);
             }}
           >
-            <img src={photo}></img>
+            <img src={photo} alt=""></img>
           </div>
-          <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
+          <div className={`dropdown-menu-n ${open ? "active" : "inactive"}`}>
             <h3>
               Hello {firstName}! <br />
               <span>{role}</span>
             </h3>
-            <u1>
+            <ul>
+              <DropdownItem
+                address={"/dashboard"}
+                icon={<AiOutlineHome />}
+                text={"Dashboard"}
+              />
               <DropdownItem
                 address={"/profile"}
-                img={user}
+                icon={<CgProfile />}
                 text={"My Profile"}
               />
-              <DropdownItem
-                img={edit}
-                address={"/profile"}
-                text={"Edit Profile"}
-              />
+
               {role === "applicant" && (
-                <DropdownItem img={inbox} text={"My Jobs"} />
+                <DropdownItem text={"My Jobs"} icon={<MdWorkOutline />} />
               )}
               {role === "recruiter" && (
-                <DropdownItem img={inbox} text={"My postings"} />
+                <DropdownItem text={"My postings"} icon={<MdWorkOutline />} />
               )}
               {role === "admin" && (
-                <DropdownItem img={inbox} text={"Admin panel"} />
+                <DropdownItem text={"Admin panel"} />
               )}
               <LogoutBtn img={logoutt} />
-            </u1>
+            </ul>
           </div>
         </div>
       </nav>
@@ -102,10 +107,11 @@ const Navbar = () => {
     return (
       <Wrapper>
         <li className="dropdownItem">
-          <img src={props.img} alt="" />
+
           <button className="logout" onClick={logout}>
-            Logout
+            <CiLogout /> Logout
           </button>
+
         </li>
       </Wrapper>
     );
@@ -116,8 +122,7 @@ function DropdownItem(props) {
   return (
     <Wrapper>
       <li className="dropdownItem">
-        <img src={props.img} alt="" />
-        <a href={props.address}>{props.text}</a>
+        <a href={props.address}> {props.icon} {props.text}</a>
       </li>
     </Wrapper>
   );
