@@ -14,9 +14,23 @@ const getJobs = async () => {
     return response.data
 }
 
+//delete job
+const deleteJob = async (id) => {
+    const response = await axios.delete('/jobs/' + id)
+    return response.data
+}
+
+//get one job
+const getOneJob = async (id) => {
+    const response = await axios.get('/jobs/' + id)
+    return response.data
+}
+
 const jobService = {
     addJob,
-    getJobs
+    getJobs,
+    deleteJob,
+    getOneJob
 }
 
 export default jobService
