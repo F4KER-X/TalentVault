@@ -34,9 +34,9 @@ function Profile() {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [profilePicUrl, setProfilePicUrl] = useState(null);
   const [role, setRole] = useState(null);
-  const [currentPassword, setCurrentPassword] = useState(null);
-  const [newPassword, setNewPassword] = useState(null);
-  const [confirmPassword, setConfirmPassword] = useState(null);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [show, setShow] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [file, setFile] = useState(null);
@@ -153,11 +153,16 @@ function Profile() {
       currentPassword,
       newPassword,
     };
+
     const data = await changePassword(dataForm);
     setIsLoading(false);
 
-    window.location.reload();
-    toast.success(data?.message);
+    if (data?.message === "Password updated successfully") {
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      toast.success(data.message);
+    }
   };
 
   //delete user
@@ -707,6 +712,7 @@ function Profile() {
                               className="form-control"
                               name="currentPassword"
                               placeholder="**********"
+                              value={currentPassword}
                               onChange={handleCurrentPasswordChange}
                             />
                           </div>
@@ -723,6 +729,7 @@ function Profile() {
                               className="form-control"
                               name="newPassword"
                               placeholder="**********"
+                              value={newPassword}
                               onChange={handleNewPasswordChange}
                             />
                           </div>
@@ -739,6 +746,7 @@ function Profile() {
                               className="form-control"
                               name="confirmPassword"
                               placeholder="**********"
+                              value={confirmPassword}
                               onChange={handleConfirmPasswordChange}
                             />
                           </div>
