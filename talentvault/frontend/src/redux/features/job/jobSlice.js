@@ -43,14 +43,44 @@ export const getJobs = createAsyncThunk(
     }
 )
 
+//delete one job
+export const deleteJob = createAsyncThunk(
+    'jobs/delete',
+    async (id, thunkAPI) => {
+        try {
+            return await jobService.deleteJob(id)
+        } catch (err) {
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            console.log(message);
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+//get one job
+export const getOneJob = createAsyncThunk(
+    'jobs/getJob',
+    async (id, thunkAPI) => {
+        try {
+            return await jobService.getOneJob(id)
+        } catch (err) {
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            console.log(message);
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 const jobSlice = createSlice({
     name: "job",
     initialState,
     reducers: {
 
-        calc(state, action) {
 
-        }
 
     },
     extraReducers: (builder) => {
@@ -88,12 +118,42 @@ const jobSlice = createSlice({
                 state.message = action.payload
                 toast.error(action.payload)
             })
-
-
+            .addCase(deleteJob.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(deleteJob.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                toast.success('Job deleted successfully')
+            })
+            .addCase(deleteJob.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload
+                toast.error(action.payload)
+            })
+            .addCase(getOneJob.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getOneJob.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.job = action.payload
+            })
+            .addCase(getOneJob.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload
+                toast.error(action.payload)
+            })
     }
 })
 
-export const { calc } = jobSlice.actions
+export const { } = jobSlice.actions
 
 export const selectIsLoading = (state) => state.job.isLoading
 

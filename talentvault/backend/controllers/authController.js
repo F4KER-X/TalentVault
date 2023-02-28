@@ -49,8 +49,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (user) {
         //now create either applicant or recruiter
-        const token = generateToken(user._id, user.role)
-        const { role } = user
+        const token = generateToken(user._id, user.role, user.email)
         if (user.role === 'recruiter') {
             if (!companyName) {
                 await user.delete()
@@ -139,7 +138,7 @@ const loginUser = asyncHandler(async (req, res) => {
     //user exists, check pass
     const correctPwd = await bcrypt.compare(password, user.password)
 
-    const token = generateToken(user._id, user.role)
+    const token = generateToken(user._id, user.role, user.email)
 
 
     let userProfile
@@ -193,8 +192,8 @@ const loggedinStatus = asyncHandler(async (req, res) => {
 })
 
 //Generate JWT token
-const generateToken = (id, role) => {
-    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '1d' })
+const generateToken = (id, role, email) => {
+    return jwt.sign({ id, role, email }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
 
 

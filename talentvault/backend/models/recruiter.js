@@ -22,8 +22,14 @@ const recruiterSchema = mongoose.Schema({
         type: String
     },
     profilePicUrl: {
-        type: String,
-        default: 'https://i.ibb.co/4pDNDk1/avatar.png'
+        public_id: {
+            type: String,
+            default: 0
+        },
+        URL: {
+            type: String,
+            default: 'https://i.ibb.co/4pDNDk1/avatar.png'
+        }
     },
     phoneNumber: {
         type: String

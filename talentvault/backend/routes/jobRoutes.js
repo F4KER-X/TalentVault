@@ -11,6 +11,12 @@ router.route("/")
   //create job
   .post(jobsController.createNewJob);
 
+
+
+router.route('/user-jobs')
+  .get(jobsController.getJobsByUser)
+
+
 router.route("/:id")
   //get a job
   .get(jobsController.getOneJob)

@@ -30,7 +30,7 @@ export const registerUser = async (userData) => {
 export const loginUser = async (userData) => {
 
     try {
-        const response = await axios.post(`${BACKEND_URL}/auth/login`, userData)
+        const response = await axios.post('/auth/login', userData)
         if (response.statusText === 'OK') {
             toast.success("Login successful...")
         } else {
@@ -110,6 +110,92 @@ export const getUserProfile = async () => {
         toast.error(message)
         throw err
 
+    }
+
+}
+
+
+//update profile
+export const updateUserInfo = async (formData) => {
+
+    try {
+        const response = await axios.patch('/user', formData)
+        return response.data
+    } catch (err) {
+        const message = (
+            err.response && err.response.data && err.response.data.message
+        ) || err.message || err.toString()
+
+        if (message === 'Not authorized') return
+        toast.error(message)
+        throw err
+
+    }
+
+}
+
+export const changePassword = async (formData) => {
+
+    try {
+        const response = await axios.patch('/user/updatePassword', formData)
+        return response.data
+    } catch (err) {
+        const message = (
+            err.response && err.response.data && err.response.data.message
+        ) || err.message || err.toString()
+
+        if (message === 'Not authorized') return
+        toast.error(message)
+    }
+
+}
+
+export const deleteUser = async () => {
+
+    try {
+        const response = await axios.delete('/user')
+        return response.data
+    } catch (err) {
+        const message = (
+            err.response && err.response.data && err.response.data.message
+        ) || err.message || err.toString()
+
+        if (message === 'Not authorized') return
+        toast.error(message)
+    }
+
+}
+
+
+
+export const uploadPhoto = async (formData) => {
+
+    try {
+        const response = await axios.patch('/user/upload/profile', formData)
+        return response.data
+    } catch (err) {
+        const message = (
+            err.response && err.response.data && err.response.data.message
+        ) || err.message || err.toString()
+
+        if (message === 'Not authorized') return
+        toast.error(message)
+    }
+
+}
+
+export const uploadFile = async (formData) => {
+
+    try {
+        const response = await axios.patch('/user/upload/file', formData)
+        return response.data
+    } catch (err) {
+        const message = (
+            err.response && err.response.data && err.response.data.message
+        ) || err.message || err.toString()
+
+        if (message === 'Not authorized') return
+        toast.error(message)
     }
 
 }
