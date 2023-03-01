@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "react-router-dom": "^6.8.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "scripts": {
+    "server": "npm run start --prefix backend --ignore frontend",
+    "frontend": "npm start --prefix frontend",
+    "start": "concurrently --kill-others-on-fail \" npm run server\" \"npm run frontend\""
+  }
+}
