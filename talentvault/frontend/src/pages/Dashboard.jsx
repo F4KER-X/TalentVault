@@ -8,6 +8,7 @@ import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
 import { useEffect } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
+import Pagination from "../components/Pagination";
 function Dashboard() {
   UseRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function Dashboard() {
           <Jobs />
           <Jobs />
         </div>
+        <Pagination></Pagination>
       </div>
     </>
   );
