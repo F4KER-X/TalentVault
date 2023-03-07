@@ -2,7 +2,8 @@ import Logo from "../components/Logo";
 import { FaBriefcase, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa";
 import Jobs from "../components/Jobs";
 import Pagination from "../components/Pagination";
-function About() {
+function JobBoard() {
+  
   return (
     <>
       <div>
@@ -37,4 +38,4 @@ function About() {
   );
 }
 
-export default About;
+export default JobBoard;
