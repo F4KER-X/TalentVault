@@ -23,7 +23,8 @@ import JobDetails from "./pages/JobDetails";
 import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
-import Test from './pages/test'
+import Test from './pages/test';
+import JobBoard from "./pages/JobBoard";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -61,17 +62,24 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/jobs" element={<JobsExtended />} />
         <Route path="/about" element={<About />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+
+        <Route path="/jobs" element={<JobsExtended />} /> {/* shows full details of job, and has an edit and delete functionality */}
+       {/**page for creating/adding the new jobs , first one is css, second is the db stuff*/}
         <Route path="/jobposting" element={<JobPosting />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/create-job" element={<CreateJob />} />
+        <Route path="/jobboard"  element={<JobBoard/>} />
         <Route path="/job-details/:id" element={<JobDetails />} />
+
+        <Route path="/register" element={<RegisterPage />} />
+        
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+
         <Route path="/test" element={<Test />} />
+
         <Route path="*" element={<Error />} />
-        <Route path="/about" element={<About/>} />
       </Routes>
     </BrowserRouter>
   );
