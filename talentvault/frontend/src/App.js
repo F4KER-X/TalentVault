@@ -23,7 +23,8 @@ import JobDetails from "./pages/JobDetails";
 import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
-import Test from './pages/test'
+import Test from "./pages/test";
+import HomePage from "./pages/HomePage";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -52,7 +53,7 @@ function App() {
         dispatch(SET_COMPANY(status.companyName));
       }
     }
-    userData()
+    userData();
   }, [dispatch, isLoggedIn]);
 
   return (
@@ -67,6 +68,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobposting" element={<JobPosting />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/create-job" element={<CreateJob />} />
         <Route path="/job-details/:id" element={<JobDetails />} />
         <Route path="/test" element={<Test />} />

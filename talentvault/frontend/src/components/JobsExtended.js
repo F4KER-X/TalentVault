@@ -33,7 +33,7 @@ const JobsExtended = (job) => {
   return (
     <>
       {/* To be implemented, the edit form */}
-      <Wrapper>
+      {/* <Wrapper>
         <div className="form">
           <div className="top">
             <h4 className="form-title">Insert Job Title Here</h4>
@@ -107,7 +107,7 @@ const JobsExtended = (job) => {
             </div>
           </div>
         </div>
-      </Wrapper>
+      </Wrapper> */}
 
       {/* below is the normal form */}
 

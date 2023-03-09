@@ -25,55 +25,14 @@ function About() {
             </li>
 
             <li>
-              <div className="job-list-content">
-                <h4 className="jobTitle">Job Title Here</h4>
-                <h5 className="companyName">Company Name Here</h5>
-
-                <div className="city-province">
-                  <span>
-                    {" "}
-                    <FaMapMarkerAlt /> City
-                  </span>
-                  <span> Province</span>
-                </div>
-
-                <div className="type-remote">
-                  <span>
-                    {" "}
-                    <FaBriefcase /> Full-Time
-                  </span>{" "}
-                </div>
-                <span>
-                  {" "}
-                  <FaRegBuilding /> Remote
-                </span>
-              </div>
+              <Jobs />
             </li>
 
             <li>
-              <div className="job-list-content">
-                <h4 className="jobTitle">Job Title Here</h4>
-                <h5 className="companyName">Company Name Here</h5>
-
-                <div className="city-province">
-                  <span>
-                    {" "}
-                    <FaMapMarkerAlt /> City
-                  </span>
-                  <span> Province</span>
-                </div>
-
-                <div className="type-remote">
-                  <span>
-                    {" "}
-                    <FaBriefcase /> Full-Time
-                  </span>{" "}
-                </div>
-                <span>
-                  {" "}
-                  <FaRegBuilding /> Remote
-                </span>
-              </div>
+              <Jobs />
+            </li>
+            <li>
+              <Jobs />
             </li>
           </ul>
 
