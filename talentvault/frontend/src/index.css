@@ -610,3 +610,42 @@ ul {
   padding: 12px 16px;
   text-transform: uppercase;
 }
+
+/* =============ABOUT PAGE======================================*/
+
+.content-about{
+  font-family: Roboto;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  padding-top: 70px;
+}
+
+.description-about{
+  width: 100%;
+}
+
+.AboutTitle{
+  font-weight: bold;
+  font-size: 1.953rem;
+  font-family: "Roboto Condensed", Sans-Serif;
+  color:#555
+}
+
+.content-about2{
+  font-family: Roboto;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  padding-top: 90px;
+}
+
+.description-about2{
+  align-content: center;
+  font-style: italic;
+  padding-left:5%;
+}
+
+.content-about3{
+  padding-top:30px;
+}
