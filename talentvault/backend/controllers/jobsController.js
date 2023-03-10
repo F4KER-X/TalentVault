@@ -1,6 +1,8 @@
 const Job = require("../models/Job");
 const asyncHandler = require('express-async-handler');
 const Recruiter = require("../models/Recruiter");
+const { application } = require("express");
+const Application = require("../models/Application");
 
 // @desc Get all jobs
 // @route GET /jobs
@@ -40,10 +42,11 @@ const createNewJob = asyncHandler(async (req, res) => {
     jobType,
     jobRequirements,
     jobLocation,
+    workType
   } = req.body
 
   //validation
-  if (!jobTitle || !maxSalary || !minSalary || !jobDescription || !jobType || !jobRequirements || !jobLocation) {
+  if (!jobTitle || !maxSalary || !minSalary || !jobDescription || !jobType || !jobRequirements || !jobLocation || !workType) {
     return res.status(400).json({ message: 'Please make sure all fields are filled out' })
   }
 
@@ -55,7 +58,6 @@ const createNewJob = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: 'Make sure Max and Min salaries are correct' })
   }
 
-
   //create job object
   const jobObject = {
     recruiterId: _id,
@@ -66,7 +68,8 @@ const createNewJob = asyncHandler(async (req, res) => {
     jobDescription,
     jobType,
     jobRequirements,
-    jobLocation
+    jobLocation,
+    workType
   }
 
   //add job
@@ -109,7 +112,7 @@ const updateJob = asyncHandler(async (req, res) => {
   }
 
   const { _id } = req.user
-  if (_id !== job.recruiterId) return res.status(401).json({ message: 'Not authorized to edit this job' })
+  if (!_id.equals(job.recruiterId)) return res.status(401).json({ message: 'Not authorized to edit this job' })
 
   const {
     jobTitle,
@@ -119,7 +122,8 @@ const updateJob = asyncHandler(async (req, res) => {
     jobType,
     jobRequirements,
     jobLocation,
-    status
+    status,
+    workType
   } = req.body;
 
   if (jobTitle) job.jobTitle = jobTitle
@@ -135,6 +139,8 @@ const updateJob = asyncHandler(async (req, res) => {
   if (jobRequirements) job.jobRequirements = jobRequirements
 
   if (status) job.status = status
+
+  if (workType) job.workType = workType
 
   if (jobLocation) {
     if (jobLocation.city) {
@@ -153,8 +159,6 @@ const updateJob = asyncHandler(async (req, res) => {
     res.status(400).json({ message: 'Job update was not successful' })
   }
 
-
-
 })
 
 // @desc DELETE job
@@ -163,24 +167,31 @@ const updateJob = asyncHandler(async (req, res) => {
 const deleteJob = asyncHandler(async (req, res) => {
   //have to check if the posting has any jobs application or created any open jobs once we implement the jobs model
 
-  const job = await Job.findById(req.params["id"]).lean().exec();
+  const job = await Job.findById(req.params["id"]).exec();
   if (!job) {
     return res.status(400).json({ message: "Job posting does not exist" });
   }
   const { _id } = req.user
-  if (_id !== job.recruiterId) {
+  if (!_id.equals(job.recruiterId)) {
     return res.status(401).json({ message: 'Not authorized to delete this job' })
   }
   if (job.status === 'Open') {
     return res.status(400).json({ message: 'Job can not be deleted, make sure it is closed' })
   }
 
+
+
   if (job.status === 'Closed') {
-    job.delete()
-    res.status(200).json({
-      message: 'Job has been deleted!',
-    });
+    const deleteApplications = await Application.deleteMany({ jobId: req.params["id"] })
+    if (deleteApplications) {
+      job.delete()
+      res.status(200).json({
+        message: 'Job has been deleted!',
+      });
+    }
+
   }
+
 
 })
 
