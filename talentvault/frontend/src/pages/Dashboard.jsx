@@ -8,6 +8,8 @@ import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
 import { useEffect } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
+import Footer from "../components/Footer";
+
 function Dashboard() {
   UseRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
@@ -36,6 +38,7 @@ function Dashboard() {
           <Jobs />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

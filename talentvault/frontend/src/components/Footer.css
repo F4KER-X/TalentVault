@@ -1,0 +1,26 @@
+.main-footer {
+    background-color: #ececec;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  
+  .col-footer {
+    padding: 3px;
+  }
+
+  .row-footer{
+    display: 'flex'; 
+    justify-content: center;
+    padding-top: 5px;
+  }
+
+  
+  @media (max-width: 768px) {
+    .col-footer {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+  }
+  
+

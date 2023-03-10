@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, validateEmail } from "../redux/features/auth/authService";
+import Footer from "../components/Footer";
+
 import {
   SET_LOGIN,
   SET_NAME,
@@ -116,6 +118,7 @@ export default function Login() {
           </p>
         </form>
       </Wrapper>
+      <Footer />
     </div>
   );
 }

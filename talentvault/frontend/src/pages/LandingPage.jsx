@@ -3,9 +3,12 @@ import Logo from "../components/Logo";
 import Wrapper from "../assets/styling/LandingPage";
 import { Link } from "react-router-dom";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
+import Footer from "../components/Footer";
+
 const Landing = () => {
   UseRedirectLoggedInUser("/dashboard");
   return (
+    <>
     <Wrapper>
       <nav>
         <Logo />
@@ -35,6 +38,8 @@ const Landing = () => {
         <img src={main} alt="job hunt" className="img main-img" />
       </div>
     </Wrapper>
+    
+    </>
   );
 };
 

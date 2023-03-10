@@ -5,6 +5,8 @@ import FormRow from "../components/FormRow";
 import "../index.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import Footer from "../components/Footer";
+
 import {
   registerUser,
   validateEmail,
@@ -110,6 +112,7 @@ function Register() {
   };
 
   return (
+    <>
     <Wrapper className="full-page">
       {isLoading && <Loader />}
       <form className="form" onSubmit={register}>
@@ -203,6 +206,8 @@ function Register() {
         </p>
       </form>
     </Wrapper>
+    <Footer />
+    </>
   );
 }
 

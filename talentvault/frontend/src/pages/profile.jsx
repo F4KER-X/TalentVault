@@ -9,6 +9,8 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import DeleteModal from "../components/DeleteModal";
 
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 import {
   changePassword,
   deleteUser,
@@ -23,6 +25,7 @@ function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  
   //states
   const [isLoading, setIsLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -768,8 +771,9 @@ function Profile() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
-    </div>
+    </div> 
   );
 }
 
