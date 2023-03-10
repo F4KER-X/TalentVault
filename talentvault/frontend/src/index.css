@@ -403,7 +403,7 @@ ul {
 /* form */
 
 .form {
-  width: 90vw;
+  width: 100vw;
   max-width: var(--fixed-width);
   max-height: 95%;
   background: var(--white);
@@ -493,8 +493,6 @@ ul {
 }
 
 .container {
-  width: var(--fluid-width);
-  max-width: var(--max-width);
   margin: 0 auto;
 }
 .full-page {
@@ -540,6 +538,7 @@ ul {
   background-color: #fff;
   border-top: 1px solid #e0e0e0;
   position: relative;
+
   z-index: 99;
 }
 

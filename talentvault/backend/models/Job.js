@@ -44,6 +44,11 @@ const jobSchema = mongoose.Schema({
     type: String,
     enum: ['Open', 'Closed'],
     default: 'Open'
+  },
+  workType: {
+    type: String,
+    enum: ['Onsite', 'Hybrid', 'Remote'],
+    required: true
   }
 }, {
   timestamp: true

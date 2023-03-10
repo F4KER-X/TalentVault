@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const { validPassword } = require('./userValidation')
 const Job = require('../models/Job')
 const cloudinary = require('../Utils/cloudinary')
+const Application = require('../models/Application')
 
 // @desc Get info of the user
 // @route GET /user
@@ -138,7 +139,8 @@ const deleteUser = asyncHandler(async (req, res) => {
             const deletedApplicant = await Applicant.findOneAndDelete({ userId: user._id })
             await cloudinary.uploader.destroy(deletedApplicant.profilePicUrl.public_id)
             await cloudinary.uploader.destroy(deletedApplicant.resume.public_id)
-            if (deletedApplicant) {
+            const deleteApplications = await Application.deleteMany({ applicantId: user._id })
+            if (deletedApplicant && deleteApplications) {
                 res.cookie("token", "", {
                     path: "/",
                     httpOnly: true,

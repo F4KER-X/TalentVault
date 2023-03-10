@@ -14,7 +14,7 @@ const Wrapper = styled.section`
   }
   .form {
     margin: auto;
-    max-width: 100vw;
+    max-width: 55vw;
     border-top: 5px solid var(--primary-500);
   }
   .top {
