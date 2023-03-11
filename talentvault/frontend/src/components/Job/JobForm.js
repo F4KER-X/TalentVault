@@ -46,158 +46,136 @@ const JobForm = ({ job, jobDescription, setJobDescription, handleInputChange, sa
                     </div>
                 </div>
 
-            <div className="job-details">
+                <div className="job-details">
 
-                <h5>Job Information</h5>
+                    <h5>Job Information</h5>
                     <FormRow 
-                    type="text"
-                    labelText="Job Title"
-                    placeholder="Job Title"
-                    name="jobTitle"
-                    value={job?.jobTitle}
-                    onChange={handleInputChange}
+                        type="text"
+                        labelText="Job Title"
+                        placeholder="Job Title"
+                        name="jobTitle"
+                        value={job?.jobTitle}
+                        onChange={handleInputChange}
                     />
                     <br />
 
-             <div className="salary-div">
-                <div className="floater">
-                  <label>Max Salary:</label>
-                    <input
-                        type="number"
-                        placeholder="Max Salary"
-                        name="maxSalary"
-                        value={job?.maxSalary}
-                        onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="floater">
-                    <label>Min Salary:</label>
-                    <input
-                        type="number"
-                        placeholder="Min Salary"
-                        name="minSalary"
-                        value={job?.minSalary}
-                        onChange={handleInputChange}
-                    />
-                </div>
-            </div>
+                    <div className="salary-div">
+                        <div className="floater">
+                            <label>Max Salary:</label>
+                            <input
+                             type="number"
+                             placeholder="Max Salary"
+                             name="maxSalary"
+                             value={job?.maxSalary}
+                             onChange={handleInputChange}
+                            />
+                        </div>
+                         <div className="floater">
+                             <label>Min Salary:</label>
+                             <input
+                                type="number"
+                                placeholder="Min Salary"
+                                name="minSalary"
+                                value={job?.minSalary}
+                                onChange={handleInputChange}
+                             />
+                        </div>
+                    </div>
 
 
-    <div className="Employment-Type">
-        <div className="floater">
-          <label>Employment Type:</label>
-          <select
-            name="jobType"
-            className="employment-type-select"
-            value={job?.jobType}
-            onChange={onChange}
-            aria-required="true"
-          >
-            <option className="dropdown_options" value="full_time">
-              Full-Time
-            </option>
-            <option className="dropdown_options" value="part_time">
-              Part-Time
-            </option>
-            <option className="dropdown_options" value="contractor">
-              Contractor
-            </option>
-            <option className="dropdown_options" value="temporary">
-              Temporary
-            </option>
-            <option className="dropdown_options" value="other">
-              Other
-            </option>
-          </select>
-        </div>
-        </div>
+                    <div className="Employment-Type">
+                        <div className="floater">
+                            <label>Employment Type:</label>
+                            <select
+                                 name="jobType"
+                                 className="employment-type-select"
+                                 value={job?.jobType}
+                                 onChange={handleInputChange}
+                                 aria-required="true"
+                            >
+                                <option className="dropdown_options" value="full_time"> Full-Time </option>
+                                <option className="dropdown_options" value="part_time">Part-Time</option>
+                                <option className="dropdown_options" value="contractor"> Contractor</option>
+                                <option className="dropdown_options" value="temporary">Temporary</option>
+                                <option className="dropdown_options" value="other"> Other</option>
+                            </select>
+                        </div>
+                    </div>
 
-        <div className="floater">
-        <label className="remotelabel">Remote:</label>
-          <select
-            name="workType"
-            className="remote-type-select"
-            value={job?.workType}
-            onChange={onChange}
-            aria-required="true"
-          >
-            <option className="dropdown_options" value="Remote">
-              Remote
-            </option>
-            <option className="dropdown_options" value="Hybrid">
-              Hybrid
-            </option>
-            <option className="dropdown_options" value="Onsite">
-              On-site
-            </option>
-          </select>
-          </div>
-
-             <br /> 
-                <div className="jobRequirements">
-                    <label> Job Requirements</label>
-                    <input
-                    className="jobreqinput"
-                        type="text"
-                        placeholder="Ex: Organized, Independent, Team-Player, HTML, CSS, JavaScript"
-                        name="jobRequirements"
-                        value={job?.jobRequirements}
-                        onChange={handleInputChange}
-                    />
-             <br />
-             </div> 
-             <br />
-                <div className="location-div">
                     <div className="floater">
-                    <label>City:</label>
-                    <input
-                        type="text"
-                        placeholder="City"
-                        name="city"
-                        value={job?.city}
-                        onChange={handleInputChange}
-                    />
+                        <label className="remotelabel">Remote:</label>
+                        <select
+                          name="workType"
+                          className="remote-type-select"
+                          value={job?.workType}
+                          onChange={handleInputChange}
+                          aria-required="true"
+                        >
+                            <option className="dropdown_options" value="Remote">Remote</option>
+                            <option className="dropdown_options" value="Hybrid"> Hybrid</option>
+                            <option className="dropdown_options" value="Onsite"> On-site</option>
+                        </select>
                     </div>
-                    <div className="floater">
-                    <label>Province:</label>
-                    <input
-                        type="text"
-                        placeholder="Province"
-                        name="province"
-                        value={job?.province}
-                        onChange={handleInputChange}
-                    />
-                    </div>
+
+                     <br /> 
+                    <div className="jobRequirements">
+                        <label> Job Requirements</label>
+                        <input
+                         className="jobreqinput"
+                         type="text"
+                         placeholder="Ex: Organized, Independent, Team-Player, HTML, CSS, JavaScript"
+                         name="jobRequirements"
+                         value={job?.jobRequirements}
+                         onChange={handleInputChange}
+                        />
+                       <br />
+                    </div> 
+                        <br />
+
+                    <div className="location-div">
+                        <div className="floater">
+                            <label>City:</label>
+                            <input
+                             type="text"
+                             placeholder="City"
+                             name="city"
+                              value={job?.city}
+                              onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="floater">
+                            <label>Province:</label>
+                            <input
+                              type="text"
+                              placeholder="Province"
+                              name="province"
+                              value={job?.province}
+                              onChange={handleInputChange}
+                            />
+                        </div>
                 </div>
-                <br />
+                        <br />
 
-                <div className="jobdescriptiondiv">
-                    <label>Job Description</label>
-                    <ReactQuill
-                        theme="snow"
-                        value={jobDescription}
-                        onChange={setJobDescription}
-                        modules={JobForm.modules}
-                        formats={JobForm.formats}
-                        className="jobdescriptionbox"
-                    />
+                        <div className="jobdescriptiondiv">
+                            <label>Job Description</label>
+                            <ReactQuill
+                              theme="snow"
+                              value={jobDescription}
+                              onChange={setJobDescription}
+                              modules={JobForm.modules}
+                              formats={JobForm.formats}
+                              className="jobdescriptionbox"
+                            />
 
-                </div>
-                    <div className="btndiv">
-                        <button  type="submit" className="btn">
-                            Save Job
-                        </button>
-                    </div>
+                        </div>
+                         <div className="btndiv">
+                            <button  type="submit" className="btn">Save Job</button>
+                        </div>
 
-             </div>
+                 </div>
                 </form>
-
-
-
-
             </Card>
-        </div>
-        
+        </div>        
      </Wrapper>
     );
 
