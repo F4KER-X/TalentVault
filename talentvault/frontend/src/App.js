@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import JobPosting from "./pages/JobPosting";
 import LandingPage from "./pages/LandingPage";
 import Error from "./pages/Error";
 import axios from "axios";
