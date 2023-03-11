@@ -75,6 +75,23 @@ export const getOneJob = createAsyncThunk(
     }
 )
 
+
+//edit job
+export const editJob = createAsyncThunk(
+    'jobs/editJob',
+    async ({ id, formData }, thunkAPI) => {
+        try {
+            return await jobService.editJob(id, formData)
+        } catch (err) {
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            console.log(message);
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 const jobSlice = createSlice({
     name: "job",
     initialState,
@@ -141,9 +158,25 @@ const jobSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.isError = false
-                state.job = action.payload
+                toast.success('Job updated successfully ')
             })
             .addCase(getOneJob.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload
+                toast.error(action.payload)
+            })
+            .addCase(editJob.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(editJob.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.job = action.payload
+            })
+            .addCase(editJob.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true
