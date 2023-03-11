@@ -28,6 +28,7 @@ function Dashboard() {
   return (
     <>
       {isLoading && <Loader />}
+
       <div>
         <Navbar />
 
