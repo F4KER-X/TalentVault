@@ -21,11 +21,11 @@ const initialState = {
   companyName: "",
   maxSalary: "",
   minSalary: "",
-  jobType: "full_time",
+  jobType: "",
   jobRequirements: "",
   city: "",
   province: "",
-  workType: "Remote",
+  workType: "",
 };
 
 const CreateJob = () => {
