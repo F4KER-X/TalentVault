@@ -21,10 +21,11 @@ const initialState = {
   companyName: "",
   maxSalary: "",
   minSalary: "",
-  jobType: "",
+  jobType: "full_time",
   jobRequirements: "",
   city: "",
   province: "",
+  workType: "Remote",
 };
 
 const CreateJob = () => {
@@ -42,6 +43,7 @@ const CreateJob = () => {
 
   const isLoading = useSelector(selectIsLoading);
 
+
   const {
     jobTitle,
     maxSalary,
@@ -50,6 +52,7 @@ const CreateJob = () => {
     jobRequirements,
     city,
     province,
+    workType,
   } = job;
 
   const handleInputChange = (ev) => {
@@ -75,6 +78,7 @@ const CreateJob = () => {
         city,
         province,
       },
+      workType,
     };
 
     if (
@@ -85,7 +89,8 @@ const CreateJob = () => {
       !formData.minSalary ||
       !formData.jobDescription ||
       !formData.jobLocation.city ||
-      !formData.jobLocation.province
+      !formData.jobLocation.province ||
+      !formData.workType
     ) {
       return toast.error("All fields are required");
     }
