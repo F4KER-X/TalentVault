@@ -1,15 +1,16 @@
-import Navbar from "../components/Navbar";
+import Jobs from "../components/Jobs";
+import Pagination from "../components/Pagination";
+import { useState,useEffect } from "react";
+import { getJobs } from "../redux/features/job/jobSlice";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useEffect } from "react";
-import { getJobs } from "../redux/features/job/jobSlice";
-import Jobs from "../components/Jobs";
+import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
-import Pagination from "../components/Pagination";
-import { useState } from "react";
 
-function Dashboard() {
+
+const JobBoard=()=> {
+
   UseRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
 
@@ -29,27 +30,22 @@ function Dashboard() {
   }, [dispatch, isError, isLoggedIn, message]);
 
 
+  // User is currently on this page
+  const [currentPage, setCurrentPage] = useState(1);
+  // No of Records to be displayed on each page   
+  const [recordsPerPage] = useState(10);
 
-  //for pagination
-  // To hold the actual data
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true);
-
-     // User is currently on this page
-     const [currentPage, setCurrentPage] = useState(1);
-
-    // No of Records to be displayed on each page   
-    const [recordsPerPage] = useState(5);
-
-    //indices of first and last record on the current page
-    const indexOfLastRecord = currentPage * recordsPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
 
     // Records to be displayed on the current page
-    const currentRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
+    const currentRecords = jobs.slice(indexOfFirstRecord, 
+    indexOfLastRecord);
 
-   //number of pages we will have
-    const nPages = Math.ceil(data.length / recordsPerPage)
+    //calculating number of pages
+    const nPages = Math.ceil(jobs.length / recordsPerPage)
+
 
   return (
     <>
@@ -68,10 +64,11 @@ function Dashboard() {
             <Jobs key={job._id} job={job} />
           ))}
         </div>
+       
       </div>
-      
     </>
   );
 }
+ 
 
-export default Dashboard;
+export default JobBoard;
