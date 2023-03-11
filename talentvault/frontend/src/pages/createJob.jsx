@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import JobForm from "../components/Job/JobForm";
 import Loader from "../components/Loader";
+import Navbar from "../components/Navbar"
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import {
@@ -12,6 +13,7 @@ import {
   selectRole,
 } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
+import "../index.css";
 
 const initialState = {
   recruiterId: "",
@@ -101,7 +103,8 @@ const CreateJob = () => {
   return (
     <div>
       {isLoading && <Loader />}
-      <h3>Add new Job</h3>
+      <Navbar></Navbar>
+      <h3 style={{textAlign:"center"}} >Create your Job</h3>
       <JobForm
         job={job}
         jobDescription={jobDescription}
