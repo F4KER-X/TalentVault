@@ -88,7 +88,10 @@ const Navbar = () => {
               />
 
               {role === "applicant" && (
-                <DropdownItem text={"My Jobs"} icon={<MdWorkOutline />} />
+                <DropdownItem 
+                address={"applications"}
+                text={"My Jobs"} 
+                icon={<MdWorkOutline />} />
               )}
               {role === "recruiter" && (
                 <DropdownItem text={"My postings"} icon={<MdWorkOutline />} />

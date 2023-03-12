@@ -23,7 +23,8 @@ import JobDetails from "./pages/JobDetails";
 import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
-import Test from './pages/test'
+import Test from './pages/test';
+import Application from './pages/Application';
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -66,7 +67,8 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobposting" element={<JobPosting />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Application />} />
+        <Route path="/applications" element={<Application/>} />
         <Route path="/create-job" element={<CreateJob />} />
         <Route path="/job-details/:id" element={<JobDetails />} />
         <Route path="/test" element={<Test />} />
