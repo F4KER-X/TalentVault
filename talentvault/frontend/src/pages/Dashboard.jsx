@@ -18,8 +18,6 @@ function Dashboard() {
     (state) => state.job
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
-
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getJobs());
@@ -28,16 +26,6 @@ function Dashboard() {
       console.log(message);
     }
   }, [dispatch, isError, isLoggedIn, message]);
-
-  const jobsPerPage = 3;
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
-    pageNumbers.push(i);
-  }
 
   return (
     <>
@@ -53,23 +41,11 @@ function Dashboard() {
 
       <div className="container">
         <div>
-          {currentJobs.map((job) => (
+          {jobs.map((job) => (
             <Jobs key={job._id} job={job} />
           ))}
         </div>
-        <div className="pagination">
-          {pageNumbers.map((number) => (
-            <button
-              key={number}
-              className={currentPage === number ? "active" : ""}
-              onClick={() => setCurrentPage(number)}
-            >
-              {number}
-            </button>
-          ))}
-        </div>
       </div>
-      
     </>
   );
 }
