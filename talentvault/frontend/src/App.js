@@ -19,7 +19,6 @@ import {
 } from "./redux/features/auth/authSlice";
 import CreateJob from "./pages/createJob";
 import Dashboard from "./pages/Dashboard";
-import JobDetails from "./pages/JobDetails";
 import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
@@ -68,7 +67,6 @@ function App() {
         <Route path="/jobposting" element={<JobPosting />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-job" element={<CreateJob />} />
-        <Route path="/job-details/:id" element={<JobDetails />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<Error />} />
       </Routes>

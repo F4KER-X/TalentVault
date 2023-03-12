@@ -21,7 +21,6 @@ export const addJob = createAsyncThunk(
             const message = (
                 err.response && err.response.data && err.response.data.message
             ) || err.message || err.toString()
-            console.log(message);
             return thunkAPI.rejectWithValue(message)
         }
     }
@@ -37,7 +36,6 @@ export const getJobs = createAsyncThunk(
             const message = (
                 err.response && err.response.data && err.response.data.message
             ) || err.message || err.toString()
-            console.log(message);
             return thunkAPI.rejectWithValue(message)
         }
     }
@@ -53,7 +51,6 @@ export const deleteJob = createAsyncThunk(
             const message = (
                 err.response && err.response.data && err.response.data.message
             ) || err.message || err.toString()
-            console.log(message);
             return thunkAPI.rejectWithValue(message)
         }
     }
@@ -69,7 +66,6 @@ export const getOneJob = createAsyncThunk(
             const message = (
                 err.response && err.response.data && err.response.data.message
             ) || err.message || err.toString()
-            console.log(message);
             return thunkAPI.rejectWithValue(message)
         }
     }

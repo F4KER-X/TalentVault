@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import Wrapper from "../assets/styling/JobsExtended";
 import InputField from "./InputField";
 import Loader from "./Loader";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 import {
   FaBriefcase,
   FaBuilding,
@@ -14,17 +17,20 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 
-import { getOneJob } from "../redux/features/job/jobSlice";
+import { deleteJob, getOneJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { selectRole } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiInfo } from "react-icons/fi";
+import Navbar from "./Navbar";
+import DeleteModal from "./DeleteModal";
 const JobsExtended = () => {
   const role = useSelector(selectRole);
   const { id } = useParams();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   //setting up states
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,6 +46,7 @@ const JobsExtended = () => {
   const [jobLocation, setJobLocation] = useState("");
   const [status, setStatus] = useState("");
   const [workType, setWorkType] = useState("");
+  const [show, setShow] = useState(false)
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -80,10 +87,8 @@ const JobsExtended = () => {
       dispatch(getOneJob(id));
     }
     if (isError) {
-      console.log(message);
     }
   }, [dispatch, isError, isLoggedIn, message, id]);
-  console.log(job);
 
   // Access specific fields of the job object
   useEffect(() => {
@@ -119,6 +124,36 @@ const JobsExtended = () => {
     setIsEditing(true);
   }
 
+
+
+  //delete job
+
+
+  const delJob = async (id) => {
+    const promise = await dispatch(deleteJob(id))
+    if (promise.meta.requestStatus === 'fulfilled') navigate('/dashboard')
+
+
+  }
+
+
+  const confirmDelete = (id) => {
+    confirmAlert({
+      title: 'Delete Job',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Delete',
+          onClick: () => delJob(id)
+        },
+        {
+          label: 'Cancel',
+          //onClick: () => delJob(id)
+        }
+      ]
+    });
+  }
+
   return (
     <>
       {isLoading && <Loader />}
@@ -126,6 +161,7 @@ const JobsExtended = () => {
       {/* below is the normal form */}
 
       <Wrapper>
+        <Navbar />
         <div className="form">
           <div className="top">
             {isEditMode ? (
@@ -145,13 +181,13 @@ const JobsExtended = () => {
 
             {/* <h4 className="form-title">{jobTitle}</h4> */}
             <div className="buttons-2">
-              {" "}
               <button className="btn" onClick={handleEditClick}>
                 <FaRegEdit className="edit" size={20} /> Edit{" "}
               </button>
-              <button className="btn">
-                <AiOutlineDelete className="delete" size={20} /> Delete{" "}
+              <button className="btn" onClick={() => confirmDelete(id)}>
+                <AiOutlineDelete className="delete" size={20} />Delete
               </button>
+
             </div>
           </div>
 
