@@ -81,7 +81,7 @@ export const editJob = createAsyncThunk(
     'jobs/editJob',
     async ({ id, formData }, thunkAPI) => {
         try {
-            return await jobService.editJob(id, formData)
+            return await jobServices.editJob(id, formData)
         } catch (err) {
             const message = (
                 err.response && err.response.data && err.response.data.message
