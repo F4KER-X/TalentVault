@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +7,6 @@ import { useEffect } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
-import Pagination from "../components/Pagination";
-import { useState } from "react";
 
 function Dashboard() {
   UseRedirectLoggedOutUser("/login");
@@ -19,6 +18,8 @@ function Dashboard() {
     (state) => state.job
   );
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getJobs());
@@ -28,32 +29,20 @@ function Dashboard() {
     }
   }, [dispatch, isError, isLoggedIn, message]);
 
+  const jobsPerPage = 3;
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
-
-  //for pagination
-  // To hold the actual data
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true);
-
-     // User is currently on this page
-     const [currentPage, setCurrentPage] = useState(1);
-
-    // No of Records to be displayed on each page   
-    const [recordsPerPage] = useState(5);
-
-    //indices of first and last record on the current page
-    const indexOfLastRecord = currentPage * recordsPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-
-    // Records to be displayed on the current page
-    const currentRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
-
-   //number of pages we will have
-    const nPages = Math.ceil(data.length / recordsPerPage)
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <>
       {isLoading && <Loader />}
+
       <div>
         <Navbar />
 
@@ -64,8 +53,19 @@ function Dashboard() {
 
       <div className="container">
         <div>
-          {jobs.map((job) => (
+          {currentJobs.map((job) => (
             <Jobs key={job._id} job={job} />
+          ))}
+        </div>
+        <div className="pagination">
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              className={currentPage === number ? "active" : ""}
+              onClick={() => setCurrentPage(number)}
+            >
+              {number}
+            </button>
           ))}
         </div>
       </div>
