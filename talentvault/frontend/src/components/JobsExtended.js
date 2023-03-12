@@ -59,7 +59,9 @@ const JobsExtended = () => {
   const handleJobDescription = (ev) => {
     setJobDescription(ev.target.value);
   };
-
+  const handleWorkType = (ev) => {
+    setWorkType(ev.target.value);
+  };
   const handleJobType = (ev) => {
     setJobType(ev.target.value);
   };
@@ -198,11 +200,38 @@ const JobsExtended = () => {
             </h5>
           )}
 
-          <div>
+          {isEditMode ? (
+            <div className="floater">
+              <FaRegBuilding />
+              <label className="remotelabel">Work Type:</label>
+              <select
+                name="workType"
+                className="remote-type-select"
+                value={job?.workType}
+                onChange={handleWorkType}
+                aria-required="true"
+              >
+                <option className="dropdown_options" value="Remote"></option>
+                <option className="dropdown_options" value="Remote">
+                  Remote
+                </option>
+                <option className="dropdown_options" value="Hybrid">
+                  {" "}
+                  Hybrid
+                </option>
+                <option className="dropdown_options" value="Onsite">
+                  {" "}
+                  On-site
+                </option>
+              </select>
+            </div>
+          ) : (
             <div className="form-control">
               <FaRegBuilding /> {workType}
             </div>
+          )}
 
+          <div>
             <div className="form-control">
               <FaBriefcase /> {jobType}
             </div>

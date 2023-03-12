@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +7,7 @@ import { useEffect } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
+
 function Dashboard() {
   UseRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
@@ -16,6 +18,8 @@ function Dashboard() {
     (state) => state.job
   );
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getJobs());
@@ -24,6 +28,16 @@ function Dashboard() {
       console.log(message);
     }
   }, [dispatch, isError, isLoggedIn, message]);
+
+  const jobsPerPage = 3;
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <>
@@ -39,8 +53,19 @@ function Dashboard() {
 
       <div className="container">
         <div>
-          {jobs.map((job) => (
+          {currentJobs.map((job) => (
             <Jobs key={job._id} job={job} />
+          ))}
+        </div>
+        <div className="pagination">
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              className={currentPage === number ? "active" : ""}
+              onClick={() => setCurrentPage(number)}
+            >
+              {number}
+            </button>
           ))}
         </div>
       </div>
