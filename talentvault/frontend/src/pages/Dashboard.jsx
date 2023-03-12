@@ -41,8 +41,8 @@ function Dashboard() {
 
       <div className="container">
         <div>
-          {jobs.map((job) => (
-            <Jobs key={job._id} job={job} />
+          {jobs.map((job, index) => (
+            <Jobs key={index} job={job} />
           ))}
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Wrapper from "../assets/styling/JobsExtended";
 import InputField from "./InputField";
 import Loader from "./Loader";
+import DOMPurify from 'dompurify'
 import {
   FaBriefcase,
   FaBuilding,
@@ -83,22 +84,21 @@ const JobsExtended = () => {
       console.log(message);
     }
   }, [dispatch, isError, isLoggedIn, message, id]);
-  console.log(job);
 
   // Access specific fields of the job object
   useEffect(() => {
     if (job) {
-      setJobTitle(job.jobTitle);
-      setCompanyName(job.companyName);
-      setMaxSalary(job.maxSalary);
-      setMinSalary(job.minSalary);
-      setJobDescription(job.jobDescription);
-      setJobType(job.jobType);
-      setJobRequirements(job.jobRequirements);
-      setJobLocation(job.jobLocation);
-      setStatus(job.status);
-      job.status === "Open" ? setIsOpen(true) : setIsOpen(false);
-      setWorkType(job.workType);
+      setJobTitle(job?.jobTitle);
+      setCompanyName(job?.companyName);
+      setMaxSalary(job?.maxSalary);
+      setMinSalary(job?.minSalary);
+      setJobDescription(job?.jobDescription);
+      setJobType(job?.jobType);
+      setJobRequirements(job?.jobRequirements);
+      setJobLocation(job?.jobLocation);
+      setStatus(job?.status);
+      job?.status === "Open" ? setIsOpen(true) : setIsOpen(false);
+      setWorkType(job?.workType);
       setIsLoading(false);
     }
   }, [job]);
@@ -181,7 +181,7 @@ const JobsExtended = () => {
                 type="text"
                 className="address"
                 name="city"
-                value={jobLocation.city}
+                value={jobLocation?.city}
                 onChange={handleJobLocation}
               />
               ,
@@ -189,14 +189,14 @@ const JobsExtended = () => {
                 type="text"
                 className="address"
                 name="province"
-                value={jobLocation.province}
+                value={jobLocation?.province}
                 onChange={handleJobLocation}
               />
             </div>
           ) : (
             <h5 className="title address form-control">
               <FaMapMarkerAlt />
-              {jobLocation.city}, {jobLocation.province}
+              {jobLocation?.city}, {jobLocation?.province}
             </h5>
           )}
 
@@ -274,13 +274,13 @@ const JobsExtended = () => {
 
                 <ul>
                   {requirementList.map((requirement, index) => (
-                    <li key={index}>{requirement}</li>
+                    <li key={index}>{requirement.trim()}</li>
                   ))}
                 </ul>
               </div>
               <div className="couple">
                 <h5>Description</h5>
-                <p>{jobDescription}</p>
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(jobDescription) }}></div>
               </div>
             </div>
           </div>
