@@ -24,6 +24,7 @@ import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
 import Test from './pages/test'
+import ViewJobs from "./pages/ViewJobs";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -71,6 +72,7 @@ function App() {
         <Route path="/job-details/:id" element={<JobDetails />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<Error />} />
+        <Route path="/ViewJobs" element={<ViewJobs />} />
       </Routes>
     </BrowserRouter>
   );
