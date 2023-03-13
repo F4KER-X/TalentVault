@@ -24,11 +24,18 @@ const getOneJob = async (id) => {
   return response.data;
 };
 
+//edit = job
+const editJob = async (id, formData) => {
+  const response = await axios.patch("/jobs/" + id, formData);
+  return response.data;
+};
+
 const jobServices = {
   addJob,
   getJobs,
   deleteJob,
   getOneJob,
+  editJob,
 };
 
 export default jobServices;
