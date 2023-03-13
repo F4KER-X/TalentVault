@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import Jobs from "../components/Jobs";
+import Pagination from "../components/Pagination";
+import { useState,useEffect } from "react";
+import { getJobs } from "../redux/features/job/jobSlice";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useEffect } from "react";
-import { getJobs } from "../redux/features/job/jobSlice";
-import Jobs from "../components/Jobs";
+import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
 
-function Dashboard() {
+
+const JobBoard=()=> {
+
   UseRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
 
@@ -27,10 +29,27 @@ function Dashboard() {
     }
   }, [dispatch, isError, isLoggedIn, message]);
 
+
+  // User is currently on this page
+  const [currentPage, setCurrentPage] = useState(1);
+  // No of Records to be displayed on each page   
+  const [recordsPerPage] = useState(10);
+
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+
+    // Records to be displayed on the current page
+    const currentRecords = jobs.slice(indexOfFirstRecord, 
+    indexOfLastRecord);
+
+    //calculating number of pages
+    const nPages = Math.ceil(jobs.length / recordsPerPage)
+
+
   return (
     <>
       {isLoading && <Loader />}
-
       <div>
         <Navbar />
 
@@ -41,13 +60,15 @@ function Dashboard() {
 
       <div className="container">
         <div>
-          {jobs.map((job, index) => (
-            <Jobs key={index} job={job} />
+          {jobs.map((job) => (
+            <Jobs key={job._id} job={job} />
           ))}
         </div>
+       
       </div>
     </>
   );
 }
+ 
 
-export default Dashboard;
+export default JobBoard;

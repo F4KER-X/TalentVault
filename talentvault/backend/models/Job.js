@@ -29,6 +29,7 @@ const jobSchema = mongoose.Schema({
   },
   jobType: {
     type: String,
+    enum: ['Full-time', 'Part-time', 'Contractor', 'Temporary', 'Other'],
     required: true
   },
   jobRequirements: {
@@ -44,6 +45,11 @@ const jobSchema = mongoose.Schema({
     type: String,
     enum: ['Open', 'Closed'],
     default: 'Open'
+  },
+  workType: {
+    type: String,
+    enum: ['Onsite', 'Hybrid', 'Remote'],
+    required: true
   }
 }, {
   timestamp: true

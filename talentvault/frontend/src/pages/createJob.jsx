@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import JobForm from "../components/Job/JobForm";
 import Loader from "../components/Loader";
+
+import Navbar from "../components/Navbar";
+
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import {
@@ -12,6 +15,7 @@ import {
   selectRole,
 } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
+import "../index.css";
 
 const initialState = {
   recruiterId: "",
@@ -23,6 +27,7 @@ const initialState = {
   jobRequirements: "",
   city: "",
   province: "",
+  workType: "",
 };
 
 const CreateJob = () => {
@@ -37,6 +42,8 @@ const CreateJob = () => {
 
   const [job, setJob] = useState(initialState);
   const [jobDescription, setJobDescription] = useState("");
+  const [error, setError] = useState(false);
+  const [salaryError, setSalaryError] = useState(false);
 
   const isLoading = useSelector(selectIsLoading);
 
@@ -48,6 +55,7 @@ const CreateJob = () => {
     jobRequirements,
     city,
     province,
+    workType,
   } = job;
 
   const handleInputChange = (ev) => {
@@ -67,12 +75,14 @@ const CreateJob = () => {
       maxSalary,
       minSalary,
       jobDescription,
-      jobType,
+      jobType: job.jobType || "Full-time",
       jobRequirements,
       jobLocation: {
         city,
         province,
       },
+
+      workType: job.workType || "Remote",
     };
 
     if (
@@ -83,31 +93,43 @@ const CreateJob = () => {
       !formData.minSalary ||
       !formData.jobDescription ||
       !formData.jobLocation.city ||
-      !formData.jobLocation.province
+      !formData.jobLocation.province ||
+      !formData.workType ||
+      !formData.jobRequirements
     ) {
+      setError(true);
       return toast.error("All fields are required");
     }
     if (formData.maxSalary < 0 || formData.minSalary < 0) {
+      setSalaryError(true);
       return toast.error("Negative salaries are not allowed");
     }
     if (formData.maxSalary <= formData.minSalary) {
-      return toast.error("Max salary can not be less than Min salary");
+      setSalaryError(true);
+      return toast.error("Max salary can not be less or equals to Min salary");
     }
-
+    setError(false);
+    setSalaryError(false);
     await dispatch(addJob(formData));
 
-    navigate("/test");
+    navigate("/dashboard");
   };
   return (
     <div>
       {isLoading && <Loader />}
-      <h3>Add new Job</h3>
+      <Navbar></Navbar>
+
+      <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+        Create your Job
+      </h3>
       <JobForm
         job={job}
         jobDescription={jobDescription}
         setJobDescription={setJobDescription}
         handleInputChange={handleInputChange}
         saveJob={saveJob}
+        error={error}
+        salaryError={salaryError}
       />
     </div>
   );

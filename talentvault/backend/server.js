@@ -40,6 +40,9 @@ app.use("/user", require("./routes/userRoutes"));
 
 app.use("/jobs", require("./routes/jobRoutes"));
 
+app.use("/applications", require("./routes/applicationRoutes"));
+
+
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("html")) {

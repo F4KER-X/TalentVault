@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import jobService from './jobServices'
+import jobServices from './jobServices'
 
 const initialState = {
     job: null,
@@ -16,7 +16,7 @@ export const addJob = createAsyncThunk(
     'jobs/create',
     async (formData, thunkAPI) => {
         try {
-            return await jobService.addJob(formData)
+            return await jobServices.addJob(formData)
         } catch (err) {
             const message = (
                 err.response && err.response.data && err.response.data.message
@@ -32,7 +32,7 @@ export const getJobs = createAsyncThunk(
     'jobs/getAll',
     async (_, thunkAPI) => {
         try {
-            return await jobService.getJobs()
+            return await jobServices.getJobs()
         } catch (err) {
             const message = (
                 err.response && err.response.data && err.response.data.message
@@ -48,7 +48,7 @@ export const deleteJob = createAsyncThunk(
     'jobs/delete',
     async (id, thunkAPI) => {
         try {
-            return await jobService.deleteJob(id)
+            return await jobServices.deleteJob(id)
         } catch (err) {
             const message = (
                 err.response && err.response.data && err.response.data.message
@@ -64,7 +64,24 @@ export const getOneJob = createAsyncThunk(
     'jobs/getJob',
     async (id, thunkAPI) => {
         try {
-            return await jobService.getOneJob(id)
+            return await jobServices.getOneJob(id)
+        } catch (err) {
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            console.log(message);
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+
+//edit job
+export const editJob = createAsyncThunk(
+    'jobs/editJob',
+    async ({ id, formData }, thunkAPI) => {
+        try {
+            return await jobServices.editJob(id, formData)
         } catch (err) {
             const message = (
                 err.response && err.response.data && err.response.data.message
@@ -141,9 +158,25 @@ const jobSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.isError = false
-                state.job = action.payload
+                toast.success('Job updated successfully ')
             })
             .addCase(getOneJob.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload
+                toast.error(action.payload)
+            })
+            .addCase(editJob.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(editJob.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.job = action.payload
+            })
+            .addCase(editJob.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true
