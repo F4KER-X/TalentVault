@@ -11,7 +11,7 @@ import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const Applications = ({ application }) => {
-    function JobStatus({ applicationStatus }) {
+    function ApplicationStatus({ applicationStatus }) {
         return (
             <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
             : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
@@ -37,6 +37,7 @@ const Applications = ({ application }) => {
               <div>
                 <div className="form-control">
                   <FaMailBulk /> {application.JobStatus}
+                  <ApplicationStatus applicationStatus={"Accepted"}/>
                 </div>
                 <div className="form-control">
                   <FaEnvelopeOpenText /> {application.applicationStatus}

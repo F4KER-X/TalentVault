@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
+import { selectID, selectIsLoggedIn, selectRole } from "../redux/features/auth/authSlice";
 import { useEffect } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import { getApplicationForUser } from "../redux/features/application/applicationSlice";
@@ -15,6 +15,8 @@ function Application() {
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userId = useSelector(selectID);
+  const userRole = useSelector(selectRole);
 
   const { applications, isLoading, isError, message } = useSelector(
     (state) => state.job
@@ -22,7 +24,9 @@ function Application() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getApplicationForUser());
+        console.log(userId);
+        console.log(userRole);
+      dispatch(getApplicationForUser(userId, userRole));
     }
     if (isError) {
       console.log(message);

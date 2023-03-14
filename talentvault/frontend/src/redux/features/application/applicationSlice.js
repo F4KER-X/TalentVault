@@ -14,9 +14,9 @@ const initialState = {
 
 export const getApplicationForUser = createAsyncThunk(
     'applications/getApplicationForUser',
-    async (id, thunkAPI) => {
+    async (formData, thunkAPI) => {
         try {
-            return await applicationService.getApplicationForUser(id)
+            return await applicationService.getApplicationForUser(formData)
         } catch (err) {
             const message = (
                 err.response && err.response.data && err.response.data.message
