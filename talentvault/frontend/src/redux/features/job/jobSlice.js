@@ -80,8 +80,6 @@ const jobSlice = createSlice({
     initialState,
     reducers: {
 
-
-
     },
     extraReducers: (builder) => {
         builder

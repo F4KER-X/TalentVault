@@ -13,7 +13,7 @@ const getApplicationForJob = asyncHandler(async (req, res) => {
         if (applications.length !== 0) {
             return res.status(200).json(applications)
         } else {
-            return res.status(404).json({ message: 'No current applications' })
+            return res.status(200).json({ message: 'No current applications' })
         }
     } else {
         return res.status(401).json({ message: 'Not a recruiter' })
@@ -28,12 +28,21 @@ const getApplicationForUser = asyncHandler(async (req, res) => {
 
     if (role === 'applicant') {
 
-        const applications = await Application.find({ applicantId: _id }).lean().exec()
+        let applications = await Application.find({ applicantId: _id }).lean().exec()
+
+        await Promise.all(applications.map(async (application) => {
+            const job = await Job.findById({ _id: application.jobId }).lean().exec()
+            application.jobTitle = job.jobTitle
+            application.companyName = job.companyName
+            application.jobStatus = job.status
+        }))
+
+
 
         if (applications.length !== 0) {
             return res.status(200).json(applications)
         } else {
-            return res.status(404).json({ message: 'No current applications' })
+            return res.status(200).json({ message: 'No current applications' })
         }
 
     } else {
