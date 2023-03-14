@@ -16,7 +16,6 @@ const UseRedirectNotAuthorizedRole = (path, userRole) => {
             dispatch(SET_ROLE(role))
 
             if (role !== userRole) {
-                toast.error('Not authorized')
                 navigate(path)
                 return
             }

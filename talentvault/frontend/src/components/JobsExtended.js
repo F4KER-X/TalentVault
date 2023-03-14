@@ -4,8 +4,7 @@ import { redirect, useNavigate, useParams } from "react-router-dom";
 import Wrapper from "../assets/styling/JobsExtended";
 
 import Loader from "./Loader";
-import DOMPurify from "dompurify";
-import JobDescription from "./DescriptionField";
+import DOMPurify from 'dompurify'
 import {
   FaBriefcase,
   FaBuilding,
@@ -131,21 +130,21 @@ const JobsExtended = () => {
       console.log(message);
     }
   }, [dispatch, isError, isLoggedIn, message, id]);
+
   // Access specific fields of the job object
   useEffect(() => {
     if (job) {
-      setJobTitle(job.jobTitle);
-      setCompanyName(job.companyName);
-      setMaxSalary(job.maxSalary);
-      setMinSalary(job.minSalary);
-      setJobDescription(job.jobDescription);
-      setJobType(job.jobType);
-      setJobRequirements(job.jobRequirements);
-      setJobLocation(job.jobLocation);
-      setStatus(job.status);
-      job.status === "Open" ? setIsOpen(true) : setIsOpen(false);
-      user_id === id ? setIsOwner(true) : setIsOwner(false);
-      setWorkType(job.workType);
+      setJobTitle(job?.jobTitle);
+      setCompanyName(job?.companyName);
+      setMaxSalary(job?.maxSalary);
+      setMinSalary(job?.minSalary);
+      setJobDescription(job?.jobDescription);
+      setJobType(job?.jobType);
+      setJobRequirements(job?.jobRequirements);
+      setJobLocation(job?.jobLocation);
+      setStatus(job?.status);
+      job?.status === "Open" ? setIsOpen(true) : setIsOpen(false);
+      setWorkType(job?.workType);
       setIsLoading(false);
     }
   }, [job, id, user_id]);
@@ -244,30 +243,28 @@ const JobsExtended = () => {
             {jobLocation.city}, {jobLocation.province}
           </h5> */}
           {isEditMode ? (
-            <div className="location-div">
-              <div className="title form-control ">
-                <FaMapMarkerAlt size={25} className="address" />
-                <input
-                  type="text"
-                  className="address form-input "
-                  name="city"
-                  value={jobLocation.city}
-                  onChange={handleJobLocation}
-                />
-
-                <input
-                  type="text"
-                  className="address form-input"
-                  name="province"
-                  value={jobLocation.province}
-                  onChange={handleJobLocation}
-                />
-              </div>
+            <div className="title form-control">
+              <FaMapMarkerAlt />
+              <input
+                type="text"
+                className="address"
+                name="city"
+                value={jobLocation?.city}
+                onChange={handleJobLocation}
+              />
+              ,
+              <input
+                type="text"
+                className="address"
+                name="province"
+                value={jobLocation?.province}
+                onChange={handleJobLocation}
+              />
             </div>
           ) : (
             <h5 className="title address form-control">
               <FaMapMarkerAlt />
-              {jobLocation.city}, {jobLocation.province}
+              {jobLocation?.city}, {jobLocation?.province}
             </h5>
           )}
 
@@ -377,85 +374,21 @@ const JobsExtended = () => {
                 <p>software engineer</p>
               </div>
 
-              {isEditMode ? (
-                <div className={`salary-div`}>
-                  <div className="floater">
-                    <label>Max Salary:</label>
-                    <input
-                      type="number"
-                      placeholder="Max Salary"
-                      name="maxSalary"
-                      value={maxSalary}
-                      onChange={handleMaxSalary}
-                    />
-                  </div>
-                  <div className="floater">
-                    <label>Min Salary:</label>
-                    <input
-                      type="number"
-                      placeholder="Min Salary"
-                      name="minSalary"
-                      value={minSalary}
-                      onChange={handleMinSalary}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className="couple">
-                  <h5>Salary</h5>
-                  <p>
-                    Between $<span>{minSalary}</span> and $
-                    <span>{maxSalary}</span>
-                  </p>
-                </div>
-              )}
-
-              {isEditMode ? (
-                <div className="jobRequirements">
-                  <label> Job Requirements</label>
-                  <br />
-                  <input
-                    className="jobreqinput"
-                    type="text"
-                    placeholder="Ex: Organized, Independent, Team-Player, HTML, CSS, JavaScript"
-                    name="jobRequirements"
-                    value={jobRequirements}
-                    onChange={handleJobRequirements}
-                  />
-                </div>
-              ) : (
-                <div className="couple">
-                  <h5>Requirements</h5>
-
-                  <ul>
-                    {requirementList.map((requirement, index) => (
-                      <li key={index}>{requirement}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {isEditMode ? (
-                <JobDescription
-                  jobDescription={jobDescription}
-                  setJobDescription={setJobDescription}
-                />
-              ) : (
-                <div className="couple">
-                  <h5>Description</h5>
-
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(jobDescription),
-                    }}
-                  ></div>
-                </div>
-              )}
+              <ul>
+                {requirementList.map((requirement, index) => (
+                  <li key={index}>{requirement.trim()}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="couple">
+              <h5>Description</h5>
+              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(jobDescription) }}></div>
             </div>
           </div>
         </div>
       </Wrapper>
     </>
+
   );
 };
 

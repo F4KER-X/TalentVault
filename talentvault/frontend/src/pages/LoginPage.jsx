@@ -23,6 +23,7 @@ const initialState = {
 
 export default function Login() {
   UseRedirectLoggedInUser("/dashboard");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

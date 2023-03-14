@@ -87,7 +87,6 @@ export const editJob = createAsyncThunk(
         (err.response && err.response.data && err.response.data.message) ||
         err.message ||
         err.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -183,7 +182,7 @@ const jobSlice = createSlice({
   },
 });
 
-export const {} = jobSlice.actions;
+export const { } = jobSlice.actions;
 
 export const selectIsLoading = (state) => state.job.isLoading;
 

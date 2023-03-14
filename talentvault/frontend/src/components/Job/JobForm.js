@@ -6,7 +6,7 @@ import { selectCompany, selectID } from "../../redux/features/auth/authSlice";
 import Card from "../Card/Card";
 import "./JobForm.css";
 import FormRow from "../FormRow";
-import Wrapper from "../../assets/styling/JobsExtended";
+import Wrapper from "../../assets/styling/CreateJob";
 
 const JobForm = ({
   job,
@@ -70,8 +70,8 @@ const JobForm = ({
                       error && !job?.maxSalary
                         ? "error"
                         : "" || salaryError
-                        ? "error"
-                        : ""
+                          ? "error"
+                          : ""
                     }
                     type="number"
                     placeholder="Max Salary"
@@ -87,8 +87,8 @@ const JobForm = ({
                       error && !job?.minSalary
                         ? "error"
                         : "" || salaryError
-                        ? "error"
-                        : ""
+                          ? "error"
+                          : ""
                     }
                     type="number"
                     placeholder="Min Salary"
@@ -159,9 +159,8 @@ const JobForm = ({
                 <label> Job Requirements</label>
                 <input
                   //className="jobreqinput"
-                  className={`jobreqinput ${
-                    error && !job?.jobRequirements ? "error" : ""
-                  }`}
+                  className={`jobreqinput ${error && !job?.jobRequirements ? "error" : ""
+                    }`}
                   type="text"
                   placeholder="Ex: Organized, Independent, Team-Player, HTML, CSS, JavaScript"
                   name="jobRequirements"
@@ -206,9 +205,8 @@ const JobForm = ({
                   onChange={setJobDescription}
                   modules={JobForm.modules}
                   formats={JobForm.formats}
-                  className={`jobdescriptionbox ${
-                    error && !jobDescription ? "error" : ""
-                  }`}
+                  className={`jobdescriptionbox ${error && !jobDescription ? "error" : ""
+                    }`}
                 />
               </div>
               <div className="btndiv">

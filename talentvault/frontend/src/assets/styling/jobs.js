@@ -23,9 +23,18 @@ const Wrapper = styled.section`
     justify-content: space-between;
   }
 
+  .form-control {
+    width: 95%;
+    border-radius: 5px;
+    border-width: 1px;
+    font-family: Roboto;
+    font-size: 15px;
+    margin: 2px 0;
+  }
+
   .title {
     margin-top: 0px;
-    font-size: 14px;
+    font-size: 17px;
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -44,11 +53,12 @@ const Wrapper = styled.section`
   }
   .job-status {
     display: inline-block;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 0.25rem;
+    margin-top: 2px
   }
 
   .job-status.open {
