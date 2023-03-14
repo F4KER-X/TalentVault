@@ -4,16 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import JobForm from "../components/Job/JobForm";
 import Loader from "../components/Loader";
-
 import Navbar from "../components/Navbar";
-
-import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
-import {
-  selectCompany,
-  selectID,
-  selectRole,
-} from "../redux/features/auth/authSlice";
+import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
 
@@ -31,9 +24,7 @@ const initialState = {
 };
 
 const CreateJob = () => {
-  UseRedirectLoggedOutUser("/login");
-  UseRedirectNotAuthorizedRole("/test", "recruiter");
-
+  UseRedirectNotAuthorizedRole("/dashboard", "recruiter");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -75,14 +66,14 @@ const CreateJob = () => {
       maxSalary,
       minSalary,
       jobDescription,
-      jobType: job.jobType || "Full-time",
+      jobType: jobType || "Full-time",
       jobRequirements,
       jobLocation: {
         city,
         province,
       },
 
-      workType: job.workType || "Remote",
+      workType: workType || "Remote",
     };
 
     if (
@@ -111,6 +102,8 @@ const CreateJob = () => {
     setError(false);
     setSalaryError(false);
     await dispatch(addJob(formData));
+
+    console.log(formData);
 
     navigate("/dashboard");
   };

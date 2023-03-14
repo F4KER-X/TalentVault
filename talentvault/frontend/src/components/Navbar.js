@@ -1,4 +1,4 @@
-import Wrapper from "../assets/styling/Navbar";
+import NavbarCSS from '../assets/styling/Navbar.module.css'
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,15 +8,10 @@ import {
   SET_LOGIN,
 } from "../redux/features/auth/authSlice";
 import { logoutUser } from "../redux/features/auth/authService";
-import { Link, useNavigate } from "react-router-dom";
-import user from "../assets/images/user.png";
-import edit from "../assets/images/edit.png";
-import inbox from "../assets/images/envelope.png";
-
+import { useNavigate } from "react-router-dom";
 import logoutt from "../assets/images/log-out.png";
 import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import Logo from "./Logo_no_text";
-
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineHome } from "react-icons/ai"
 import { CiLogout } from "react-icons/ci"
@@ -55,27 +50,27 @@ const Navbar = () => {
     navigate("/login");
   };
   return (
-    <Wrapper>
-      <nav className="navbar-n">
-        <Logo className="logo" />
+    <>
+      <nav className={NavbarCSS.myNavbar}>
+        <Logo className={NavbarCSS.myLogo} />
 
-        <GiHamburgerMenu size={24} className="burger cursor-pointer" />
+        <GiHamburgerMenu size={24} className={`${NavbarCSS.myBurger} ${NavbarCSS.myCursorPointer}`} />
 
-        <div className="menu-container" ref={menuRef}>
+        <div ref={menuRef}>
           <div
-            className="menu-trigger"
+            className={NavbarCSS.myMenuTrigger}
             onClick={() => {
               setOpen(!open);
             }}
           >
             <img src={photo} alt=""></img>
           </div>
-          <div className={`dropdown-menu-n ${open ? "active" : "inactive"}`}>
-            <h3>
+          <div className={`${NavbarCSS.myDropdownMenu} ${open ? NavbarCSS.active : NavbarCSS.inactive}`}>
+            <h3 className={NavbarCSS.h3}>
               Hello {firstName}! <br />
-              <span>{role}</span>
+              <span >{role}</span>
             </h3>
-            <ul>
+            <ul className={NavbarCSS.ul}>
               <DropdownItem
                 address={"/dashboard"}
                 icon={<AiOutlineHome />}
@@ -101,30 +96,26 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-    </Wrapper>
+    </>
   );
   function LogoutBtn(props) {
     return (
-      <Wrapper>
-        <li className="dropdownItem">
-
-          <button className="logout" onClick={logout}>
-            <CiLogout /> Logout
-          </button>
-
-        </li>
-      </Wrapper>
+      <li className={NavbarCSS.myDropdownItem}>
+        <button className={NavbarCSS.myLogout} onClick={logout}>
+          <CiLogout /> Logout
+        </button>
+      </li>
     );
   }
 };
 
 function DropdownItem(props) {
   return (
-    <Wrapper>
-      <li className="dropdownItem">
-        <a href={props.address}> {props.icon} {props.text}</a>
-      </li>
-    </Wrapper>
+
+    <li className={NavbarCSS.myDropdownItem}>
+      <a className={NavbarCSS.atag} href={props.address}> {props.icon} {props.text}</a>
+    </li>
+
   );
 }
 

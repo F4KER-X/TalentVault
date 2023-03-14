@@ -4,6 +4,11 @@ const Wrapper = styled.main`
   * {
     user-select: none;
   }
+  .container {
+    width: var(--fluid-width);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
 
   nav {
     width: var(--fluid-width);

@@ -6,7 +6,7 @@ import { selectCompany, selectID } from "../../redux/features/auth/authSlice";
 import Card from "../Card/Card";
 import "./JobForm.css";
 import FormRow from "../FormRow";
-import Wrapper from "../../assets/styling/JobsExtended";
+import Wrapper from "../../assets/styling/CreateJob";
 
 
 
@@ -25,7 +25,7 @@ const JobForm = ({ job, jobDescription, setJobDescription, handleInputChange, sa
                         <h5>Your Information</h5>
                         <div className="unchangeable-values">
 
-                            <div className="floater">
+                            <div className="uv-1">
                                 <label>Recruiter ID:</label>
                                 <input
                                     type="text"
@@ -35,7 +35,7 @@ const JobForm = ({ job, jobDescription, setJobDescription, handleInputChange, sa
                                     disabled
                                 />
                             </div>
-                            <div className="floater">
+                            <div className="uv-2" >
                                 <label>Company Name:</label>
                                 <input
                                     type="text"

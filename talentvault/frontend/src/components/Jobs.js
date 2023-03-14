@@ -1,4 +1,3 @@
-import "../index.css";
 import Wrapper from "../assets/styling/jobs";
 import {
   FaBriefcase,
@@ -21,8 +20,6 @@ const Jobs = ({ job }) => {
         <div className="form">
           <div className="top">
             <h4 className="form-title">{job?.jobTitle}</h4>
-            {/* <FaRegEdit className="edit" size={20} />
-            <AiOutlineDelete className="delete" size={20} /> */}
           </div>
 
           <h6 className="title">{job?.companyName} </h6>

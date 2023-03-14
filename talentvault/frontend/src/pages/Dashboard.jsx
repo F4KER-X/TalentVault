@@ -1,15 +1,14 @@
-import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
 import { useEffect } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
+import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 
 function Dashboard() {
-  UseRedirectLoggedOutUser("/login");
+  // UseRedirectNotAuthorizedRole("/profile", "applicant");
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
