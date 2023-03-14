@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import Wrapper from "../assets/styling/JobsExtended";
-import InputField from "./InputField";
+
 import Loader from "./Loader";
 import DOMPurify from 'dompurify'
 import {
@@ -15,28 +15,37 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 
-import { getOneJob } from "../redux/features/job/jobSlice";
+import { deleteJob, getOneJob, editJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
-import { selectRole } from "../redux/features/auth/authSlice";
+import { selectRole, selectID } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiInfo } from "react-icons/fi";
+
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import DeleteModal from "./DeleteModal";
+import Card from "./Card/Card";
+import { toast } from "react-toastify";
 const JobsExtended = () => {
   const role = useSelector(selectRole);
   const { id } = useParams();
+  const user_id = useSelector(selectID);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   //setting up states
   const [isLoading, setIsLoading] = useState(false);
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [maxSalary, setMaxSalary] = useState(null);
-  const [minSalary, setMinSalary] = useState(null);
+  const [maxSalary, setMaxSalary] = useState(0);
+  const [minSalary, setMinSalary] = useState(0);
   const [jobDescription, setJobDescription] = useState("");
-  const [jobType, setJobType] = useState(null);
+  const [jobType, setJobType] = useState("");
   const [jobRequirements, setJobRequirements] = useState("");
   const [jobLocation, setJobLocation] = useState("");
   const [status, setStatus] = useState("");
@@ -63,13 +72,50 @@ const JobsExtended = () => {
   const handleWorkType = (ev) => {
     setWorkType(ev.target.value);
   };
+  const handleJobRequirements = (ev) => {
+    setJobRequirements(ev.target.value);
+  };
   const handleJobType = (ev) => {
     setJobType(ev.target.value);
   };
   const handleJobLocation = (ev) => {
-    setJobLocation(ev.target.value);
+    const { name, value } = ev.target;
+    setJobLocation((prevState) => ({ ...prevState, [name]: value }));
+  };
+  const handleStatusClick = () => {
+    const newIsOpen = !isOpen;
+    setIsOpen(newIsOpen);
+    setStatus(newIsOpen ? "Open" : "Closed");
   };
 
+  function handleEditClick(ev) {
+    ev.preventDefault();
+    setIsEditMode((prevState) => !prevState);
+  }
+  const handleSubmitClick = async (ev) => {
+    ev.preventDefault();
+    setIsLoading(true);
+    const formData = {
+      jobTitle,
+      companyName,
+      isOpen,
+      maxSalary,
+      minSalary,
+      jobDescription,
+      jobType,
+      jobRequirements,
+      jobLocation,
+      status,
+      workType,
+    };
+    await dispatch(editJob(formData, id));
+
+    setIsEditMode(false);
+    setIsLoading(false);
+  };
+  const handleCancelClick = () => {
+    window.location.reload();
+  };
   const { job, isError, message } = useSelector(
     (state) => state.job,
     (prev, next) => prev.job === next.job
@@ -101,24 +147,43 @@ const JobsExtended = () => {
       setWorkType(job?.workType);
       setIsLoading(false);
     }
-  }, [job]);
+  }, [job, id, user_id]);
   const requirements = jobRequirements;
   const requirementList = requirements.split(","); // split on commas and spaces
 
-  function JobStatus({ isOpen }) {
+  function JobStatus({ isOpen, onClick }) {
     return (
-      <div className={`job-status ${isOpen ? "open" : "closed"}`}>
+      <div
+        onClick={onClick}
+        className={`job-status ${isOpen ? "open" : "closed"}`}
+      >
         {isOpen ? "Open" : "Closed"}
       </div>
     );
   }
-  const [isEditing, setIsEditing] = useState(false);
 
-  function handleEditClick(e) {
-    e.preventDefault();
-    setIsEditing(true);
-  }
+  //delete job
+  const delJob = async (id) => {
+    const promise = await dispatch(deleteJob(id));
+    if (promise.meta.requestStatus === "fulfilled") navigate("/dashboard");
+  };
 
+  const confirmDelete = (id) => {
+    confirmAlert({
+      title: "Delete Job",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Delete",
+          onClick: () => delJob(id),
+        },
+        {
+          label: "Cancel",
+          //onClick: () => delJob(id)
+        },
+      ],
+    });
+  };
   return (
     <>
       {isLoading && <Loader />}
@@ -127,12 +192,37 @@ const JobsExtended = () => {
 
       <Wrapper>
         <div className="form">
+          <div className="buttons-2">
+            {" "}
+            {isEditMode && (
+              <button className="btn" onClick={() => handleSubmitClick()}>
+                <AiOutlineDelete className="delete" size={20} />
+                Submit
+              </button>
+            )}
+            {!isEditMode && (
+              <button className="btn" onClick={handleEditClick}>
+                <FaRegEdit className="edit" size={20} />
+                {isEditMode ? "Save" : "Edit"}
+              </button>
+            )}
+            {isEditMode && (
+              <button className="btn" onClick={handleCancelClick}>
+                <AiOutlineDelete className="delete" size={20} />
+                Cancel
+              </button>
+            )}
+            <button className="btn" onClick={() => confirmDelete(id)}>
+              <AiOutlineDelete className="delete" size={20} />
+              Delete
+            </button>
+          </div>
           <div className="top">
             {isEditMode ? (
               <input
                 type="text"
                 className={
-                  "form-title form-control" +
+                  "form-title  form-input" +
                   (jobTitle === "" ? " is-invalid" : "")
                 }
                 name="jobTitle"
@@ -144,31 +234,9 @@ const JobsExtended = () => {
             )}
 
             {/* <h4 className="form-title">{jobTitle}</h4> */}
-            <div className="buttons-2">
-              {" "}
-              <button className="btn" onClick={handleEditClick}>
-                <FaRegEdit className="edit" size={20} /> Edit{" "}
-              </button>
-              <button className="btn">
-                <AiOutlineDelete className="delete" size={20} /> Delete{" "}
-              </button>
-            </div>
           </div>
 
-          {/* <h5 className="title form-control">{companyName} </h5> */}
-          {isEditMode ? (
-            <input
-              type="text"
-              className={
-                "title form-control" + (companyName === "" ? " is-invalid" : "")
-              }
-              name="companyName"
-              value={companyName}
-              onChange={handleCompanyName}
-            />
-          ) : (
-            <h5 className="title form-control">{companyName}</h5>
-          )}
+          <h5 className="title form-control">{companyName}</h5>
 
           {/* <h5 className="title address form-control">
             <FaMapMarkerAlt />
@@ -207,11 +275,10 @@ const JobsExtended = () => {
               <select
                 name="workType"
                 className="remote-type-select"
-                value={job?.workType}
+                value={workType}
                 onChange={handleWorkType}
                 aria-required="true"
               >
-                <option className="dropdown_options" value="Remote"></option>
                 <option className="dropdown_options" value="Remote">
                   Remote
                 </option>
@@ -232,22 +299,66 @@ const JobsExtended = () => {
           )}
 
           <div>
-            <div className="form-control">
-              <FaBriefcase /> {jobType}
-            </div>
-            <div>
-              <JobStatus isOpen={isOpen} />
-            </div>
-
-            <div className="buttons-2">
-              <div href="" className="btn">
-                Apply <FaExternalLinkAlt className="apply" size={15} />
+            {isEditMode ? (
+              <div className="Employment-Type">
+                <div className="floater">
+                  <FaBriefcase />
+                  <label>Employment Type:</label>
+                  <select
+                    name="jobType"
+                    className="employment-type-select"
+                    value={jobType}
+                    onChange={handleJobType}
+                    aria-required="true"
+                  >
+                    <option className="dropdown_options" value="Full-time">
+                      Full-Time
+                    </option>
+                    <option className="dropdown_options" value="Part-time">
+                      Part-Time
+                    </option>
+                    <option className="dropdown_options" value="Contractor">
+                      Contractor
+                    </option>
+                    <option className="dropdown_options" value="Temporary">
+                      Temporary
+                    </option>
+                    <option className="dropdown_options" value="Other">
+                      Other
+                    </option>
+                  </select>
+                </div>
               </div>
-
-              <div href="" className="btn-success">
-                Applied <FaCheck className="info" size={15} />
+            ) : (
+              <div className="form-control">
+                <FaBriefcase /> {jobType}
               </div>
-            </div>
+            )}
+
+            {isEditMode ? (
+              <>
+                <div className="Couple">
+                  Click To Change The Status
+                  <JobStatus isOpen={isOpen} onClick={handleStatusClick} />
+                </div>
+              </>
+            ) : (
+              <div>
+                <JobStatus isOpen={isOpen} />
+              </div>
+            )}
+
+            {role === "Applicant" && (
+              <div className="buttons-2">
+                <div href="" className="btn">
+                  Apply <FaExternalLinkAlt className="apply" size={15} />
+                </div>
+
+                <div href="" className="btn-success">
+                  Applied <FaCheck className="info" size={15} />
+                </div>
+              </div>
+            )}
           </div>
           <div className="description">
             <h4>Job Details</h4>
@@ -262,110 +373,23 @@ const JobsExtended = () => {
                 <h5>postion</h5>
                 <p>software engineer</p>
               </div>
-              <div className="couple">
-                <h5>Salary</h5>
-                <p>
-                  Between $<span>{minSalary}</span> and $
-                  <span>{maxSalary}</span>
-                </p>
-              </div>
-              <div className="couple">
-                <h5>Requirements</h5>
 
-                <ul>
-                  {requirementList.map((requirement, index) => (
-                    <li key={index}>{requirement.trim()}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="couple">
-                <h5>Description</h5>
-                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(jobDescription) }}></div>
-              </div>
+              <ul>
+                {requirementList.map((requirement, index) => (
+                  <li key={index}>{requirement.trim()}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="couple">
+              <h5>Description</h5>
+              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(jobDescription) }}></div>
             </div>
           </div>
         </div>
       </Wrapper>
     </>
+
   );
 };
+
 export default JobsExtended;
-
-{
-  /* To be implemented, the edit form
-      <Wrapper>
-        <div className="form">
-          <div className="top">
-            <h4 className="form-title">Insert Job Title Here</h4>
-            <FaRegEdit className="edit" size={20} onClick={handleEditClick} />
-            <AiOutlineDelete className="delete" size={20} />
-          </div>
-
-          <h6 className="title">Insert company * City, Province </h6>
-          <h6 className="title address">Insert City, Province</h6>
-          <div>
-            <div className="form-control">
-              <FaRegBuilding /> Remote
-            </div>
-
-            <div className="form-control">
-              <FaBriefcase /> Full time
-            </div>
-            <div>
-              <JobStatus isOpen={true} />
-            </div>
-
-            <div className="buttons-2">
-              <div href="" className="btn">
-                Apply <FaExternalLinkAlt className="apply" size={15} />
-              </div>
-
-              <div href="" className="btn-success">
-                Applied <FaCheck className="info" size={15} />
-              </div>
-            </div>
-          </div>
-          <div className="description">
-            <h4>Job Details</h4>
-
-            <div className="`container">
-              <div className="couple">
-                <h5>Job Type</h5>
-                <InputField />
-              </div>
-
-              <div className="couple">
-                <h5>postion</h5>
-                <p>software engineer</p>
-              </div>
-              <div className="couple">
-                <h5>Salary</h5>
-                <p>
-                  Between $<span>25000</span> and $<span>30000</span>
-                </p>
-              </div>
-              <div className="couple">
-                <h5>Requirements</h5>
-
-                <ul>
-                  {requirementList.map((requirement, index) => (
-                    <li key={index}>{requirement}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="couple">
-                <h5>Description</h5>
-                <p>
-                  We are seeking a skilled React developer to join our team. You
-                  will be responsible for developing and maintaining web
-                  applications using React, Redux, and related technologies. The
-                  ideal candidate will have experience with responsive design,
-                  cross-browser compatibility, and testing frameworks such as
-                  Jest or Enzyme.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Wrapper> */
-}

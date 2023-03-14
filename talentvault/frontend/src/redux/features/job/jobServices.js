@@ -35,7 +35,7 @@ const jobServices = {
   getJobs,
   deleteJob,
   getOneJob,
-  editJob
-}
+  editJob,
+};
 
 export default jobServices;

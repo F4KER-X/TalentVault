@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import JobForm from "../components/Job/JobForm";
 import Loader from "../components/Loader";
+
 import Navbar from "../components/Navbar";
+
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
@@ -102,8 +105,6 @@ const CreateJob = () => {
     setError(false);
     setSalaryError(false);
     await dispatch(addJob(formData));
-
-    console.log(formData);
 
     navigate("/dashboard");
   };

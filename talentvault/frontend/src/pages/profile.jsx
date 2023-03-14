@@ -173,7 +173,7 @@ function Profile() {
   };
 
   //delete function
-  const idk = async () => {
+  const deleteAccount = async () => {
     setIsLoading(true);
     await dispatch(deleteUser);
     toast.success("Account deleted successfully");
@@ -457,7 +457,7 @@ function Profile() {
                 <DeleteModal
                   show={show}
                   handleClose={handleClose}
-                  handleDeleteItem={idk}
+                  handleDeleteItem={deleteAccount}
                   message={
                     "All information will be deleted, are you sure you want to proceed?"
                   }

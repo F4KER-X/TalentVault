@@ -91,8 +91,10 @@ const Wrapper = styled.section`
   }
   .buttons-2 {
     display: flex;
-    flex-direction: row;
-    margin: 1rem auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
   }
   .edit {
     margin-top: 6px;
@@ -118,13 +120,37 @@ const Wrapper = styled.section`
     margin-top: 1rem;
     text-align: left;
   }
+  .floater {
+    float: left;
+    width: 50%;
+  }
+  .location-div {
+    padding-bottom: 40px;
+    padding-top: 15px;
+  }
+  .location-div label {
+    font-family: Roboto;
+    padding-right: 10px;
+  }
+
+  .location-div input {
+    background-color: #e2ebf4;
+    border: 1px solid var(--grey-200);
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+    height: 35px;
+  }
   .btn {
-    margin-right: 1rem;
-    padding: auto;
-    margin-top: 1rem;
+    width: 150px; /* Change this to your desired width */
+    margin: 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .address {
     margin-bottom: 20px;
+    margin-right: 20px;
   }
 
   .form-title {
