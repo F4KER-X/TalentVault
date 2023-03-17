@@ -50,6 +50,10 @@ const jobSchema = mongoose.Schema({
     type: String,
     enum: ['Onsite', 'Hybrid', 'Remote'],
     required: true
+  },
+  numberOfApplication: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamp: true

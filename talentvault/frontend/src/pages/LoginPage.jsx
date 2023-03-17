@@ -3,11 +3,12 @@ import Logo from "../components/Logo_no_text";
 import FormRow from "../components/FormRow";
 import "../index.css";
 import Wrapper from "../assets/styling/RegisterPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, validateEmail } from "../redux/features/auth/authService";
 import {
+  selectRole,
   SET_LOGIN,
   SET_NAME,
   SET_PHOTO,
@@ -23,7 +24,7 @@ const initialState = {
 
 export default function Login() {
   UseRedirectLoggedInUser("/dashboard");
-
+  const role = useSelector(selectRole);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,8 +63,13 @@ export default function Login() {
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(data.firstName));
       await dispatch(SET_PHOTO(data.profilePicUrl.URL));
-      await dispatch(SET_ROLE(data.role));
-      navigate("/dashboard");
+      //await dispatch(SET_ROLE(data.role));
+      // if (data.role === "applicant")
+      //navigate("/dashboard");
+
+      if (role === "recruiter") navigate("/job/my-jobs");
+      if (role === "applicant") navigate("/dashboard");
+
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

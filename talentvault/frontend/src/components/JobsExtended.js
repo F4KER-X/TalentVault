@@ -1,73 +1,160 @@
 import React, { useState, useEffect } from "react";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Wrapper from "../assets/styling/JobsExtended";
-
+import ReactQuill from "react-quill";
 import Loader from "./Loader";
 import DOMPurify from 'dompurify'
 import {
   FaBriefcase,
-  FaBuilding,
   FaRegBuilding,
   FaExternalLinkAlt,
   FaRegEdit,
-  FaCheck,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-
 import { deleteJob, getOneJob, editJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
-import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { selectRole, selectID } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
-import { FiInfo } from "react-icons/fi";
-
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import DeleteModal from "./DeleteModal";
-import Card from "./Card/Card";
 import { toast } from "react-toastify";
+import Navbar from "./Navbar";
+
 const JobsExtended = () => {
   const role = useSelector(selectRole);
   const { id } = useParams();
-  const user_id = useSelector(selectID);
+  const userId = useSelector(selectID)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //setting up states
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [isOwner, setIsOwner] = useState(false);
+  //states
+  const [isLoading, setIsLoading] = useState(false)
   const [jobTitle, setJobTitle] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
   const [maxSalary, setMaxSalary] = useState(0);
   const [minSalary, setMinSalary] = useState(0);
   const [jobDescription, setJobDescription] = useState("");
   const [jobType, setJobType] = useState("");
-  const [jobRequirements, setJobRequirements] = useState("");
   const [jobLocation, setJobLocation] = useState("");
+  const [jobRequirements, setJobRequirements] = useState("");
   const [status, setStatus] = useState("");
   const [workType, setWorkType] = useState("");
+  const [editMode, setEditMode] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
 
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  //Handle change
+
+  const { job, isError, message } = useSelector((state) => state.job)
+
+  //fetching job data
+  useEffect(() => {
+    if (isLoggedIn) {
+      setIsLoading(true)
+      dispatch(getOneJob(id))
+    }
+
+    if (isError) {
+      toast.error(message)
+    }
+
+    setIsLoading(false)
+
+  }, [dispatch, id, isLoggedIn, isError, message, setIsOwner])
+
+  //setting all states
+  useEffect(() => {
+    if (job?.recruiterId === userId) setIsOwner(true)
+    setJobTitle(job?.jobTitle)
+    setCompanyName(job?.companyName)
+    setMaxSalary(job?.maxSalary)
+    setMinSalary(job?.minSalary)
+    setJobDescription(job?.jobDescription)
+    setJobType(job?.jobType)
+    setJobLocation(job?.jobLocation)
+    setJobRequirements(job?.jobRequirements)
+    setStatus(job?.status)
+    setWorkType(job?.workType)
+  }, [job?.recruiterId, job?.jobTitle, job?.companyName, job?.maxSalary, job?.minSalary, job?.jobDescription, job?.jobType, job?.jobLocation, job?.jobRequirements, job?.status, job?.workType, userId],)
+
+
+
+  function JobStatus({ isOpen, onClick }) {
+    return (
+      <div
+        onClick={onClick}
+        className={`job-status ${isOpen ? "open" : "closed"}`}
+      >
+        {isOpen ? "Open" : "Closed"}
+      </div>
+    );
+  }
+
+  //edit button
+  const handleEditJobButton = (ev) => {
+    ev.preventDefault();
+    setEditMode((prevState) => !prevState);
+  }
+
+  const handleCancelClick = () => {
+    setEditMode(false)
+    window.location.reload();
+  }
+
+  const handleSaveClick = async (ev) => {
+    ev.preventDefault()
+
+    const formData = {
+      jobTitle,
+      maxSalary,
+      minSalary,
+      jobDescription,
+      jobType,
+      jobRequirements,
+      jobLocation: {
+        city: jobLocation.city,
+        province: jobLocation.province,
+      },
+      workType,
+      status
+    };
+
+    if (
+      !formData.jobTitle ||
+      !formData.maxSalary ||
+      !formData.minSalary ||
+      !formData.jobDescription ||
+      !formData.jobLocation.city ||
+      !formData.jobLocation.province ||
+      !formData.workType ||
+      !formData.jobRequirements
+    ) {
+      return toast.error("All fields are required");
+    }
+
+    if (formData.maxSalary < 0 || formData.minSalary < 0) {
+      return toast.error("Negative salaries are not allowed");
+    }
+
+    if (formData.maxSalary <= formData.minSalary) {
+      return toast.error("Max salary can not be less or equals to Min salary");
+    }
+    setIsLoading(true)
+    dispatch(editJob({ id, formData }))
+    setIsLoading(false)
+    setEditMode(false)
+  }
+
   const handleJobTitle = (ev) => {
     setJobTitle(ev.target.value);
-  };
-  const handleCompanyName = (ev) => {
-    setCompanyName(ev.target.value);
   };
   const handleMaxSalary = (ev) => {
     setMaxSalary(ev.target.value);
   };
   const handleMinSalary = (ev) => {
     setMinSalary(ev.target.value);
-  };
-  const handleJobDescription = (ev) => {
-    setJobDescription(ev.target.value);
   };
   const handleWorkType = (ev) => {
     setWorkType(ev.target.value);
@@ -83,87 +170,14 @@ const JobsExtended = () => {
     setJobLocation((prevState) => ({ ...prevState, [name]: value }));
   };
   const handleStatusClick = () => {
-    const newIsOpen = !isOpen;
-    setIsOpen(newIsOpen);
-    setStatus(newIsOpen ? "Open" : "Closed");
+    setStatus(status === 'Open' ? "Closed" : "Open");
   };
 
-  function handleEditClick(ev) {
-    ev.preventDefault();
-    setIsEditMode((prevState) => !prevState);
-  }
-  const handleSubmitClick = async (ev) => {
-    ev.preventDefault();
-    setIsLoading(true);
-    const formData = {
-      jobTitle,
-      companyName,
-      isOpen,
-      maxSalary,
-      minSalary,
-      jobDescription,
-      jobType,
-      jobRequirements,
-      jobLocation,
-      status,
-      workType,
-    };
-    await dispatch(editJob(formData, id));
-
-    setIsEditMode(false);
-    setIsLoading(false);
-  };
-  const handleCancelClick = () => {
-    window.location.reload();
-  };
-  const { job, isError, message } = useSelector(
-    (state) => state.job,
-    (prev, next) => prev.job === next.job
-  );
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (isLoggedIn) {
-      dispatch(getOneJob(id));
-    }
-    if (isError) {
-      console.log(message);
-    }
-  }, [dispatch, isError, isLoggedIn, message, id]);
-
-  // Access specific fields of the job object
-  useEffect(() => {
-    if (job) {
-      setJobTitle(job?.jobTitle);
-      setCompanyName(job?.companyName);
-      setMaxSalary(job?.maxSalary);
-      setMinSalary(job?.minSalary);
-      setJobDescription(job?.jobDescription);
-      setJobType(job?.jobType);
-      setJobRequirements(job?.jobRequirements);
-      setJobLocation(job?.jobLocation);
-      setStatus(job?.status);
-      job?.status === "Open" ? setIsOpen(true) : setIsOpen(false);
-      setWorkType(job?.workType);
-      setIsLoading(false);
-    }
-  }, [job, id, user_id]);
   const requirements = jobRequirements;
-  const requirementList = requirements.split(","); // split on commas and spaces
-
-  function JobStatus({ isOpen, onClick }) {
-    return (
-      <div
-        onClick={onClick}
-        className={`job-status ${isOpen ? "open" : "closed"}`}
-      >
-        {isOpen ? "Open" : "Closed"}
-      </div>
-    );
-  }
+  const requirementList = requirements?.split(",");
 
   //delete job
-  const delJob = async (id) => {
+  const handleDelJob = async (id) => {
     const promise = await dispatch(deleteJob(id));
     if (promise.meta.requestStatus === "fulfilled") navigate("/dashboard");
   };
@@ -175,11 +189,10 @@ const JobsExtended = () => {
       buttons: [
         {
           label: "Delete",
-          onClick: () => delJob(id),
+          onClick: () => handleDelJob(id),
         },
         {
           label: "Cancel",
-          //onClick: () => delJob(id)
         },
       ],
     });
@@ -190,64 +203,51 @@ const JobsExtended = () => {
 
       {/* below is the normal form */}
 
+      <Navbar />
       <Wrapper>
         <div className="form">
-          <div className="buttons-2">
-            {" "}
-            {isEditMode && (
-              <button className="btn" onClick={() => handleSubmitClick()}>
-                <AiOutlineDelete className="delete" size={20} />
-                Submit
+          {isOwner &&
+            <div className="buttons-2">
+              {editMode ? <><button className="btn" onClick={handleSaveClick}>
+                <FaRegEdit className="edit" size={20} />Save
               </button>
-            )}
-            {!isEditMode && (
-              <button className="btn" onClick={handleEditClick}>
-                <FaRegEdit className="edit" size={20} />
-                {isEditMode ? "Save" : "Edit"}
-              </button>
-            )}
-            {isEditMode && (
-              <button className="btn" onClick={handleCancelClick}>
-                <AiOutlineDelete className="delete" size={20} />
-                Cancel
-              </button>
-            )}
-            <button className="btn" onClick={() => confirmDelete(id)}>
-              <AiOutlineDelete className="delete" size={20} />
-              Delete
-            </button>
-          </div>
+                <button className="btn" onClick={handleCancelClick}>
+                  <AiOutlineDelete className="delete" size={20} /> Cancel
+                </button></> :
+                <><button className="btn" onClick={handleEditJobButton}>
+                  <FaRegEdit className="edit" size={20} />Edit Job
+                </button>
+                  <button className="btn" onClick={() => confirmDelete(id)}>
+                    <AiOutlineDelete className="delete" size={20} /> Delete
+                  </button></>
+              }
+            </div>
+          }
           <div className="top">
-            {isEditMode ? (
-              <input
-                type="text"
-                className={
-                  "form-title  form-input" +
-                  (jobTitle === "" ? " is-invalid" : "")
-                }
-                name="jobTitle"
-                value={jobTitle}
-                onChange={handleJobTitle}
-              />
-            ) : (
-              <h4 className="form-title">{jobTitle}</h4>
-            )}
+            {editMode ? (
+              <>
+                <input
+                  type="text"
+                  className={
 
-            {/* <h4 className="form-title">{jobTitle}</h4> */}
+                    "form-title form-input" +
+                    (jobTitle === "" ? " is-invalid" : "")
+                  }
+                  name="jobTitle"
+                  value={jobTitle}
+                  onChange={handleJobTitle}
+                /></>
+            ) :
+              <h4 className="form-title">{jobTitle}</h4>}
           </div>
 
           <h5 className="title form-control">{companyName}</h5>
-
-          {/* <h5 className="title address form-control">
-            <FaMapMarkerAlt />
-            {jobLocation.city}, {jobLocation.province}
-          </h5> */}
-          {isEditMode ? (
+          {editMode ? (
             <div className="title form-control">
               <FaMapMarkerAlt />
               <input
                 type="text"
-                className="address"
+                className={"address form-input-location" + (jobLocation?.city === "" ? " is-invalid" : "")}
                 name="city"
                 value={jobLocation?.city}
                 onChange={handleJobLocation}
@@ -255,7 +255,7 @@ const JobsExtended = () => {
               ,
               <input
                 type="text"
-                className="address"
+                className={"address form-input-location" + (!jobLocation?.province ? " is-invalid" : "")}
                 name="province"
                 value={jobLocation?.province}
                 onChange={handleJobLocation}
@@ -263,13 +263,12 @@ const JobsExtended = () => {
             </div>
           ) : (
             <h5 className="title address form-control">
-              <FaMapMarkerAlt />
+              <FaMapMarkerAlt className="locationIcon" />
               {jobLocation?.city}, {jobLocation?.province}
-            </h5>
-          )}
+            </h5>)}
 
-          {isEditMode ? (
-            <div className="floater">
+          {editMode ? (
+            <div className="workTypediv">
               <FaRegBuilding />
               <label className="remotelabel">Work Type:</label>
               <select
@@ -283,106 +282,151 @@ const JobsExtended = () => {
                   Remote
                 </option>
                 <option className="dropdown_options" value="Hybrid">
-                  {" "}
                   Hybrid
                 </option>
                 <option className="dropdown_options" value="Onsite">
-                  {" "}
                   On-site
                 </option>
               </select>
             </div>
-          ) : (
+          ) :
             <div className="form-control">
               <FaRegBuilding /> {workType}
             </div>
-          )}
+          }
 
           <div>
-            {isEditMode ? (
-              <div className="Employment-Type">
-                <div className="floater">
-                  <FaBriefcase />
-                  <label>Employment Type:</label>
-                  <select
-                    name="jobType"
-                    className="employment-type-select"
-                    value={jobType}
-                    onChange={handleJobType}
-                    aria-required="true"
-                  >
-                    <option className="dropdown_options" value="Full-time">
-                      Full-Time
-                    </option>
-                    <option className="dropdown_options" value="Part-time">
-                      Part-Time
-                    </option>
-                    <option className="dropdown_options" value="Contractor">
-                      Contractor
-                    </option>
-                    <option className="dropdown_options" value="Temporary">
-                      Temporary
-                    </option>
-                    <option className="dropdown_options" value="Other">
-                      Other
-                    </option>
-                  </select>
-                </div>
+            {editMode ? (
+              <div className="jobTypediv">
+                <FaBriefcase />
+                <label className="remotelabel">Employment Type:</label>
+                <select
+                  name="jobType"
+                  className="employment-type-select"
+                  value={jobType}
+                  onChange={handleJobType}
+                  aria-required="true"
+                >
+                  <option className="dropdown_options" value="Full-time">
+                    Full-Time
+                  </option>
+                  <option className="dropdown_options" value="Part-time">
+                    Part-Time
+                  </option>
+                  <option className="dropdown_options" value="Contractor">
+                    Contractor
+                  </option>
+                  <option className="dropdown_options" value="Temporary">
+                    Temporary
+                  </option>
+                  <option className="dropdown_options" value="Other">
+                    Other
+                  </option>
+                </select>
               </div>
-            ) : (
+            ) :
               <div className="form-control">
                 <FaBriefcase /> {jobType}
               </div>
-            )}
+            }
 
-            {isEditMode ? (
+            {editMode ? (
               <>
                 <div className="Couple">
-                  Click To Change The Status
-                  <JobStatus isOpen={isOpen} onClick={handleStatusClick} />
+                  <div className="statusDiv">
+                    <span className="statusSpan">Click to change the status:</span>
+                    <JobStatus isOpen={status === 'Open'} onClick={handleStatusClick} />
+                  </div>
                 </div>
               </>
             ) : (
               <div>
-                <JobStatus isOpen={isOpen} />
-              </div>
-            )}
+                <JobStatus isOpen={status === 'Open'} />
+              </div>)}
 
-            {role === "Applicant" && (
-              <div className="buttons-2">
-                <div href="" className="btn">
-                  Apply <FaExternalLinkAlt className="apply" size={15} />
-                </div>
+            {role === "applicant" && !editMode && (
+              <div className="buttons-1">
+                <button className="btn" style={{ marginLeft: "0", marginTop: "15px" }}>
+                  Apply <FaExternalLinkAlt className="" size={15} />
+                </button>
 
-                <div href="" className="btn-success">
-                  Applied <FaCheck className="info" size={15} />
-                </div>
               </div>
             )}
           </div>
+
           <div className="description">
             <h4>Job Details</h4>
 
-            <div className="`container">
-              <div className="couple">
+            <div className="container">
+              {!editMode && <div className="couple">
                 <h5>Job Type</h5>
                 <p>{jobType}</p>
-              </div>
+              </div>}
+
 
               <div className="couple">
-                <h5>postion</h5>
-                <p>software engineer</p>
+                <h5>Salary</h5>
+                {editMode ?
+                  <div className='salary-d'>
+                    <div className="floater">
+                      <label>Max Salary:</label>
+                      <input
+                        className={!maxSalary && 'is-invalid'}
+                        type="number"
+                        placeholder="Max Salary"
+                        name="maxSalary"
+                        value={maxSalary}
+                        onChange={handleMaxSalary}
+                      />
+                    </div>
+                    <div className="floater">
+                      <label>Min Salary:</label>
+                      <input
+                        className={!minSalary && 'is-invalid'}
+                        type="number"
+                        placeholder="Min Salary"
+                        name="minSalary"
+                        value={minSalary}
+                        onChange={handleMinSalary}
+
+                      />
+                    </div>
+                  </div> : <p>Between: ${minSalary} and ${maxSalary}</p>}
               </div>
 
-              <ul>
-                {requirementList.map((requirement, index) => (
-                  <li key={index}>{requirement.trim()}</li>
-                ))}
-              </ul>
+              {editMode ? <div className="jobRequirements couple">
+                <h5>Requirements</h5>
+                <br />
+                <textarea
+                  className={"jobreqinput" + (jobRequirements === '' ? ' is-invalid' : '')}
+                  placeholder="Ex: Organized, Independent, Team-Player, HTML, CSS, JavaScript"
+                  name="jobRequirements"
+                  value={jobRequirements}
+                  onChange={handleJobRequirements}
+                ></textarea>
+              </div> : <div className="couple">
+                <h5>Requirements</h5>
+                <ul>
+                  {requirementList?.map((requirement, index) => (
+                    <li key={index}>{requirement.trim()}</li>
+                  ))}
+                </ul>
+              </div>}
+
             </div>
             <div className="couple">
               <h5>Description</h5>
-              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(jobDescription) }}></div>
+              {editMode ? <div className="jobdescriptiondiv jobDescriptionPara">
+                <ReactQuill
+                  theme="snow"
+                  value={jobDescription}
+                  onChange={setJobDescription}
+                  modules={JobsExtended.modules}
+                  formats={JobsExtended.formats}
+                  className={`jobdescriptionbox`}
+                />
+              </div> : <div className="jobDescriptionPara" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(jobDescription) }}></div>}
+
             </div>
           </div>
         </div>
@@ -391,5 +435,41 @@ const JobsExtended = () => {
 
   );
 };
+JobsExtended.modules = {
+  toolbar: [
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ size: [] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [{ align: [] }],
+    [{ color: [] }, { background: [] }],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+    ["clean"],
+  ],
+};
+JobsExtended.formats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "color",
+  "background",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "video",
+  "image",
+  "code-block",
+  "align",
+];
 
 export default JobsExtended;

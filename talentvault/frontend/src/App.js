@@ -22,6 +22,7 @@ import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
 import Test from './pages/test'
+import ViewJobs from "./pages/ViewJobs";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -30,8 +31,18 @@ function App() {
 
 
   //get user role
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
+
+  //get login status
+  useEffect(() => {
+    async function loginStatus() {
+      const status = await getLoginStatus();
+      dispatch(SET_LOGIN(status));
+    }
+    loginStatus();
+  }, [dispatch]);
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
 
   useEffect(() => {
@@ -58,6 +69,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/job/create-job" element={<CreateJob />} />
+        <Route path="/job/my-jobs" element={<ViewJobs />} />
+
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<Error />} />
       </Routes>

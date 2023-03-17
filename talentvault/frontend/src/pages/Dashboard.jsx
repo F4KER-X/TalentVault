@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 
 function Dashboard() {
-  // UseRedirectNotAuthorizedRole("/profile", "applicant");
+  UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);

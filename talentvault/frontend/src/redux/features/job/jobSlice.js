@@ -22,7 +22,6 @@ export const addJob = createAsyncThunk(
         (err.response && err.response.data && err.response.data.message) ||
         err.message ||
         err.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -37,7 +36,6 @@ export const getJobs = createAsyncThunk("jobs/getAll", async (_, thunkAPI) => {
       (err.response && err.response.data && err.response.data.message) ||
       err.message ||
       err.toString();
-    console.log(message);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -53,7 +51,6 @@ export const deleteJob = createAsyncThunk(
         (err.response && err.response.data && err.response.data.message) ||
         err.message ||
         err.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -70,7 +67,6 @@ export const getOneJob = createAsyncThunk(
         (err.response && err.response.data && err.response.data.message) ||
         err.message ||
         err.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -91,6 +87,21 @@ export const editJob = createAsyncThunk(
     }
   }
 );
+
+export const getJobUser = createAsyncThunk(
+  'jobs/getSome',
+  async (id, thunkAPI) => {
+    try {
+      return await jobServices.getJobsPerUser()
+    } catch (err) {
+      const message = (
+        err.response && err.response.data && err.response.data.message
+      ) || err.message || err.toString()
+      console.log(message);
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
 const jobSlice = createSlice({
   name: "job",
@@ -145,7 +156,7 @@ const jobSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload;
-        toast.error(action.payload);
+        toast.error(action.payload.message);
       })
       .addCase(getOneJob.pending, (state) => {
         state.isLoading = true;
@@ -154,7 +165,7 @@ const jobSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        toast.success("Job updated successfully ");
+        state.job = action.payload
       })
       .addCase(getOneJob.rejected, (state, action) => {
         state.isLoading = false;
@@ -170,7 +181,8 @@ const jobSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.job = action.payload;
+        state.message = action.payload;
+        toast.success(action.payload.message)
       })
       .addCase(editJob.rejected, (state, action) => {
         state.isLoading = false;
@@ -178,7 +190,23 @@ const jobSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
-      });
+      })
+      .addCase(getJobUser.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getJobUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.isError = false
+        state.jobs = action.payload
+      })
+      .addCase(getJobUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = false
+        state.isError = true
+        state.message = action.payload
+        toast.error(action.payload)
+      })
   },
 });
 

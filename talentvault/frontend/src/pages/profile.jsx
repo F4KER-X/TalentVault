@@ -78,7 +78,8 @@ function Profile() {
   };
 
   //save button
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (ev) => {
+    ev.preventDefault();
     if (!firstName || !lastName)
       return toast.error("Please make sure all required fields aren't empty");
 
@@ -666,7 +667,7 @@ function Profile() {
                                 color: "white",
                                 width: "250px",
                               }}
-                              onClick={() => handleSaveClick()}
+                              onClick={handleSaveClick}
                             >
                               Save Changes
                             </button>

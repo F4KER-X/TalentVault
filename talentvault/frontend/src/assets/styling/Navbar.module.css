@@ -16,6 +16,7 @@
 
 .ul {
   list-style: none;
+  padding: 0px !important;
 }
 
 .atag {
@@ -117,8 +118,8 @@ h3 span {
 }
 
 .myDropdownMenu ul li {
-  padding: 10px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 10px 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 
 .myDropdownMenu ul li:hover a {
@@ -128,35 +129,35 @@ h3 span {
 
 .myDropdownMenu ul li:hover img {
   opacity: 1 !important;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .myDropdownItem {
-  text-align: center;
+  text-align: center !important;
 }
 
 .myNavbar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f2f2f2;
-  padding: 10px;
-  user-select: none;
-  box-sizing: border-box;
-  font-family: var(--bodyFont);
-  font-weight: 400;
-  line-height: 1.75;
-  color: var(--textColor);
-  height: 125px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background-color: #f2f2f2 !important;
+  padding: 10px !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  font-family: var(--bodyFont) !important;
+  font-weight: 400 !important;
+  line-height: 1.75 !important;
+  color: var(--textColor) !important;
+  height: 125px !important;
 }
 
 .myDropdownItem a {
-  max-width: 200px;
-  margin-left: 10px;
-  transition: var(--speed);
+  max-width: 200px !important;
+  margin-left: 10px !important;
+  transition: var(--speed) !important;
 }
 
 .myCursorPointer {
-  cursor: pointer;
+  cursor: pointer !important;
 }

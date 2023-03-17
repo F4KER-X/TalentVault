@@ -30,12 +30,18 @@ const editJob = async (id, formData) => {
   return response.data
 }
 
+const getJobsPerUser = async () => {
+  const response = await axios.get("/jobs/user-jobs");
+  return response.data;
+};
+
 const jobServices = {
   addJob,
   getJobs,
   deleteJob,
   getOneJob,
   editJob,
+  getJobsPerUser
 };
 
 export default jobServices;

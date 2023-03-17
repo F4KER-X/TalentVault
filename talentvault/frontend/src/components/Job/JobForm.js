@@ -75,6 +75,7 @@ const JobForm = ({
                     }
                     type="number"
                     placeholder="Max Salary"
+                    min={0}
                     name="maxSalary"
                     value={job?.maxSalary}
                     onChange={handleInputChange}
@@ -92,6 +93,7 @@ const JobForm = ({
                     }
                     type="number"
                     placeholder="Min Salary"
+                    min={0}
                     name="minSalary"
                     value={job?.minSalary}
                     onChange={handleInputChange}

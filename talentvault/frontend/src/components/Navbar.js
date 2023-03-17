@@ -82,11 +82,11 @@ const Navbar = () => {
                 text={"My Profile"}
               />
 
-              {role === "applicant" && (
+              {role === "recruiter" && (
                 <DropdownItem text={"My Jobs"} icon={<MdWorkOutline />} />
               )}
-              {role === "recruiter" && (
-                <DropdownItem text={"My postings"} icon={<MdWorkOutline />} />
+              {role === "applicant" && (
+                <DropdownItem text={"My applications"} icon={<MdWorkOutline />} />
               )}
               {role === "admin" && (
                 <DropdownItem text={"Admin panel"} />
