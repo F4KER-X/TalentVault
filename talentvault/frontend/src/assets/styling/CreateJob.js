@@ -25,6 +25,11 @@ const Wrapper = styled.section`
     text-transform: uppercase;
     border-radius: 0.25rem;
   }
+  
+  .jobDescriptionPara p {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 
   .job-status.open {
     color: green;

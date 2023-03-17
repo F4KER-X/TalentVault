@@ -17,6 +17,7 @@ import { AiOutlineHome } from "react-icons/ai"
 import { CiLogout } from "react-icons/ci"
 import { CgProfile } from "react-icons/cg"
 import { MdWorkOutline } from "react-icons/md"
+import { IoCreateOutline } from "react-icons/io5";
 
 const Navbar = () => {
   UserRedirectLoggedOutUser("/login");
@@ -71,16 +72,23 @@ const Navbar = () => {
               <span >{role}</span>
             </h3>
             <ul className={NavbarCSS.ul}>
-              <DropdownItem
+              {role === 'applicant' && (<DropdownItem
                 address={"/dashboard"}
                 icon={<AiOutlineHome />}
                 text={"Dashboard"}
-              />
+              />)}
+
+
               <DropdownItem
                 address={"/profile"}
                 icon={<CgProfile />}
                 text={"My Profile"}
               />
+              {role === 'recruiter' && (<DropdownItem
+                address={"/job/create-job"}
+                icon={<IoCreateOutline />}
+                text={"Create A Job"}
+              />)}
 
               {role === "recruiter" && (
                 <DropdownItem text={"My Jobs"} icon={<MdWorkOutline />} />

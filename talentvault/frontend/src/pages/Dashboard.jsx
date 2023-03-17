@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
@@ -14,16 +14,22 @@ function Dashboard() {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const [currentPage,setCurrentPage]=useState(1);
+  const getPrevious = () => {
+    setCurrentPage(currentPage - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  const getPrevious  = () => {
-    setCurrentPage(currentPage - 1)
-  }
+  const getNext = () => {
+    setCurrentPage(currentPage + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  const getNext  = () => {
-    setCurrentPage(currentPage + 1)
-  }
+  const pageNumber = (number) => {
+    setCurrentPage(number);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const { jobs, isLoading, isError, message } = useSelector(
     (state) => state.job
@@ -34,12 +40,10 @@ function Dashboard() {
       dispatch(getJobs());
     }
     if (isError) {
-      console.log(message);
     }
   }, [dispatch, isError, isLoggedIn, message]);
 
-
-  const jobsPerPage = 4;
+  const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
@@ -49,9 +53,7 @@ function Dashboard() {
     pageNumbers.push(i);
   }
 
-  const totalPages= Math.ceil(jobs.length/jobsPerPage);
-  //console.log(totalPages);
-
+  const totalPages = Math.ceil(jobs.length / jobsPerPage);
 
   return (
     <>
@@ -67,41 +69,42 @@ function Dashboard() {
 
       <div className="pagination-container">
         <div>
-
           {currentJobs.map((job) => (
             <Jobs key={job._id} job={job} />
-
           ))}
         </div>
 
         <div className="pagination">
-          <button  className="prev"
-          disabled={currentPage === 1 ? true : false} 
-          onClick={getPrevious}>
-          Previous
+          <button
+            className="prev"
+            disabled={currentPage === 1 ? true : false}
+            onClick={getPrevious}
+          >
+            Previous
           </button>
 
-                      
           {pageNumbers.map((number) => (
             <button
+              id="pageButton"
               key={number}
               className={currentPage === number ? "active" : ""}
-              onClick={() => setCurrentPage(number)}
+              onClick={() => pageNumber(number)}
             >
               {number}
             </button>
           ))}
 
-           <button  className="next"
-           disabled={currentPage === totalPages ? true : false} 
-           onClick={getNext}>
-           Next
+          <button
+            className="next"
+            disabled={currentPage === totalPages ? true : false}
+            onClick={getNext}
+          >
+            Next
           </button>
         </div>
       </div>
     </>
   );
 }
-
 
 export default Dashboard;
