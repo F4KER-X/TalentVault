@@ -102,7 +102,8 @@ function Register() {
       await dispatch(SET_NAME(user.firstName));
       await dispatch(SET_PHOTO(user.profilePicUrl.URL));
 
-      navigate("/dashboard");
+      if (role === "recruiter") navigate("/job/my-jobs");
+      if (role === "applicant") navigate("/dashboard");
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);

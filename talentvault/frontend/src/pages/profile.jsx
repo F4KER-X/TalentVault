@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import DeleteModal from "../components/DeleteModal";
 
-import Navbar from "../components/Navbar";
 import {
   changePassword,
   deleteUser,
@@ -17,9 +16,9 @@ import {
   uploadFile,
   uploadPhoto,
 } from "../redux/features/auth/authService";
+import Navbar from "../components/Navbar";
 
 function Profile() {
-  UserRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -79,7 +78,8 @@ function Profile() {
   };
 
   //save button
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (ev) => {
+    ev.preventDefault();
     if (!firstName || !lastName)
       return toast.error("Please make sure all required fields aren't empty");
 
@@ -174,7 +174,7 @@ function Profile() {
   };
 
   //delete function
-  const idk = async () => {
+  const deleteAccount = async () => {
     setIsLoading(true);
     await dispatch(deleteUser);
     toast.success("Account deleted successfully");
@@ -253,6 +253,7 @@ function Profile() {
 
   return (
     <div style={{ backgroundColor: "#f8f9fa" }}>
+      <Navbar />
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -260,9 +261,8 @@ function Profile() {
         crossOrigin="anonymous"
       />
       {isLoading && <Loader />}
-      <Navbar />
       <div>
-        <div className="container mt-5">
+        <div className="container pt-5">
           <div className="main-body">
             <div className="row gutters-sm">
               <div className="col-md-4 mb-3">
@@ -450,7 +450,7 @@ function Profile() {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-danger btn-lg mt-2"
+                  className="btn btn-danger btn-block mt-2"
                   onClick={() => handleClickDelete()}
                 >
                   Delete Account
@@ -458,7 +458,7 @@ function Profile() {
                 <DeleteModal
                   show={show}
                   handleClose={handleClose}
-                  handleDeleteItem={idk}
+                  handleDeleteItem={deleteAccount}
                   message={
                     "All information will be deleted, are you sure you want to proceed?"
                   }
@@ -665,13 +665,17 @@ function Profile() {
                               style={{
                                 backgroundColor: "#4540db",
                                 color: "white",
+                                width: "250px",
                               }}
-                              onClick={() => handleSaveClick()}
+                              onClick={handleSaveClick}
                             >
                               Save Changes
                             </button>
                             <button
                               className="btn btn-secondary"
+                              style={{
+                                width: "250px",
+                              }}
                               onClick={() => handleCancelClick()}
                             >
                               Cancel Changes
@@ -679,10 +683,11 @@ function Profile() {
                           </>
                         ) : (
                           <button
-                            className="btn"
+                            className="btn "
                             style={{
                               backgroundColor: "#4540db",
                               color: "white",
+                              width: "250px",
                             }}
                             onClick={() => handleEditClick()}
                           >
@@ -756,6 +761,7 @@ function Profile() {
                           style={{
                             backgroundColor: "#4540db",
                             color: "white",
+                            width: "250px",
                           }}
                         >
                           Change Password

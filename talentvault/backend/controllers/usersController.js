@@ -51,6 +51,11 @@ const updateUserInfo = asyncHandler(async (req, res) => {
         if (recruiter) {
             if (companyName) {
                 recruiter.companyName = companyName
+                // let jobs = await Job.find({ recruiterId: _id })
+                // await Promise.all(jobs.map(async (job) => {
+                //     job.companyName = companyName
+                //     job.save()
+                // }))
             }
             if (phoneNumber) {
                 recruiter.phoneNumber = phoneNumber
@@ -123,6 +128,7 @@ const deleteUser = asyncHandler(async (req, res) => {
             const deletedRecruiter = await Recruiter.findOneAndDelete({ userId: user._id }).exec()
             await cloudinary.uploader.destroy(deletedRecruiter.profilePicUrl.public_id)
             const deleteJobs = await Job.deleteMany({ recruiterId: user._id })
+            //should also delete all applications for the deleted jobs
             if (deletedRecruiter && deleteJobs) {
                 res.cookie("token", "", {
                     path: "/",

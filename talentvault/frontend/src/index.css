@@ -153,15 +153,6 @@ label {
 .btndiv {
   padding-top: 10px;
 }
-.btn {
-  background-color: #4540db;
-
-  color: white;
-  width: 1ref;
-  border-radius: 10px;
-  padding: 10px;
-  border: none;
-}
 
 .forgotpassword {
   font-family: Roboto;
@@ -342,6 +333,16 @@ ul {
 /* buttons */
 
 .btn {
+  background-color: #4540db;
+
+  color: white;
+  width: 1ref;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+}
+
+.btn {
   cursor: pointer;
   color: var(--white);
   background: var(--primary-500);
@@ -355,6 +356,34 @@ ul {
   display: inline-block;
 }
 .btn:hover {
+  background: var(--primary-700);
+  box-shadow: var(--shadow-3);
+}
+
+.btn-2 {
+  background-color: #4540db;
+
+  color: white;
+  width: 1ref;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+}
+
+.btn-2 {
+  cursor: pointer;
+  color: var(--white);
+  background: var(--primary-500);
+  border: transparent;
+  border-radius: var(--borderRadius);
+  letter-spacing: var(--letterSpacing);
+  padding: 0.375rem 0.75rem;
+  box-shadow: var(--shadow-2);
+  transition: var(--transition);
+  text-transform: capitalize;
+  display: inline-block;
+}
+.btn-2:hover {
   background: var(--primary-700);
   box-shadow: var(--shadow-3);
 }
@@ -493,7 +522,7 @@ ul {
 }
 
 .container {
-  margin: 0 auto;
+  margin: 0 2;
 }
 .full-page {
   min-height: 100vh;

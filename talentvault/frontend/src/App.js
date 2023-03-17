@@ -18,16 +18,19 @@ import {
 } from "./redux/features/auth/authSlice";
 import CreateJob from "./pages/createJob";
 import Dashboard from "./pages/Dashboard";
-import JobDetails from "./pages/JobDetails";
 import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
 import Test from './pages/test'
+import ViewJobs from "./pages/ViewJobs";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
 
 function App() {
+
+
+  //get user role
   const dispatch = useDispatch();
 
   //get login status
@@ -39,8 +42,8 @@ function App() {
     loginStatus();
   }, [dispatch]);
 
-  //get user role
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
 
   useEffect(() => {
     async function userData() {
@@ -65,8 +68,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/create-job" element={<CreateJob />} />
-        <Route path="/job-details/:id" element={<JobDetails />} />
+        <Route path="/job/create-job" element={<CreateJob />} />
+        <Route path="/job/my-jobs" element={<ViewJobs />} />
+
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<Error />} />
       </Routes>

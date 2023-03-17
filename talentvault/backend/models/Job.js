@@ -29,7 +29,7 @@ const jobSchema = mongoose.Schema({
   },
   jobType: {
     type: String,
-    enum: ['full_time','part_time','contractor','temporary','other'],
+    enum: ['Full-time', 'Part-time', 'Contractor', 'Temporary', 'Other'],
     required: true
   },
   jobRequirements: {
@@ -50,6 +50,10 @@ const jobSchema = mongoose.Schema({
     type: String,
     enum: ['Onsite', 'Hybrid', 'Remote'],
     required: true
+  },
+  numberOfApplication: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamp: true

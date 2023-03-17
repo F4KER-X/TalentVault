@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
 import { useEffect } from "react";
@@ -8,11 +6,10 @@ import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
 import "../index.css";
-
-
+import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 
 function Dashboard() {
-  UseRedirectLoggedOutUser("/login");
+  UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -70,8 +67,10 @@ function Dashboard() {
 
       <div className="pagination-container">
         <div>
+
           {currentJobs.map((job) => (
             <Jobs key={job._id} job={job} />
+
           ))}
         </div>
 
