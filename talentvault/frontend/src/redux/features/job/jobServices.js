@@ -24,11 +24,17 @@ const getOneJob = async (id) => {
   return response.data;
 };
 
+const getJobsPerUser = async () => {
+  const response = await axios.get("/jobs/user-jobs");
+  return response.data;
+};
+
 const jobServices = {
   addJob,
   getJobs,
   deleteJob,
   getOneJob,
+  getJobsPerUser
 };
 
 export default jobServices;

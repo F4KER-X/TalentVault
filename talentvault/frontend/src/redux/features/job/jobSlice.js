@@ -75,6 +75,22 @@ export const getOneJob = createAsyncThunk(
     }
 )
 
+//get jobs per user
+export const getJobUser = createAsyncThunk(
+    'jobs/getSome',
+    async (id, thunkAPI) => {
+        try {
+            return await jobServices.getJobsPerUser()
+        } catch (err) {
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            console.log(message);
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 const jobSlice = createSlice({
     name: "job",
     initialState,
@@ -95,7 +111,7 @@ const jobSlice = createSlice({
                 state.jobs.push(action.payload)
                 toast.success('Job created successfully')
             })
-            .addCase(getJobs.rejected, (state, action) => {
+            .addCase(addJob.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true
@@ -111,7 +127,7 @@ const jobSlice = createSlice({
                 state.isError = false
                 state.jobs = action.payload
             })
-            .addCase(addJob.rejected, (state, action) => {
+            .addCase(getJobs.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true
@@ -150,6 +166,23 @@ const jobSlice = createSlice({
                 state.message = action.payload
                 toast.error(action.payload)
             })
+            .addCase(getJobUser.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getJobUser.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.jobs = action.payload
+            })
+            .addCase(getJobUser.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload
+                toast.error(action.payload)
+            })
+
     }
 })
 

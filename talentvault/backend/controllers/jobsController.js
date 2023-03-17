@@ -205,11 +205,7 @@ const getJobsByUser = asyncHandler(async (req, res) => {
 
   if (role === 'recruiter') {
     const jobs = await Job.find({ recruiterId: _id }).lean().exec()
-    if (jobs.length !== 0) {
-      return res.status(200).json(jobs)
-    } else {
-      return res.status(400).json({ message: 'No current jobs for this user' })
-    }
+    return res.status(200).json(jobs)
   } else {
     return res.status(400).json({ message: 'Not a recruiter' })
   }
