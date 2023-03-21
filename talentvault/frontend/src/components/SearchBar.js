@@ -14,9 +14,9 @@ const SearchBar = () => {
             <input 
             className='search-input'
             type="text"
-            value={searchInput}
+           // value={searchInput}
             placeholder='Search by Job Title'
-            onChange={handleSearchValue}
+           // onChange={handleSearchValue}
             />
 
             <button className='search-button'>
