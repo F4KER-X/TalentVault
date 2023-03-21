@@ -1,6 +1,10 @@
 const asyncHandler = require('express-async-handler')
 const Application = require('../models/Application')
 const Job = require('../models/Job')
+const transporter = require('../middleware/nodemailer')
+const Recruiter = require('../models/Recruiter')
+const Applicant = require('../models/Applicant')
+const User = require('../models/User')
 
 
 // @desc Get application for job.
@@ -62,9 +66,31 @@ const updateApplicatin = asyncHandler(async (req, res) => {
         if (status) application.status = status
 
 
+        const user = await User.findById(application.applicantId).lean().exec()
+        const job = await Job.findById(application.jobId).lean().exec()
+        const applicant = await Applicant.findOne({ userId: application.applicantId }).lean().exec()
+
+
+
         const updatedApplication = await application.save()
 
         if (updatedApplication) {
+
+            const mailOptions = {
+                from: `${process.env.EMAIL}`,
+                to: `${user.email}`,
+                subject: `${job.jobTitle} Application Updated - ${applicant.firstName} ${applicant.lastName}`,
+                text: `Dear ${applicant.firstName},\n\nWe wanted to inform you that there has been an update to your application for the ${job.jobTitle} position at ${job.companyName}. The recruiter has made some changes to your application, and we wanted to bring them to your attention.\n\nPlease log in to our platform to view the updated details of your application. If you have any questions or concerns, please do not hesitate to reach out to us or the recruiter directly.\n\nThank you for your continued interest in this position, and we wish you the best of luck in your job search.\n\nBest regards,\n\nTalentVault Team`
+            };
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+
+
             res.status(200).json({ message: 'Application updated' })
         } else {
             res.status(400).json({ message: 'Application update was not successful' })
@@ -104,13 +130,30 @@ const createNewApplication = asyncHandler(async (req, res) => {
     }
     //create application
     const application = await Application.create(applicationObject)
+    const user = await User.findById(_id).lean().exec();
+    const recruiter = await Recruiter.findOne({ userId: job.recruiterId }).lean().exec()
+    const applicant = await Applicant.findOne({ userId: _id }).lean().exec()
 
 
-    if (!application) {
+    if (!application || !recruiter || !applicant) {
         return res.status(400).json({ message: 'Error creating a new application, please contact us' })
     }
     job.numberOfApplication += 1
     job.save()
+
+    const mailOptions = {
+        from: `${process.env.EMAIL}`,
+        to: `${user.email}`,
+        subject: `${job?.jobTitle} Application Received - ${applicant?.firstName} ${applicant?.lastName}`,
+        text: `Dear ${recruiter?.firstName},\n\nWe wanted to inform you that ${applicant?.firstName} ${applicant?.lastName} has applied for the ${job?.jobTitle} position at ${job?.companyName} through our platform. We believe that they would be a great fit for the position and wanted to bring their application to your attention.\n\nPlease log in to our platform to view ${applicant.firstName}'s application and resume. Please let us know if there is any additional information that you require from us to support their application.\n\nWe appreciate your time and consideration and look forward to hearing from you soon.\n\nBest regards,\n\nTalentVault Team.`
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 
     res.status(200).json({
         message: 'Application created',
