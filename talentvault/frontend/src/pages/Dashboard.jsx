@@ -1,19 +1,22 @@
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
 import "../index.css";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
+import JobFilter from "../components/Job/JobFilter";
+import SearchBar from "../components/SearchBar";
+
+
 
 function Dashboard() {
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
 
   const [currentPage,setCurrentPage]=useState(1);
 
@@ -48,9 +51,7 @@ function Dashboard() {
   for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
     pageNumbers.push(i);
   }
-
   const totalPages= Math.ceil(jobs.length/jobsPerPage);
-  //console.log(totalPages);
 
 
   return (
@@ -61,17 +62,24 @@ function Dashboard() {
         <Navbar />
 
         <div className="top-container">
-          <h2>Explore Our Jobs!</h2>
+          <h2>Find Your Dream Job!</h2>
+          <h4>It's only a click away</h4>
         </div>
       </div>
 
+      <div>     
+        <SearchBar/>
+      </div>
+      <div>
+        <JobFilter/>
+      </div>
+
+
       <div className="pagination-container">
         <div>
-
           {currentJobs.map((job) => (
             <Jobs key={job._id} job={job} />
-
-          ))}
+          ))} 
         </div>
 
         <div className="pagination">
