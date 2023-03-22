@@ -14,6 +14,7 @@ import { getApplicationForUser } from "../redux/features/application/application
 import Loader from "../components/Loader";
 import Applications from "../components/Applications";
 
+
 function Application() {
   //UseRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
