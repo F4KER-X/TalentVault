@@ -25,6 +25,7 @@ import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
 import Test from './pages/test';
 import Application from './pages/Application';
+import MyPosting from "./pages/myPosting";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -73,6 +74,7 @@ function App() {
         <Route path="/job-details/:id" element={<JobDetails />} />
         <Route path="/test" element={<Test />} />
         <Route path="*" element={<Error />} />
+        <Route path="/myPosting" element={<MyPosting />} />
       </Routes>
     </BrowserRouter>
   );

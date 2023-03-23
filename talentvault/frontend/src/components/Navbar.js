@@ -94,7 +94,7 @@ const Navbar = () => {
                 icon={<MdWorkOutline />} />
               )}
               {role === "recruiter" && (
-                <DropdownItem text={"My postings"} icon={<MdWorkOutline />} />
+                <DropdownItem address={"/myPosting"} text={"My postings"} icon={<MdWorkOutline />} />
               )}
               {role === "admin" && (
                 <DropdownItem text={"Admin panel"} />
