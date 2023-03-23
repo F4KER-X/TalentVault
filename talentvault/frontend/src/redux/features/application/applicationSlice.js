@@ -25,6 +25,22 @@ export const getApplicationForUser = createAsyncThunk(
     }
 )
 
+
+export const createNewApplication = createAsyncThunk(
+    'applications/createNewApplication',
+    async (formData, thunkAPI) => {
+        try {
+            return await applicationService.createNewApplication(formData)
+        } catch (err) {
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+
 const applicationSlice = createSlice({
     name: "application",
     initialState,
@@ -48,6 +64,23 @@ const applicationSlice = createSlice({
                 state.isSuccess = false
                 state.isError = true
                 state.message = action.payload
+            })
+            .addCase(createNewApplication.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(createNewApplication.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isError = false
+                state.applications.push(action.payload)
+                toast.success('Application submitted successfully')
+            })
+            .addCase(createNewApplication.rejected, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = true
+                state.message = action.payload
+                toast.error(action.payload)
             })
     }
 })

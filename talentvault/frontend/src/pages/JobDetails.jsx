@@ -8,7 +8,6 @@ import {
   selectRole,
 } from "../redux/features/auth/authSlice";
 import { useEffect } from "react";
-import { createNewApplication } from "../redux/features/application/createApplicationSlice";
 
 import Loader from "../components/Loader";
 import Applications from "../components/Applications";
