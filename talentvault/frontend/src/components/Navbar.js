@@ -83,6 +83,7 @@ const Navbar = () => {
                 text={"My Profile"}
               />
 
+
               {role === 'applicant' && (<DropdownItem
                 address={"/dashboard"}
                 icon={<AiOutlineHome />}

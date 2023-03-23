@@ -74,7 +74,6 @@ export const getOneJob = createAsyncThunk(
   }
 );
 
-
 //edit job
 export const editJob = createAsyncThunk(
   "jobs/editJob",
@@ -225,11 +224,8 @@ const jobSlice = createSlice({
   },
 });
 
-// eslint-disable-next-line no-empty-pattern
 export const { SET_JOB } = jobSlice.actions;
 
 export const selectIsLoading = (state) => state.job.isLoading;
-export const selectJob = (state) => state.job.job
-export const selectJobs = (state) => state.job.jobs
 
 export default jobSlice.reducer;

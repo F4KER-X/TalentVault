@@ -28,7 +28,16 @@ const getApplicationForUser = asyncHandler(async (req, res) => {
 
     if (role === 'applicant') {
 
-        const applications = await Application.find({ applicantId: _id }).lean().exec()
+        let applications = await Application.find({ applicantId: _id }).lean().exec()
+
+        await Promise.all(applications.map(async (application) => {
+            const job = await Job.findById({ _id: application.jobId }).lean().exec()
+            application.jobTitle = job.jobTitle
+            application.companyName = job.companyName
+            application.jobStatus = job.status
+        }))
+
+
 
         if (applications.length !== 0) {
             return res.status(200).json(applications)

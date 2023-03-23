@@ -16,6 +16,7 @@ import { deleteJob, getOneJob, editJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRole, selectID } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
+import { createNewApplication } from "../redux/features/application/applicationSlice";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-toastify";
@@ -47,7 +48,10 @@ const JobsExtended = () => {
 
 
 
-  const { job, isError, message } = useSelector((state) => state.job)
+  const { job } = useSelector((state) => state.job)
+  const { applications } = useSelector(
+    (state) => state.application
+  );
 
   //fetching job data
   useEffect(() => {
@@ -56,13 +60,9 @@ const JobsExtended = () => {
       dispatch(getOneJob(id))
     }
 
-    if (isError) {
-      toast.error(message)
-    }
-
     setIsLoading(false)
 
-  }, [dispatch, id, isLoggedIn, isError, message, setIsOwner])
+  }, [dispatch, id, isLoggedIn, setIsOwner])
 
   //setting all states
   useEffect(() => {
@@ -90,6 +90,16 @@ const JobsExtended = () => {
         {isOpen ? "Open" : "Closed"}
       </div>
     );
+  }
+
+  //application apply
+
+  const applyApplication = async (ev) => {
+    ev.preventDefault()
+    const formData = {
+      jobId: id
+    }
+    await dispatch(createNewApplication(formData));
   }
 
   //edit button

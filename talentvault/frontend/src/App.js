@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/profile";
 import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
+import Application from './pages/Application';
 import ViewJobs from "./pages/ViewJobs";
 import { useEffect } from "react";
 import { getLoginStatus } from "./redux/features/auth/authService";
@@ -42,6 +43,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Application />} />
+        <Route path="/applications" element={<Application />} />
+        <Route path="/create-job" element={<CreateJob />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/job/create-job" element={<CreateJob />} />
         <Route path="/job/my-jobs" element={<ViewJobs />} />
