@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import applicationService from './applicationServices'
+import createApplicationService from './createApplicationServices'
 
 const initialState = {
     application: null,
@@ -11,11 +11,16 @@ const initialState = {
     message: '',
 }
 
-export const getApplicationForUser = createAsyncThunk(
-    'applications/getApplicationForUser',
+//*app se5vicde
+export const createNewApplication = createAsyncThunk(
+    'applications/createNewApplication',
     async (id, thunkAPI) => {
         try {
-            return await applicationService.getApplicationForUser(id)
+            console.log("INSIDE CREATE SLICE");
+            console.log("THIS IS ID IN APP" + id);
+            return await createApplicationService.createNewApplication({
+                jobId: id
+            })
         } catch (err) {
             const message = (
                 err.response && err.response.data && err.response.data.message
@@ -25,7 +30,7 @@ export const getApplicationForUser = createAsyncThunk(
     }
 )
 
-const applicationSlice = createSlice({
+const createApplicationSlice = createSlice({
     name: "application",
     initialState,
     reducers: {
@@ -34,16 +39,16 @@ const applicationSlice = createSlice({
     extraReducers: (builder) => {
         builder
 
-            .addCase(getApplicationForUser.pending, (state) => {
+            .addCase(createNewApplication.pending, (state) => {
                 state.isLoading = true
             })
-            .addCase(getApplicationForUser.fulfilled, (state, action) => {
+            .addCase(createNewApplication.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
                 state.isError = false
                 state.applications = action.payload
             })
-            .addCase(getApplicationForUser.rejected, (state, action) => {
+            .addCase(createNewApplication.rejected, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = true
@@ -52,11 +57,8 @@ const applicationSlice = createSlice({
     }
 })
 
-export const { } = applicationSlice.actions
-
+export const { } = createApplicationSlice.actions
 
 export const selectIsLoading = (state) => state.application.isLoading
 
-
-export default applicationSlice.reducer
-
+export default createApplicationSlice.reducer

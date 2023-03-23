@@ -47,7 +47,8 @@ const Jobs = ({ job }) => {
               </div> */}
               <div>
                 {/* More Info <FiInfo className="info" size={15} /> */}
-                <Link className="btn" to={`/job/${job._id}`}>More Info <FiInfo className="info" size={15} /></Link>
+                {console.log(job._id)}
+                <Link className="btn" to={`/job/${job._id}`} state={{jobId: job._id}}>More Info <FiInfo className="info" size={15} /></Link>
               </div>
 
             </div>

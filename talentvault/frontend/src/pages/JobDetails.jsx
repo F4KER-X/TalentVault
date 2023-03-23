@@ -1,10 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectID,
+  selectIsLoggedIn,
+  selectRole,
+} from "../redux/features/auth/authSlice";
+import { useEffect } from "react";
+import { createNewApplication } from "../redux/features/application/createApplicationSlice";
+
+import Loader from "../components/Loader";
+import Applications from "../components/Applications";
 
 const JobDetails = () => {
-  UseRedirectLoggedOutUser("/login");
+  //UseRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -18,7 +28,7 @@ const JobDetails = () => {
         <div>
           <span>
             Canadian Security Intelligence Service (CSIS) | Service canadien du
-            renseignement de sécurité (SCRS)>
+            renseignement de sécurité (SCRS)
           </span>
           <span>Montreal, QC</span>
 

@@ -11,10 +11,43 @@ import {
 } from "react-icons/fa";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiInfo } from "react-icons/fi";
+import { createNewApplication } from "../redux/features/application/createApplicationSlice";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import {
+  selectID,
+  selectIsLoggedIn,
+  selectRole,
+} from "../redux/features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 const JobsExtended = (job) => {
+
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+  const {jobId} = location.state;
+
   const requirements =
     "Experience with React,Experience with Node.js,Experience with MongoDB";
   const requirementList = requirements.split(","); // split on commas and spaces
+  console.log(jobId);
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userId = useSelector(selectID);
+  const userRole = useSelector(selectRole);
+
+  const { applications, isLoading, isError, message } = useSelector(
+    (state) => state.application
+  );
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      // dispatch(createNewApplication(jobId));
+
+      console.log(applications);
+    }
+  }, [dispatch, isLoggedIn, userId]);
 
   function JobStatus({ isOpen }) {
     return (
@@ -29,6 +62,24 @@ const JobsExtended = (job) => {
     e.preventDefault();
     setIsEditing(true);
   }
+
+  const apply = async () => {
+    console.log("BEEN CALLED!!!!!!!");
+    console.log(jobId);
+    const applicationData = {
+      _id:jobId
+    };
+
+    await dispatch(createNewApplication(jobId));
+  }
+
+  // async function apply() {
+  //   await dispatch(createNewApplication({
+  //     _id:jobId,
+  //     role:"Applicant"
+  //   }))
+  // }
+  
 
   return (
     <>
@@ -56,9 +107,10 @@ const JobsExtended = (job) => {
             </div>
 
             <div className="buttons-2">
-              <div href="" className="btn">
+              {/* <div href="" className="btn">
                 Apply <FaExternalLinkAlt className="apply" size={15} />
-              </div>
+              </div> */}
+              <button onClick={apply}></button>
 
               <div href="" className="btn-success">
                 Applied <FaCheck className="info" size={15} />
