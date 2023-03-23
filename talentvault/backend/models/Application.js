@@ -23,7 +23,7 @@ const applicantionSchema = mongoose.Schema({
     }
 
 }, {
-    timestamp: true
+    timestamps: true
 })
 
 module.exports = mongoose.model('Application', applicantionSchema)

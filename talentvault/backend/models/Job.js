@@ -29,6 +29,7 @@ const jobSchema = mongoose.Schema({
   },
   jobType: {
     type: String,
+    enum: ['Full-time', 'Part-time', 'Contractor', 'Temporary', 'Other'],
     required: true
   },
   jobRequirements: {
@@ -49,9 +50,14 @@ const jobSchema = mongoose.Schema({
     type: String,
     enum: ['Onsite', 'Hybrid', 'Remote'],
     required: true
+  },
+  numberOfApplication: {
+    type: Number,
+    default: 0
   }
 }, {
-  timestamp: true
+  timestamps: true
+
 });
 
 module.exports = mongoose.model("Job", jobSchema);
