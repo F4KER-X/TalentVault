@@ -4,14 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import JobForm from "../components/Job/JobForm";
 import Loader from "../components/Loader";
-
 import Navbar from "../components/Navbar";
-
-import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
-import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
+import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
+import { store } from "../redux/store";
 
 const initialState = {
   recruiterId: "",
@@ -111,7 +109,7 @@ const CreateJob = () => {
   return (
     <div>
       {isLoading && <Loader />}
-      <Navbar></Navbar>
+      <Navbar />
 
       <h3 style={{ textAlign: "center", marginTop: "20px" }}>
         Create your Job

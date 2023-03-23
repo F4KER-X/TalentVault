@@ -8,7 +8,7 @@ const Application = require("../models/Application");
 // @access Private
 const getAllJobs = asyncHandler(async (req, res) => {
   //search for all jobs
-  const jobsData = await Job.find()
+  const jobsData = await Job.find().sort({ createdAt: -1 }).lean().exec()
   if (jobsData.length === 0) {
     return res.status(404).json({ message: "No jobs found" });
   }
@@ -164,7 +164,6 @@ const updateJob = asyncHandler(async (req, res) => {
 // @route DELETE /jobs/:id
 // @access Private
 const deleteJob = asyncHandler(async (req, res) => {
-  //have to check if the posting has any jobs application or created any open jobs once we implement the jobs model
 
   const job = await Job.findById(req.params["id"]).exec();
   if (!job) {
@@ -203,7 +202,7 @@ const getJobsByUser = asyncHandler(async (req, res) => {
   const { _id, role } = req.user
 
   if (role === 'recruiter') {
-    const jobs = await Job.find({ recruiterId: _id }).lean().exec()
+    const jobs = await Job.find({ recruiterId: _id }).sort({ createdAt: -1 }).lean().exec()
     return res.status(200).json(jobs)
 
   } else {

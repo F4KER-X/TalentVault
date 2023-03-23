@@ -40,6 +40,8 @@ export const getJobs = createAsyncThunk("jobs/getAll", async (_, thunkAPI) => {
   }
 });
 
+
+
 //delete one job
 export const deleteJob = createAsyncThunk(
   "jobs/delete",
@@ -72,6 +74,7 @@ export const getOneJob = createAsyncThunk(
   }
 );
 
+
 //edit job
 export const editJob = createAsyncThunk(
   "jobs/editJob",
@@ -90,23 +93,35 @@ export const editJob = createAsyncThunk(
 
 export const getJobUser = createAsyncThunk(
   'jobs/getSome',
-  async (id, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       return await jobServices.getJobsPerUser()
     } catch (err) {
       const message = (
         err.response && err.response.data && err.response.data.message
       ) || err.message || err.toString()
-      console.log(message);
       return thunkAPI.rejectWithValue(message)
     }
   }
 )
 
+export const clearAllJobs = () => {
+  initialState.job = { ...initialState.job, jobs: [] };
+}
+
 const jobSlice = createSlice({
   name: "job",
   initialState,
-  reducers: {},
+  reducers: {
+    SET_JOB(state) {
+      state.job = null;
+      state.jobs = []
+      state.isError = false
+      state.isSuccess = false
+      state.isLoading = false
+      state.message = ""
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addJob.pending, (state) => {
@@ -210,8 +225,11 @@ const jobSlice = createSlice({
   },
 });
 
-export const { } = jobSlice.actions;
+// eslint-disable-next-line no-empty-pattern
+export const { SET_JOB } = jobSlice.actions;
 
 export const selectIsLoading = (state) => state.job.isLoading;
+export const selectJob = (state) => state.job.job
+export const selectJobs = (state) => state.job.jobs
 
 export default jobSlice.reducer;
