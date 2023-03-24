@@ -4,9 +4,30 @@ import {
   FaEnvelopeOpenText,
   FaMailBulk
 } from "react-icons/fa";
+
+import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const Applications = ({ application }) => {
+
+  let btnColor = "btn-pending";
+  switch (application?.status) {
+    case "Accepted":
+      btnColor = "btn-accepted";
+      break;
+
+    case "Rejected":
+      btnColor = "btn-rejected";
+      break;
+
+    default:
+      btnColor = "btn-pending"
+      break;
+  }
+  // function ApplicationStatus({ applicationStatus }) {
+  //     return (
+  //         <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
+  //         : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
 
   return (
     <>
@@ -38,9 +59,7 @@ const Applications = ({ application }) => {
                     Apply <FaExternalLinkAlt className="apply" size={15} />
                   </div> */}
               <div>
-                {/* More Info <FiInfo className="info" size={15} /> */}
-
-                <Link className="btn" to={`/job/${application?.jobId}`}>More Info </Link>
+                <Link className={btnColor} to={`/job/${application?._id}`}>More Info <FiInfo className="info" size={15} /></Link>
               </div>
 
             </div>

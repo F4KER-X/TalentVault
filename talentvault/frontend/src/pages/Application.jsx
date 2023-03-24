@@ -13,6 +13,7 @@ import Loader from "../components/Loader";
 import Applications from "../components/Applications";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 
+
 function Application() {
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
   const dispatch = useDispatch();
