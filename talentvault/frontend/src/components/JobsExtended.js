@@ -16,7 +16,7 @@ import { deleteJob, getOneJob, editJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRole, selectID } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
-import { createNewApplication } from "../redux/features/application/applicationSlice";
+import { createNewApplication, getApplicationForJob, getApplicationForUser } from "../redux/features/application/applicationSlice";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-toastify";
@@ -32,7 +32,7 @@ const JobsExtended = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   //states
-  const [isLoading, setIsLoading] = useState(false)
+  //const [isLoading1, setIsLoading] = useState(false)
   const [jobTitle, setJobTitle] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [maxSalary, setMaxSalary] = useState(0);
@@ -45,24 +45,35 @@ const JobsExtended = () => {
   const [workType, setWorkType] = useState("");
   const [editMode, setEditMode] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
+  const [isApplied, setIsApplied] = useState(false)
 
-
-
-  const { job } = useSelector((state) => state.job)
-  const { applications } = useSelector(
+  const { job, isLoadingJob } = useSelector((state) => state.job)
+  const { applications, isLoadingApp } = useSelector(
     (state) => state.application
   );
 
   //fetching job data
   useEffect(() => {
     if (isLoggedIn) {
-      setIsLoading(true)
       dispatch(getOneJob(id))
+      dispatch(getApplicationForJob(id))
+      window.scrollTo(0, 0);
     }
 
-    setIsLoading(false)
-
   }, [dispatch, id, isLoggedIn, setIsOwner])
+
+
+  let found = false;
+  if (role === 'applicant') {
+    applications.forEach(function (application) {
+      if (application.jobId === id && application.applicantId === userId) {
+        found = true;
+      }
+    });
+  }
+
+
+
 
   //setting all states
   useEffect(() => {
@@ -93,13 +104,13 @@ const JobsExtended = () => {
   }
 
   //application apply
-
   const applyApplication = async (ev) => {
     ev.preventDefault()
     const formData = {
       jobId: id
     }
     await dispatch(createNewApplication(formData));
+    setIsApplied(true)
   }
 
   //edit button
@@ -151,9 +162,7 @@ const JobsExtended = () => {
     if (formData.maxSalary <= formData.minSalary) {
       return toast.error("Max salary can not be less or equals to Min salary");
     }
-    setIsLoading(true)
-    dispatch(editJob({ id, formData }))
-    setIsLoading(false)
+    await dispatch(editJob({ id, formData }))
     setEditMode(false)
   }
 
@@ -209,7 +218,7 @@ const JobsExtended = () => {
   };
   return (
     <>
-      {isLoading && <Loader />}
+      {(isLoadingJob || isLoadingApp) && <Loader />}
 
       {/* below is the normal form */}
 
@@ -356,9 +365,14 @@ const JobsExtended = () => {
 
             {role === "applicant" && !editMode && (
               <div className="buttons-1">
-                <button className="btn" style={{ marginLeft: "0", marginTop: "15px" }}>
-                  Apply <FaExternalLinkAlt className="" size={15} />
-                </button>
+                {status === 'Closed' ?
+                  <button className="btn" style={{ marginLeft: "0", marginTop: "15px", backgroundColor: '#f2dede', color: 'red' }} disabled>
+                    {found || isApplied ? 'Applied' : 'Apply'} <FaExternalLinkAlt className="" size={15} />
+                  </button> :
+                  <button className="btn" style={{ marginLeft: "0", marginTop: "15px" }} disabled={found || isApplied} onClick={applyApplication}>
+                    {found || isApplied ? 'Applied' : 'Apply'} <FaExternalLinkAlt className="" size={15} />
+                  </button>
+                }
 
               </div>
             )}

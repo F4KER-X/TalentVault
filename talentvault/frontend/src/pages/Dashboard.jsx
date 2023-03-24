@@ -33,15 +33,13 @@ function Dashboard() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const { jobs, isLoading, isError, message } = useSelector(
-    (state) => state.job
-  );
+  const { jobs, isLoadingJob } = useSelector((state) => state.job);
 
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getJobs());
     }
-  }, [dispatch, isError, isLoggedIn, message]); // role]);
+  }, [dispatch, isLoggedIn]); // role]);
 
   const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -57,7 +55,7 @@ function Dashboard() {
 
   return isLoggedIn ? (
     <>
-      {isLoading && <Loader />}
+      {isLoadingJob && <Loader />}
       <div>
         <Navbar />
         <div className="top-container">

@@ -7,17 +7,8 @@ const Job = require('../models/Job')
 // @route GET /application/job/id
 // @access Private
 const getApplicationForJob = asyncHandler(async (req, res) => {
-    const { _id, role } = req.user
-    if (role === 'recruiter') {
-        const applications = await Application.find({ jobId: req.params['id'] }).lean().exec()
-        if (applications.length !== 0) {
-            return res.status(200).json(applications)
-        } else {
-            return res.status(200).json({ message: 'No current applications' })
-        }
-    } else {
-        return res.status(401).json({ message: 'Not a recruiter' })
-    }
+    const applications = await Application.find({ jobId: req.params['id'] }).lean().exec()
+    return res.status(200).json(applications)
 })
 
 // @desc Get application for a user.
@@ -37,13 +28,7 @@ const getApplicationForUser = asyncHandler(async (req, res) => {
             application.jobStatus = job.status
         }))
 
-
-
-        if (applications.length !== 0) {
-            return res.status(200).json(applications)
-        } else {
-            return res.status(200).json({ message: 'No current applications' })
-        }
+        return res.status(200).json(applications)
 
     } else {
         return res.status(401).json({ message: 'Not an applicant' })
@@ -95,13 +80,14 @@ const createNewApplication = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: 'Not authorized' })
     }
 
-    //
-    //job id -> recruterid
-    //applicantid = user id
-
     const { jobId } = req.body
     if (!jobId) return res.status(400).json({ message: 'Job id is required' })
 
+    const foundApplication = await Application.findOne({ jobId, applicantId: _id })
+
+    if (foundApplication) {
+        return res.status(400).json({ message: 'User already have an application' })
+    }
     const job = await Job.findById({ _id: jobId }).exec()
 
     if (!job) return res.status(404).json({ message: 'Job not found' })
@@ -111,8 +97,12 @@ const createNewApplication = asyncHandler(async (req, res) => {
         recruiterId: job.recruiterId,
         applicantId: _id
     }
-    //create application
-    const application = await Application.create(applicationObject)
+
+    let application;
+    if (job.status === 'Open') {
+        //create application
+        application = await Application.create(applicationObject)
+    }
 
 
     if (!application) {

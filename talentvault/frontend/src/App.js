@@ -27,10 +27,11 @@ function App() {
   useEffect(() => {
     async function loginStatus() {
       const status = await getLoginStatus();
+      console.log(status);
       dispatch(SET_LOGIN(status));
     }
     loginStatus();
-  }, [dispatch]);
+  }, []);
 
 
   return (
@@ -43,8 +44,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Application />} />
-        <Route path="/applications" element={<Application />} />
+        <Route path="/applications/my-applications" element={<Application />} />
         <Route path="/create-job" element={<CreateJob />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/job/create-job" element={<CreateJob />} />

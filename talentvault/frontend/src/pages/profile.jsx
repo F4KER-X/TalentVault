@@ -576,7 +576,7 @@ function Profile() {
                             min="0"
                             className="form-control"
                             name="phoneNumber"
-                            value={phoneNumber}
+                            value={phoneNumber || ""}
                             placeholder="Phone Number"
                             onChange={handlePhoneNumberChange}
                           />

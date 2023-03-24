@@ -9,7 +9,6 @@ import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
-import { store } from "../redux/store";
 
 const initialState = {
   recruiterId: "",
@@ -102,7 +101,7 @@ const CreateJob = () => {
     }
     setError(false);
     setSalaryError(false);
-    await dispatch(addJob(formData));
+    dispatch(addJob(formData));
 
     navigate("/dashboard");
   };

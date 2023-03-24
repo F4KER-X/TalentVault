@@ -5,7 +5,9 @@ const protect = require("../middleware/authVerification");
 
 router.use(protect)
 
-router.route('/').post(applicationController.createNewApplication)
+router.route('/')
+    .post(applicationController.createNewApplication)
+    .get(applicationController.getApplicationForUser)
 
 router.route('/job/:id')
     .get(applicationController.getApplicationForJob)

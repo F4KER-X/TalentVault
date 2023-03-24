@@ -4,19 +4,10 @@ import {
   FaEnvelopeOpenText,
   FaMailBulk
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Applications = ({ application }) => {
-  // function ApplicationStatus({ applicationStatus }) {
-  //     return (
-  //         <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
-  //         : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
 
-  //         {`application-status ${applicationStatus == "Accepted" ?  "You've been accepted for an interview" 
-  //         : applicationStatus == "Unfortunately the company chose another company" ? "Closed" : 
-  //         "Candidates are still being reviewed. Offers pending"}`}
-  //         </div>
-  //         ); //if accepted, else if closed, else pending
-  // }
   return (
     <>
       <Wrapper>
@@ -49,7 +40,7 @@ const Applications = ({ application }) => {
               <div>
                 {/* More Info <FiInfo className="info" size={15} /> */}
 
-                {/* <Link className="btn" to={`/job/${job._id}`}>More Info <FiInfo className="info" size={15} /></Link> */}
+                <Link className="btn" to={`/job/${application?.jobId}`}>More Info </Link>
               </div>
 
             </div>
