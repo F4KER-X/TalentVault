@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Loader from "../components/Loader";
-import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
-import { SET_NAME, SET_PHOTO } from "../redux/features/auth/authSlice";
+import {
+  SET_COMPANY,
+  SET_LOGIN,
+  SET_NAME,
+  SET_PHOTO,
+} from "../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -17,6 +21,8 @@ import {
   uploadPhoto,
 } from "../redux/features/auth/authService";
 import Navbar from "../components/Navbar";
+import "../assets/styling/profile.css";
+import "../index.css";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -66,8 +72,9 @@ function Profile() {
       setProfilePicUrl(profilePicUrl?.URL);
       setFile(resume?.URL);
       setIsLoading(false);
-      dispatch(SET_NAME(firstName));
-      dispatch(SET_PHOTO(profilePicUrl?.URL));
+      dispatch(SET_NAME(data.firstName));
+      dispatch(SET_PHOTO(data.profilePicUrl.URL));
+      dispatch(SET_COMPANY(data.companyName));
     }
     getUserData();
   }, [dispatch]);
@@ -99,6 +106,7 @@ function Profile() {
       companyName,
     };
     await updateUserInfo(formData);
+    toast.success("User info updated successfully");
     setIsLoading(false);
     setIsEditMode(false);
   };
@@ -174,12 +182,13 @@ function Profile() {
   };
 
   //delete function
-  const deleteAccount = async () => {
+  const deleteAccount = () => {
     setIsLoading(true);
-    await dispatch(deleteUser);
+    dispatch(deleteUser);
     toast.success("Account deleted successfully");
-    setIsLoading(false);
     navigate("/register");
+    dispatch(SET_LOGIN(false));
+    setIsLoading(false);
     setShow(false);
   };
 
@@ -636,7 +645,7 @@ function Profile() {
                             <div className=" col-sm-3">
                               <button
                                 type="button"
-                                className="btn btn-outline-primary"
+                                className="btn btn-outline-primary resumebtn"
                                 onClick={handleDownloadFile}
                               >
                                 View file
@@ -661,12 +670,7 @@ function Profile() {
                         {isEditMode ? (
                           <>
                             <button
-                              className="btn"
-                              style={{
-                                backgroundColor: "#4540db",
-                                color: "white",
-                                width: "250px",
-                              }}
+                              className="btn saveChanges"
                               onClick={handleSaveClick}
                             >
                               Save Changes
@@ -683,12 +687,7 @@ function Profile() {
                           </>
                         ) : (
                           <button
-                            className="btn "
-                            style={{
-                              backgroundColor: "#4540db",
-                              color: "white",
-                              width: "250px",
-                            }}
+                            className="btn editProfile"
                             onClick={() => handleEditClick()}
                           >
                             Edit Profile
@@ -756,14 +755,7 @@ function Profile() {
                             />
                           </div>
                         </div>
-                        <button
-                          className="btn mt-3"
-                          style={{
-                            backgroundColor: "#4540db",
-                            color: "white",
-                            width: "250px",
-                          }}
-                        >
+                        <button className="btn mt-3 changePassword">
                           Change Password
                         </button>
                       </div>

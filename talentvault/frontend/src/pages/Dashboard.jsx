@@ -7,9 +7,11 @@ import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
 import "../index.css";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function Dashboard() {
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
+
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -39,9 +41,7 @@ function Dashboard() {
     if (isLoggedIn) {
       dispatch(getJobs());
     }
-    if (isError) {
-    }
-  }, [dispatch, isError, isLoggedIn, message]);
+  }, [dispatch, isError, isLoggedIn, message]); // role]);
 
   const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -55,13 +55,11 @@ function Dashboard() {
 
   const totalPages = Math.ceil(jobs.length / jobsPerPage);
 
-  return (
+  return isLoggedIn ? (
     <>
       {isLoading && <Loader />}
-
       <div>
         <Navbar />
-
         <div className="top-container">
           <h2>Explore Our Jobs!</h2>
         </div>
@@ -69,8 +67,8 @@ function Dashboard() {
 
       <div className="pagination-container">
         <div>
-          {currentJobs.map((job) => (
-            <Jobs key={job._id} job={job} />
+          {currentJobs.map((job, index) => (
+            <Jobs key={index} job={job} />
           ))}
         </div>
 
@@ -104,6 +102,8 @@ function Dashboard() {
         </div>
       </div>
     </>
+  ) : (
+    <></>
   );
 }
 

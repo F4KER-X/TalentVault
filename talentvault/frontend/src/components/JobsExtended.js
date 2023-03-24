@@ -185,7 +185,7 @@ const JobsExtended = () => {
   const confirmDelete = (id) => {
     confirmAlert({
       title: "Delete Job",
-      message: "Are you sure to do this.",
+      message: "All data and applications will be deleted, are you sure you want to continue? ",
       buttons: [
         {
           label: "Delete",
