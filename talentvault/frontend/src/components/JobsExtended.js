@@ -362,14 +362,6 @@ const JobsExtended = () => {
 
               </div>
             )}
-            {role === "recruiter" && !editMode && (
-              <div className="buttons-1">
-                <a href="/ViewApplication"><button className="btn" style={{ marginLeft: "0", marginTop: "15px" }}>
-                  View Who Applied <FaExternalLinkAlt className="" size={15} />
-                </button></a>
-
-              </div>
-            )}
           </div>
 
           <div className="description">
