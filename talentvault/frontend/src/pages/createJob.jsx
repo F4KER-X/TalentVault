@@ -6,12 +6,12 @@ import JobForm from "../components/Job/JobForm";
 import Loader from "../components/Loader";
 
 import Navbar from "../components/Navbar";
-
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
+import Footer from "../components/Footer";
 
 const initialState = {
   recruiterId: "",
@@ -109,6 +109,7 @@ const CreateJob = () => {
     navigate("/dashboard");
   };
   return (
+    <>
     <div>
       {isLoading && <Loader />}
       <Navbar></Navbar>
@@ -126,6 +127,8 @@ const CreateJob = () => {
         salaryError={salaryError}
       />
     </div>
+    <Footer/>
+    </>
   );
 };
 export default CreateJob;
