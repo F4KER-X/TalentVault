@@ -9,7 +9,6 @@ export const validateEmail = (email) => {
 
 //register user
 export const registerUser = async (userData) => {
-
     try {
         const response = await axios.post(`${BACKEND_URL}/auth/signup`, userData)
 
@@ -28,7 +27,6 @@ export const registerUser = async (userData) => {
 
 //login user
 export const loginUser = async (userData) => {
-
     try {
         const response = await axios.post('/auth/login', userData)
         if (response.statusText === 'OK') {
@@ -65,11 +63,9 @@ export const logoutUser = async () => {
 
 //login status
 export const getLoginStatus = async () => {
-
     try {
-        const response = await axios.get(`${BACKEND_URL}/auth/loggedinStatus`)
+        const response = await axios.get(`/auth/loggedinStatus`)
         return response.data
-
     } catch (err) {
         const message = (
             err.response && err.response.data && err.response.data.message

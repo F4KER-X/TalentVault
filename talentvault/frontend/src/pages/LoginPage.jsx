@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, validateEmail } from "../redux/features/auth/authService";
 import {
+  SET_COMPANY,
+  SET_EMAIL,
+  SET_ID,
   SET_LOGIN,
   SET_NAME,
   SET_PHOTO,
@@ -15,6 +18,7 @@ import {
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
+import { store } from "../redux/store";
 
 const initialState = {
   email: "",
@@ -22,7 +26,8 @@ const initialState = {
 };
 
 export default function Login() {
-  UseRedirectLoggedInUser("/dashboard");
+  UseRedirectLoggedInUser();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -58,11 +63,17 @@ export default function Login() {
     setIsLoading(true);
     try {
       const data = await loginUser(userData);
-      await dispatch(SET_LOGIN(true));
-      await dispatch(SET_NAME(data.firstName));
-      await dispatch(SET_PHOTO(data.profilePicUrl.URL));
-      await dispatch(SET_ROLE(data.role));
-      navigate("/dashboard");
+      dispatch(SET_LOGIN(true));
+      dispatch(SET_NAME(data.firstName));
+      dispatch(SET_PHOTO(data.profilePicUrl.URL));
+      dispatch(SET_ROLE(data.role));
+      dispatch(SET_ID(data.id));
+      dispatch(SET_COMPANY(data.companyName));
+      dispatch(SET_EMAIL(data.email));
+
+      if (data.role === "recruiter") navigate("/job/my-jobs");
+      if (data.role === "applicant") navigate("/dashboard");
+
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
