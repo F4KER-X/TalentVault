@@ -4,21 +4,22 @@ import {
   FaEnvelopeOpenText,
   FaMailBulk
 } from "react-icons/fa";
+
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const Applications = ({ application }) => {
-  
+
   let btnColor = "btn-pending";
   switch (application?.status) {
     case "Accepted":
       btnColor = "btn-accepted";
       break;
-    
-      case "Rejected":
+
+    case "Rejected":
       btnColor = "btn-rejected";
       break;
-  
+
     default:
       btnColor = "btn-pending"
       break;
@@ -28,12 +29,6 @@ const Applications = ({ application }) => {
   //         <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
   //         : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
 
-  //         {`application-status ${applicationStatus == "Accepted" ?  "You've been accepted for an interview" 
-  //         : applicationStatus == "Unfortunately the company chose another company" ? "Closed" : 
-  //         "Candidates are still being reviewed. Offers pending"}`}
-  //         </div>
-  //         ); //if accepted, else if closed, else pending
-  // }
   return (
     <>
       <Wrapper>

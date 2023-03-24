@@ -189,13 +189,23 @@ const loggedinStatus = asyncHandler(async (req, res) => {
     }
 
     //verify token
-    const verified = jwt.verify(token, process.env.JWT_SECRET)
-
-    if (verified) {
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
         return res.json(true)
-    } else {
-        return (false)
+    } catch (err) {
+        if (err instanceof jwt.TokenExpiredError) {
+            return res.json(false)
+        } else {
+            console.log(err);
+        }
     }
+
+
+
+
+
+
+
 
 })
 

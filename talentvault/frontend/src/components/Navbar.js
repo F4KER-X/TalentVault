@@ -19,6 +19,7 @@ import { MdWorkOutline } from "react-icons/md"
 import { IoCreateOutline } from "react-icons/io5";
 import UseRedirectLoggedOutUser from '../hook/useRedirectLoggedOutUser';
 import { SET_JOB } from '../redux/features/job/jobSlice';
+import { SET_APPLICATION } from '../redux/features/application/applicationSlice';
 
 
 
@@ -50,9 +51,10 @@ const Navbar = () => {
   const logout = async (e) => {
     e.preventDefault();
     await logoutUser();
+    navigate("/login");
     dispatch(SET_CLEAR())
     dispatch(SET_JOB())
-    navigate("/login");
+    dispatch(SET_APPLICATION())
   };
   return (
     <>
@@ -101,7 +103,7 @@ const Navbar = () => {
                 <DropdownItem address={"/job/my-jobs"} text={"My Jobs"} icon={<MdWorkOutline />} />
               )}
               {role === "applicant" && (
-                <DropdownItem text={"My applications"} icon={<MdWorkOutline />} />
+                <DropdownItem address={'/applications/my-applications'} text={"My applications"} icon={<MdWorkOutline />} />
               )}
               <LogoutBtn img={logoutt} />
             </ul>
