@@ -10,13 +10,13 @@ import {
 import {  useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
 import { Link } from "react-router-dom";
-
+import "./Applications.css"
 const Applications = ({ application }) => {
 
   const role = useSelector(selectRole);
 
 
-  let btnColor = "btn-pending";
+ let btnColor = "btn-pending";
   switch (application?.status) {
     case "Accepted":
       btnColor = "btn-accepted";
@@ -30,16 +30,16 @@ const Applications = ({ application }) => {
       btnColor = "btn-pending"
       break;
   }
-
-  /* function ApplicationStatus({ applicationStatus }) {
+ 
+ /*   function ApplicationStatus( applicationStatus ) {
     return (
        <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
        : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
        </div>
     );
   }
-    
- */
+     */
+ 
 
   return (
     
@@ -59,13 +59,11 @@ const Applications = ({ application }) => {
 
 
             
-            <div className="form-control">
-              <FaEnvelopeOpenText /> {application?.status}
-            </div>
+            <div className="application-status"> {application?.status}</div>
 
              <div>
               {/* <ApplicationStatus applicationStatus={applicationStatus === "Accepted" ?  "Accepted" 
-                : applicationStatus === "Closed" ? "Closed" : "Pending"} />  */}
+                : applicationStatus === "Closed" ? "Closed" : "Pending"} />   */}
             </div> 
             <div className="buttons-2">
               <div>

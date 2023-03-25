@@ -1,0 +1,26 @@
+.application-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0.25rem;
+  }
+
+  .application-status.pending {
+    color: blue;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+  }
+
+  .application-status.accepted {
+    color: green;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+  }
+
+  .job-status.rejected {
+    color: red;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+  }
