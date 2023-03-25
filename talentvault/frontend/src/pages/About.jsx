@@ -1,8 +1,10 @@
 import Logo from "../components/Logo";
 import { FaBriefcase, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa";
 import Jobs from "../components/Jobs";
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function About() {
+  UseRedirectLoggedOutUser();
   return (
     <>
       <div>

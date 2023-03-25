@@ -97,7 +97,9 @@ const CreateJob = () => {
     }
     if (formData.maxSalary <= formData.minSalary) {
       setSalaryError(true);
-      return toast.error("Max salary can not be less or equals to Min salary");
+      return toast.error(
+        "Max salary can not be less or equals to Min salary!!"
+      );
     }
     setError(false);
     setSalaryError(false);

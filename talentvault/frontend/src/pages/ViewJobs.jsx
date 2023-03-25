@@ -7,8 +7,10 @@ import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
 import { useEffect } from "react";
 import { getJobUser } from "../redux/features/job/jobSlice";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function ViewJobs() {
+  UseRedirectLoggedOutUser();
   UseRedirectNotAuthorizedRole("/dashboard", "recruiter");
 
   const dispatch = useDispatch();
