@@ -25,7 +25,8 @@ const getApplicationForJob = asyncHandler(async (req, res) => {
                 applicationStatus: application.status,
                 resume: applicant.resume.URL,
                 applicantId: application.applicantId,
-                jobId: application.jobId
+                jobId: application.jobId,
+                applicationId: application._id
             };
         })
     );
