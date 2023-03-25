@@ -642,14 +642,15 @@ ul {
   color: #fff;
 }
 #pageButton.active {
-  color: #842029;
+  color: white;
+  background-color: #4540db;
 }
 #pageButton {
   margin: auto 10px;
 }
 
 #pageButton.active:hover {
-  background-color: #842029;
+  background-color: #4540db;
   color: #fff;
 }
 
