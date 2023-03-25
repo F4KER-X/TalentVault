@@ -38,14 +38,13 @@ const Applications = ({ application }) => {
       break;
   }
 
-  /*   function ApplicationStatus( applicationStatus ) {
-     return (
-        <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
-        : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
-        </div>
-     );
-   }
-      */
+  function ApplicationStatus({ btnColor }) {
+    return (
+      <div className={`job-status ${btnColor}`}>
+        {application?.applicationStatus}
+      </div>
+    );
+  }
 
   const role = useSelector(selectRole);
 
@@ -70,12 +69,12 @@ const Applications = ({ application }) => {
                 {" "}
                 <FaEnvelope /> {application?.email}
               </div>
-              <div
+              {/* <div
                 className={`form-control ${btnColor}`}
                 style={{ marginBottom: "10px" }}
               >
                 <FaEnvelopeOpenText /> {application?.applicationStatus}
-              </div>
+              </div> */}
               <div></div>
               <div className="buttons-2">
                 <div>
@@ -137,16 +136,15 @@ const Applications = ({ application }) => {
                 isOpen={application?.jobStatus === "Open" ? true : false}
               />
 
-              <div
+              {/* <div
                 className={`form-control ${btnColor}`}
                 style={{ marginTop: "10px" }}
               >
                 <FaEnvelopeOpenText /> {application?.applicationStatus}
-              </div>
+              </div> */}
 
               <div>
-                {/* <ApplicationStatus applicationStatus={applicationStatus === "Accepted" ?  "Accepted" 
-                : applicationStatus === "Closed" ? "Closed" : "Pending"} />  */}
+                <ApplicationStatus btnColor={btnColor} />
               </div>
               <div className="buttons-2">
                 <div>
