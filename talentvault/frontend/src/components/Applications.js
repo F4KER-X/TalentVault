@@ -1,7 +1,6 @@
 import "../index.css";
 import Wrapper from "../assets/styling/jobs";
 import {
-  FaEnvelopeOpenText,
   FaPhone,
   FaEnvelope,
   FaDownload,
@@ -10,7 +9,6 @@ import {
 import { FiInfo } from "react-icons/fi";
 
 import { Link } from "react-router-dom";
-import "./Applications.css";
 import { useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
 
@@ -69,13 +67,11 @@ const Applications = ({ application }) => {
                 {" "}
                 <FaEnvelope /> {application?.email}
               </div>
-              {/* <div
-                className={`form-control ${btnColor}`}
-                style={{ marginBottom: "10px" }}
-              >
-                <FaEnvelopeOpenText /> {application?.applicationStatus}
-              </div> */}
-              <div></div>
+              
+              
+              <div style={{marginTop:"10px"}}>
+                <ApplicationStatus btnColor={btnColor} />
+              </div>
               <div className="buttons-2">
                 <div>
                   <Link
@@ -94,18 +90,7 @@ const Applications = ({ application }) => {
                     View CV <FaDownload className="info" size={15} />
                   </Link>
                 </div>
-              </div>
-
-              <div>
-                <ApplicationStatus btnColor={btnColor} />
-              </div>
-              <div className="buttons-2">
-                <div>
-                  <Link className="btn">
-                    View CV <FaDownload className="info" size={15} />
-                  </Link>
-                </div>
-              </div>
+              </div>              
             </div>
             <div className="form-group"></div>
           </div>
@@ -136,14 +121,8 @@ const Applications = ({ application }) => {
                 isOpen={application?.jobStatus === "Open" ? true : false}
               />
 
-              {/* <div
-                className={`form-control ${btnColor}`}
-                style={{ marginTop: "10px" }}
-              >
-                <FaEnvelopeOpenText /> {application?.applicationStatus}
-              </div> */}
-
-              <div>
+            
+              <div style={{marginTop:"10px"}} >
                 <ApplicationStatus btnColor={btnColor} />
               </div>
               <div className="buttons-2">
