@@ -19,21 +19,27 @@ import { editApplicationStatus } from "../redux/features/application/application
 const Applications = ({ application }) => {
 
   const dispatch = useDispatch()
+  const [selectedStatus, setSelectedOption] = useState(application?.applicationStatus);
+
+
+  const handleSelection = (event) => {
+    const status = event.target.value;
+    setSelectedOption(status);
+  };
+
+
 
   const handleEditClick = async (ev) => {
     ev.preventDefault()
 
     const formData = {
-      status: 'Accepted'
+      status: selectedStatus
     }
     await dispatch(editApplicationStatus({ id: application?.applicationId, formData }))
+    window.location.reload()
+
 
   }
-
-
-  console.log(application?.applicationId);
-
-
 
   let btnColor = "btn-pending";
   switch (application?.applicationStatus) {
@@ -57,8 +63,6 @@ const Applications = ({ application }) => {
       </div>
     );
   }
-
-  const [selectedStatus, setSelectedOption] = useState("hold");
 
 
   const role = useSelector(selectRole);
@@ -103,39 +107,22 @@ const Applications = ({ application }) => {
                       margin: "0",
                       width: "150px",
                     }}
-                    onClick={handleEditClick}
                   >
                     View CV <FaDownload className="info" size={15} />
-                  </Link> : <> <Link
-                    className="btn"
-                    to={application?.resume}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      margin: "0",
-                      width: "150px",
-                    }}
-                    onClick={handleEditClick}
-                  >
-                    View CV <FaDownload className="info" size={15} />
-                  </Link></>}
+                  </Link> : <> </>}
 
                 </div>
               </div>
-              <div>
-                <label htmlFor="applicant-style" className="applicant-style"> Accept or Reject Applicant :</label>
-              </div>
-              <div className="dropdown">
 
-                <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} >
-                  <option value="accept">Accept</option>
-                  <option value="reject">Reject</option>
-                  <option value="hold">Hold</option>
-                </select>
-              </div>
+              {application?.isModified ? <></> : <><div>
+                <label htmlFor="applicant-style" className="applicant-style"> Accept or Reject Applicant :</label>
+              </div><div className="dropdown">
+                  <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} onChange={handleSelection}>
+                    <option value="Accepted">Accept</option>
+                    <option value="Rejected">Reject</option>
+                  </select>
+                  <button onClick={handleEditClick} className="confirm-btn">Confirm</button>
+                </div></>}
             </div>
             <div className="form-group"></div>
           </div>

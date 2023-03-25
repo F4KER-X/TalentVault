@@ -18,11 +18,8 @@ const getApplicationsForJob = async (id) => {
     return response.data
 }
 
-//edit application status
 const editApplicationStatus = async (id, formData) => {
-    const response = await axios.patch(`/applications/${id}`, formData)
-    console.log(id);
-    console.log(formData);
+    const response = await axios.patch('/applications/' + id, formData)
     return response.data
 
 }
@@ -36,4 +33,3 @@ const jobService = {
 }
 
 export default jobService
-
