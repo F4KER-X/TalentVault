@@ -10,7 +10,7 @@ const User = require('../models/User')
 // @route GET /application/job/id
 // @access Private
 const getApplicationForJob = asyncHandler(async (req, res) => {
-    const applications = await Application.find({ jobId: req.params['id'] }).lean().exec()
+    const applications = await Application.find({ jobId: req.params['id'] }).sort({ createdAt: -1 }).lean().exec()
 
     const updatedApplications = await Promise.all(
         applications.map(async (application) => {
@@ -26,7 +26,8 @@ const getApplicationForJob = asyncHandler(async (req, res) => {
                 resume: applicant.resume.URL,
                 applicantId: application.applicantId,
                 jobId: application.jobId,
-                applicationId: application._id
+                applicationId: application._id,
+                isModified: application.isModified
             };
         })
     );
@@ -39,7 +40,7 @@ const getApplicationForJob = asyncHandler(async (req, res) => {
 const getApplicationForUser = asyncHandler(async (req, res) => {
     const { _id } = req.user
 
-    const applications = await Application.find({ applicantId: _id }).lean().exec()
+    const applications = await Application.find({ applicantId: _id }).sort({ createdAt: -1 }).lean().exec()
 
     const updatedApplications = await Promise.all(
         applications.map(async (application) => {
@@ -83,6 +84,8 @@ const updateApplicatin = asyncHandler(async (req, res) => {
 
         const { status } = req.body
         if (status) application.status = status
+
+        application.isModified = true
 
 
         const updatedApplication = await application.save()
