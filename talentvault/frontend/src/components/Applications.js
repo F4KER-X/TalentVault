@@ -13,7 +13,18 @@ import { Link } from "react-router-dom";
 import "./Applications.css"
 import { useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
+
+
 const Applications = ({ application }) => {
+
+  
+  function JobStatus({ isOpen }) {
+    return (
+      <div className={`job-status ${isOpen ? "open" : "closed"}`}>
+        {isOpen ? "Open" : "Closed"}
+      </div>
+    );
+  }
 
   let btnColor = "btn-pending";
   switch (application?.status) {
@@ -86,9 +97,15 @@ const Applications = ({ application }) => {
           <div>
             <div style={{ marginBottom: "10px", marginLeft: "10px" }}><FaUser /> {application?.firstName} {application?.lastName}</div>
             <div style={{ marginBottom: "10px", marginLeft: "10px" }}> <FaEnvelope /> {application?.email}</div>
-            <div className={`form-control`} style={{ marginBottom: "10px", marginLeft: "10px" }}>
-              <FaEnvelopeOpenText /> {application?.jobStatus}
-            </div>
+            
+            <JobStatus isOpen={application?.jobStatus === 'Open' ? true : false} />
+            
+
+
+
+
+
+
             <div className={`form-control ${btnColor}`} style={{ marginTop: "10px" }}>
               <FaEnvelopeOpenText /> {application?.applicationStatus}
             </div>
