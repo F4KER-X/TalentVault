@@ -13,13 +13,7 @@ import { useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
 
 const Applications = ({ application }) => {
-  function JobStatus({ isOpen }) {
-    return (
-      <div className={`job-status ${isOpen ? "open" : "closed"}`}>
-        {isOpen ? "Open" : "Closed"}
-      </div>
-    );
-  }
+
 
   let btnColor = "btn-pending";
   switch (application?.status) {
@@ -117,10 +111,7 @@ const Applications = ({ application }) => {
                 <FaEnvelope /> {application?.email}
               </div>
 
-              <JobStatus
-                isOpen={application?.jobStatus === "Open" ? true : false}
-              />
-
+             
             
               <div style={{marginTop:"10px"}} >
                 <ApplicationStatus btnColor={btnColor} />
