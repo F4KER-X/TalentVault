@@ -116,13 +116,20 @@ const Applications = ({ application }) => {
 
               {application?.isModified ? <></> : <><div>
                 <label htmlFor="applicant-style" className="applicant-style"> Accept or Reject Applicant :</label>
-              </div><div className="dropdown">
+              </div>
+              <div className="dropdown"  style={{ display:"inline",margin: "auto",}}>
+                <div style={{float:"left"}} >
                   <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} onChange={handleSelection}>
-                    <option value="Accepted">Accept</option>
-                    <option value="Rejected">Reject</option>
+                    <option value="Accepted">ACCEPT</option>
+                    <option value="Rejected">REJECT</option>
                   </select>
-                  <button onClick={handleEditClick} className="confirm-btn">Confirm</button>
-                </div></>}
+                  </div>
+
+                  <div style={{float:"left", paddingLeft:"25px"}}>
+                    <button onClick={handleEditClick} className="confirm-btn">Confirm</button>
+                  </div>
+                </div>
+                </>}
             </div>
             <div className="form-group"></div>
           </div>
