@@ -23,15 +23,15 @@ axios.defaults.withCredentials = true;
 
 function App() {
   const dispatch = useDispatch();
+
   //get login status
   useEffect(() => {
     async function loginStatus() {
       const status = await getLoginStatus();
-      console.log(status);
       dispatch(SET_LOGIN(status));
     }
     loginStatus();
-  }, []);
+  }, [dispatch]);
 
 
   return (
@@ -51,7 +51,7 @@ function App() {
         <Route path="/job/create-job" element={<CreateJob />} />
         <Route path="/job/my-jobs" element={<ViewJobs />} />
         <Route path="*" element={<Error />} />
-       
+
       </Routes>
     </BrowserRouter>
   );

@@ -157,32 +157,46 @@ label {
 
 .btn-accepted {
   background-color: #9ad457;
-
+  max-width: 150px;
+  text-align: center;
   color: white;
-  width: 1ref;
-  border-radius: 10px;
   padding: 10px;
-  border: none;
+  border: transparent;
+  border-radius: var(--borderRadius);
+  letter-spacing: var(--letterSpacing);
+  box-shadow: var(--shadow-2);
+  transition: var(--transition);
+  text-transform: capitalize;
+  display: inline-block;
 }
 
 .btn-rejected {
   background-color: #e03315;
-
+  max-width: 150px;
+  text-align: center;
   color: white;
-  width: 1ref;
-  border-radius: 10px;
   padding: 10px;
-  border: none;
+  border: transparent;
+  border-radius: var(--borderRadius);
+  letter-spacing: var(--letterSpacing);
+  box-shadow: var(--shadow-2);
+  transition: var(--transition);
+  text-transform: capitalize;
+  display: inline-block;
 }
 
 .btn-pending {
   background-color: #edae2f;
-
+  max-width: 150px;
+  text-align: center;
   color: white;
-  width: 1ref;
-  border-radius: 10px;
   padding: 10px;
-  border: none;
+  border: transparent;
+  border-radius: var(--borderRadius);
+  letter-spacing: var(--letterSpacing);
+  box-shadow: var(--shadow-2);
+  transition: var(--transition);
+  text-transform: capitalize;
 }
 
 .forgotpassword {
@@ -642,14 +656,15 @@ ul {
   color: #fff;
 }
 #pageButton.active {
-  color: #842029;
+  color: white;
+  background-color: #4540db;
 }
 #pageButton {
   margin: auto 10px;
 }
 
 #pageButton.active:hover {
-  background-color: #842029;
+  background-color: #4540db;
   color: #fff;
 }
 

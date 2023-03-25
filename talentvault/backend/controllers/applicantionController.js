@@ -1,6 +1,9 @@
 const asyncHandler = require('express-async-handler')
+const Applicant = require('../models/Applicant')
 const Application = require('../models/Application')
 const Job = require('../models/Job')
+const Recruiter = require('../models/Recruiter')
+const User = require('../models/User')
 
 
 // @desc Get application for job.
@@ -8,31 +11,58 @@ const Job = require('../models/Job')
 // @access Private
 const getApplicationForJob = asyncHandler(async (req, res) => {
     const applications = await Application.find({ jobId: req.params['id'] }).lean().exec()
-    return res.status(200).json(applications)
+
+    const updatedApplications = await Promise.all(
+        applications.map(async (application) => {
+            const applicant = await Applicant.findOne({ userId: application.applicantId }).lean().exec()
+
+            const user = await User.findById(application.applicantId).lean().exec()
+            return {
+                firstName: applicant.firstName,
+                lastName: applicant.lastName,
+                phoneNumber: applicant.phoneNumber,
+                email: user.email,
+                applicationStatus: application.status,
+                resume: applicant.resume.URL,
+                applicantId: application.applicantId,
+                jobId: application.jobId
+            };
+        })
+    );
+    console.log(updatedApplications);
+    return res.status(200).json(updatedApplications)
 })
 
 // @desc Get application for a user.
 // @route GET /application/:id
 // @access Private
 const getApplicationForUser = asyncHandler(async (req, res) => {
-    const { _id, role } = req.user
+    const { _id } = req.user
 
-    if (role === 'applicant') {
+    const applications = await Application.find({ applicantId: _id }).lean().exec()
 
-        let applications = await Application.find({ applicantId: _id }).lean().exec()
+    const updatedApplications = await Promise.all(
+        applications.map(async (application) => {
+            const recruiter = await Recruiter.findOne({ userId: application.recruiterId }).lean().exec()
+            const job = await Job.findById(application.jobId).lean().exec()
+            const user = await User.findById(application.recruiterId).lean().exec()
+            return {
+                jobTitle: job.jobTitle,
+                companyName: recruiter.companyName,
+                firstName: recruiter.firstName,
+                lastName: recruiter.lastName,
+                email: user.email,
+                jobStatus: job.status,
+                applicationStatus: application.status,
+                jobId: job._id
+            };
+        })
 
-        await Promise.all(applications.map(async (application) => {
-            const job = await Job.findById({ _id: application.jobId }).lean().exec()
-            application.jobTitle = job.jobTitle
-            application.companyName = job.companyName
-            application.jobStatus = job.status
-        }))
+    );
+    console.log(updatedApplications);
+    return res.status(200).json(updatedApplications)
 
-        return res.status(200).json(applications)
 
-    } else {
-        return res.status(401).json({ message: 'Not an applicant' })
-    }
 })
 
 

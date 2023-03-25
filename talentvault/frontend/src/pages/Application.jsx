@@ -1,23 +1,16 @@
 import Navbar from "../components/Navbar";
-import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectID,
-  selectIsLoggedIn,
-  selectRole,
-} from "../redux/features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { getApplicationForUser } from "../redux/features/application/applicationSlice";
-
 import Loader from "../components/Loader";
 import Applications from "../components/Applications";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
-
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function Application() {
+  UseRedirectLoggedOutUser();
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,10 +34,8 @@ function Application() {
   );
 
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(getApplicationForUser());
-    }
-  }, [dispatch, isLoggedIn]);
+    dispatch(getApplicationForUser());
+  }, [dispatch]);
 
   const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;

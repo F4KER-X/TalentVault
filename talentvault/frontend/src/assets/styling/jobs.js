@@ -22,7 +22,6 @@ const Wrapper = styled.section`
     flex-direction: row;
     justify-content: space-between;
   }
-
   .form-control {
     width: 95%;
     border-radius: 5px;
@@ -31,7 +30,6 @@ const Wrapper = styled.section`
     font-size: 15px;
     margin: 2px 0;
   }
-
   .title {
     margin-top: 0px;
     font-size: 17px;
@@ -60,13 +58,11 @@ const Wrapper = styled.section`
     border-radius: 0.25rem;
     margin-top: 2px
   }
-
   .job-status.open {
     color: green;
     background-color: #dff0d8;
     border-color: #d6e9c6;
   }
-
   .job-status.closed {
     color: red;
     background-color: #f2dede;
@@ -89,7 +85,7 @@ const Wrapper = styled.section`
     margin-top: 6px;
   }
   .info {
-    margin-top: 6px;
+    margin-left: 6px;
   }
   p {
     margin: 0;
@@ -104,7 +100,6 @@ const Wrapper = styled.section`
   .address {
     margin-bottom: 20px;
   }
-
   .form-title {
     margin-bottom: 5px;
   }
@@ -113,10 +108,8 @@ const Wrapper = styled.section`
     padding: auto;
     margin-top: 1rem;
     background: #0f5132;
-
     cursor: pointer;
     color: var(--white);
-
     border: transparent;
     border-radius: var(--borderRadius);
     letter-spacing: var(--letterSpacing);

@@ -10,6 +10,7 @@ import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function Dashboard() {
+  UseRedirectLoggedOutUser();
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
 
   const dispatch = useDispatch();

@@ -1,20 +1,17 @@
-
-
-import React, { useState, useEffect } from "react";
-import Wrapper from "../assets/styling/JobsExtended";
+import Wrapper from "../assets/styling/jobs";
 import {
   FaBriefcase,
   FaRegBuilding,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-import {  useSelector } from "react-redux";
-import { selectRole } from "../redux/features/auth/authSlice";
-import "react-confirm-alert/src/react-confirm-alert.css";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectRole } from "../redux/features/auth/authSlice";
 
 
 const Jobs = ({ job }) => {
+
   function JobStatus({ isOpen }) {
     return (
       <div className={`job-status ${isOpen ? "open" : "closed"}`}>
@@ -33,7 +30,7 @@ const Jobs = ({ job }) => {
             <h4 className="form-title">{job?.jobTitle}</h4>
           </div>
 
-          <h6 className="title">{job?.companyName} </h6>
+          <h6 className="title" style={{ color: "#4540db" }}>{job?.companyName} </h6>
 
           <div>
             <div className="form-control">
@@ -49,19 +46,31 @@ const Jobs = ({ job }) => {
             <div>
               <JobStatus isOpen={job?.status === 'Open' ? true : false} />
             </div>
-
-          <div style={{textAlign:"center", float:"left", marginTop:"20px"}}>
-
-            <div style={{display:"inline-block"}}>
-                <Link className="btn" to={`/job/${job?._id}`}>More Info <FiInfo className="info" size={15} /></Link>
+            <div className="buttons-2">
+              {/* <div href="" className="btn">
+                Apply <FaExternalLinkAlt className="apply" size={15} />
+              </div> */}
+              <div>
+                {/* More Info <FiInfo className="info" size={15} /> */}
+                <Link className="btn" to={`/job/${job?._id}`} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>More Info <FiInfo className="info" size={15} /></Link>
+              </div>
+              <div >
+                {role === "recruiter" && (
+                  <Link className="btn" to={`/application/${job?._id}`} style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: "10px",
+                    // optional: set the height of the parent div to make it take up the full height of the viewport
+                  }}>View Applications </Link>
+                )}
               </div>
 
-            <div style={{display:"inline-block"}}>
-               {role === "recruiter" && (
-                 <Link className="btn" to={`/application/${job?._id}`} >View Applications </Link> 
-                )}
-           </div>
-        </div>
+            </div>
           </div>
           <div className="form-group"></div>
         </div>

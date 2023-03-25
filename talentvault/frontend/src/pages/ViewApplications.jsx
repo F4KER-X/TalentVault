@@ -1,18 +1,17 @@
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn,} from "../redux/features/auth/authSlice";
-import { useEffect,useState } from "react";
+import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
+import { useEffect, useState } from "react";
 import { getApplicationForJob } from "../redux/features/application/applicationSlice";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Applications from "../components/Applications";
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function ViewApplications() {
-  //UseRedirectLoggedOutUser("/login");
-
+  UseRedirectLoggedOutUser();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
 
   //=====================pagination====================
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,20 +30,14 @@ function ViewApplications() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-
-  const {id} = useParams();
-  const { applications, isLoading} = useSelector(
-    (state) => state.application
-  );
+  const { id } = useParams();
+  const { applications, isLoading } = useSelector((state) => state.application);
 
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getApplicationForJob(id));
-      console.log(id);
-      
     }
-  }, [dispatch, isLoggedIn,id]);
-
+  }, [dispatch, isLoggedIn, id]);
 
   const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -70,16 +63,16 @@ function ViewApplications() {
       </div>
 
       <div className="pagination-container">
-        {applications?.length===0 ? (
+        {applications?.length === 0 ? (
           <h5>No one has applied to this job yet!</h5>
-        ): (
-      <div>
+        ) : (
+          <div>
             <div>
-           {currentJobs.map((application, index) => (
-            <Applications key={index} application={application} />
-          ))}
-          </div>
-          <div className="pagination">
+              {currentJobs.map((application, index) => (
+                <Applications key={index} application={application} />
+              ))}
+            </div>
+            <div className="pagination">
               <button
                 className="prev"
                 disabled={currentPage === 1 ? true : false}
@@ -109,7 +102,6 @@ function ViewApplications() {
             </div>
           </div>
         )}
-        
       </div>
     </>
   );
