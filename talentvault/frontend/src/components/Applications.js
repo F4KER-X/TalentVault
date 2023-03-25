@@ -2,13 +2,19 @@ import "../index.css";
 import Wrapper from "../assets/styling/jobs";
 import {
   FaEnvelopeOpenText,
-  FaMailBulk
+  FaPhone,
+  FaEnvelope,
+  FaDownload,
+  FaUser
 } from "react-icons/fa";
-
-import { FiInfo } from "react-icons/fi";
+import {  useSelector } from "react-redux";
+import { selectRole } from "../redux/features/auth/authSlice";
 import { Link } from "react-router-dom";
 
 const Applications = ({ application }) => {
+
+  const role = useSelector(selectRole);
+
 
   let btnColor = "btn-pending";
   switch (application?.status) {
@@ -24,45 +30,49 @@ const Applications = ({ application }) => {
       btnColor = "btn-pending"
       break;
   }
-  // function ApplicationStatus({ applicationStatus }) {
-  //     return (
-  //         <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
-  //         : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
+
+  /* function ApplicationStatus({ applicationStatus }) {
+    return (
+       <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
+       : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
+       </div>
+    );
+  }
+    
+ */
 
   return (
+    
     <>
       <Wrapper>
         <div className="form">
           <div className="top">
-            <h4 className="form-title">{application?.jobTitle}</h4>
-            {/* <FaRegEdit className="edit" size={20} />
-                <AiOutlineDelete className="delete" size={20} /> */}
+            <h4 className="form-title">{application?.jobTitle}</h4> 
           </div>
 
-          <h6 className="title">{application?.companyName} </h6>
+          <h6 className="title">{application?.companyName}</h6>
 
           <div>
-            <div className="form-control">
-              <FaMailBulk /> {application?.jobStatus}
-              {/* <ApplicationStatus applicationStatus={"Accepted"}/> */}
-            </div>
+            <div><FaUser/> insert applicant full name here</div>
+            <div> <FaPhone/> insert applicant phone number here</div>
+            <div> <FaEnvelope/> insert applicant email address</div>
+
+
+            
             <div className="form-control">
               <FaEnvelopeOpenText /> {application?.status}
             </div>
 
-            <div>
-              {/* <JobStatus applicationStatus={applicationStatus === "Accepted" ?  "Accepted" 
-                : applicationStatus === "Closed" ? "Closed" : "Pending"} /> */}
-            </div>
+             <div>
+              {/* <ApplicationStatus applicationStatus={applicationStatus === "Accepted" ?  "Accepted" 
+                : applicationStatus === "Closed" ? "Closed" : "Pending"} />  */}
+            </div> 
             <div className="buttons-2">
-              {/* <div href="" className="btn">
-                    Apply <FaExternalLinkAlt className="apply" size={15} />
-                  </div> */}
               <div>
-                <Link className={btnColor} to={`/job/${application?._id}`}>More Info <FiInfo className="info" size={15} /></Link>
+                <Link className="btn">View CV <FaDownload className="info" size={15} /></Link>
               </div>
-
             </div>
+
           </div>
           <div className="form-group"></div>
         </div>
