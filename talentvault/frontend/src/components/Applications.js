@@ -40,14 +40,23 @@ const Applications = ({ application }) => {
   }
 
   const dispatch = useDispatch();
-  const [selectedStatus, setSelectedOption] = useState("hold");
+  const [selectedStatus, setSelectedOption] = useState(application?.applicationStatus);
+  const id = {applicationId : application?.applicationId}
 
-  function handleSelection(event) {
-    setSelectedOption(event.target.value);
+  const handleSelection = (event) => {
+    const status = event.target.value;
+    setSelectedOption(status);
+  };
+
+  function handleConfirm (event) {
 
     console.log(application)
+    console.log(application?.applicationId)
+    console.log(selectedStatus);
+    
+    const formData = { status: selectedStatus };
 
-    dispatch(updateApplicationStatus({ id: application?.jobId, status: selectedStatus }));
+    dispatch(updateApplicationStatus({id, formData}));
   }
   const role = useSelector(selectRole);
 
@@ -102,10 +111,11 @@ const Applications = ({ application }) => {
               <div className="dropdown">
                 
                 <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} onChange={handleSelection}>
-                  <option value="accept">Accept</option>
-                  <option value="reject">Reject</option>
-                  <option value="hold">Hold</option>
+                  <option value="Accepted">Accept</option>
+                  <option value="Rejected">Reject</option>
+                  <option value="Pending">Hold</option>
                 </select>
+                <button onClick={handleConfirm} className="confirm-btn">Confirm</button>
               </div>            
             </div>
             <div className="form-group"></div>

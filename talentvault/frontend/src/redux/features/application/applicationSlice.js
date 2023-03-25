@@ -55,13 +55,12 @@ export const getApplicationForJob = createAsyncThunk(
 
 export const updateApplicationStatus = createAsyncThunk(
     'applications/updateApplicationStatus',
-    async({ id, status }, thunkAPI) => {
+    async({ id, formData }, thunkAPI) => {
+        console.log(id);
         try {
             // Call your application service to update the status in your database
-            await applicationService.updateApplicationStatus(id, status);
-
+            return await applicationService.updateApplicationStatus(id, formData);
             // Return the updated status so you can use it in your reducer
-            return { id, status };
         } catch (err) {
             const message =
                 (err.response && err.response.data && err.response.data.message) ||

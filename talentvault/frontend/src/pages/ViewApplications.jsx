@@ -33,6 +33,8 @@ function ViewApplications() {
   const { id } = useParams();
   const { applications, isLoading } = useSelector((state) => state.application);
 
+  
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getApplicationForJob(id));
