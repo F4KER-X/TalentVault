@@ -1,4 +1,3 @@
-import "../index.css";
 import Wrapper from "../assets/styling/jobs";
 import {
   FaBriefcase,
@@ -20,26 +19,24 @@ const Jobs = ({ job }) => {
       <Wrapper>
         <div className="form">
           <div className="top">
-            <h4 className="form-title">{job.jobTitle}</h4>
-            {/* <FaRegEdit className="edit" size={20} />
-            <AiOutlineDelete className="delete" size={20} /> */}
+            <h4 className="form-title">{job?.jobTitle}</h4>
           </div>
 
-          <h6 className="title">{job.companyName} </h6>
+          <h6 className="title">{job?.companyName} </h6>
 
           <div>
             <div className="form-control">
-              <FaMapMarkerAlt /> {job.jobLocation.city}, {job.jobLocation.province}
+              <FaMapMarkerAlt /> {job?.jobLocation?.city}, {job?.jobLocation?.province}
             </div>
             <div className="form-control">
-              <FaRegBuilding /> {job.workType}
+              <FaRegBuilding /> {job?.workType}
             </div>
 
             <div className="form-control">
-              <FaBriefcase /> {job.jobType}
+              <FaBriefcase /> {job?.jobType}
             </div>
             <div>
-              <JobStatus isOpen={job.status === 'Open' ? true : false} />
+              <JobStatus isOpen={job?.status === 'Open' ? true : false} />
             </div>
             <div className="buttons-2">
               {/* <div href="" className="btn">
@@ -47,7 +44,7 @@ const Jobs = ({ job }) => {
               </div> */}
               <div>
                 {/* More Info <FiInfo className="info" size={15} /> */}
-                <Link className="btn" to={`/job/${job._id}`}>More Info <FiInfo className="info" size={15} /></Link>
+                <Link className="btn" to={`/job/${job?._id}`}>More Info <FiInfo className="info" size={15} /></Link>
               </div>
 
             </div>

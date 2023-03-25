@@ -1,29 +1,19 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { SET_LOGIN } from "../redux/features/auth/authSlice";
-import { getLoginStatus } from '../redux/features/auth/authService'
+import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
 
-const UseRedirectLoggedOutUser = (path) => {
+const UseRedirectLoggedOutUser = () => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     useEffect(() => {
-        const redirectLoggedOutUser = async () => {
-            const isLoggedIn = await getLoginStatus()
-            dispatch(SET_LOGIN(isLoggedIn))
-
-            if (!isLoggedIn) {
-                toast.info("Session expired, please login to continue")
-                navigate(path)
-                return
-            }
+        if (!isLoggedIn) {
+            toast.info("Session expired, please login to continue")
+            navigate('/login')
         }
-        redirectLoggedOutUser()
-
-
-    }, [navigate, path, dispatch])
+    }, [isLoggedIn, navigate])
 
 }
 

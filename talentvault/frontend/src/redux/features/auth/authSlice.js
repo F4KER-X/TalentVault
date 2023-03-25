@@ -1,26 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const name = JSON.parse(localStorage.getItem("name"))
-const photo = JSON.parse(localStorage.getItem("photo"))
+//const name = JSON.parse(localStorage.getItem("name"))
+//const photo = JSON.parse(localStorage.getItem("photo"))
 
 
 const initialState = {
 
     isLoggedIn: false,
-    name: name ? name : "",
-    user: {
-        firstName: "",
-        lastName: "",
-        companyNamy: "",
-        resume: "",
-        phoneNumber: "",
-        profilePicUrl: "",
-        bio: "",
-    },
-    photo: photo ? photo : "",
-    role: "",
+    name: "",
+    photo: "",
+    role: '',
     id: '',
-    companyName: ''
+    companyName: '',
+    email: ''
 }
 const authSlide = createSlice({
     name: 'auth',
@@ -31,17 +23,9 @@ const authSlide = createSlice({
             state.isLoggedIn = action.payload
         },
         SET_NAME(state, action) {
-            localStorage.setItem('name', JSON.stringify(action.payload))
             state.name = action.payload
         },
-        SET_USER(state, action) {
-            const profile = action.payload
-            state.user.name = profile.firstName
-            state.user.companyNamy = profile.companyNamy
-            state.user.phoneNumber = profile.phoneNumber
-        },
         SET_PHOTO(state, action) {
-            localStorage.setItem('photo', JSON.stringify(action.payload))
             state.photo = action.payload
         },
         SET_ROLE(state, action) {
@@ -52,20 +36,33 @@ const authSlide = createSlice({
         },
         SET_COMPANY(state, action) {
             state.companyName = action.payload
+        },
+        SET_EMAIL(state, action) {
+            state.email = action.payload
+        },
+        SET_CLEAR(state) {
+            state.isLoggedIn = false
+            state.name = ""
+            state.photo = ""
+            // state.role = ''
+            state.id = ''
+            state.companyName = ''
+            state.email = ''
         }
     }
 })
 
-export const { SET_LOGIN, SET_NAME, SET_USER, SET_PHOTO, SET_ROLE, SET_ID, SET_COMPANY } = authSlide.actions
+export const { SET_LOGIN, SET_NAME, SET_PHOTO, SET_ROLE, SET_ID, SET_COMPANY, SET_EMAIL, SET_CLEAR } = authSlide.actions
 
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn
 export const selectName = (state) => state.auth.name
-export const selectUser = (state) => state.auth.user
 export const selectPhoto = (state) => state.auth.photo
 export const selectRole = (state) => state.auth.role
 export const selectID = (state) => state.auth.id
 export const selectCompany = (state) => state.auth.companyName
+export const selectEmail = (state) => state.auth.email
+
 
 
 export default authSlide.reducer

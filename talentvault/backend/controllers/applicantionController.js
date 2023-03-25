@@ -13,7 +13,7 @@ const getApplicationForJob = asyncHandler(async (req, res) => {
         if (applications.length !== 0) {
             return res.status(200).json(applications)
         } else {
-            return res.status(404).json({ message: 'No current applications' })
+            return res.status(200).json({ message: 'No current applications' })
         }
     } else {
         return res.status(401).json({ message: 'Not a recruiter' })
@@ -33,7 +33,7 @@ const getApplicationForUser = asyncHandler(async (req, res) => {
         if (applications.length !== 0) {
             return res.status(200).json(applications)
         } else {
-            return res.status(404).json({ message: 'No current applications' })
+            return res.status(200).json({ message: 'No current applications' })
         }
 
     } else {
@@ -93,7 +93,7 @@ const createNewApplication = asyncHandler(async (req, res) => {
     const { jobId } = req.body
     if (!jobId) return res.status(400).json({ message: 'Job id is required' })
 
-    const job = await Job.findById({ _id: jobId })
+    const job = await Job.findById({ _id: jobId }).exec()
 
     if (!job) return res.status(404).json({ message: 'Job not found' })
 
@@ -105,9 +105,12 @@ const createNewApplication = asyncHandler(async (req, res) => {
     //create application
     const application = await Application.create(applicationObject)
 
+
     if (!application) {
         return res.status(400).json({ message: 'Error creating a new application, please contact us' })
     }
+    job.numberOfApplication += 1
+    job.save()
 
     res.status(200).json({
         message: 'Application created',

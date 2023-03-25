@@ -7,6 +7,7 @@ const { validPassword } = require('./userValidation')
 const Job = require('../models/Job')
 const cloudinary = require('../Utils/cloudinary')
 const Application = require('../models/Application')
+const { getJobsByUser } = require('./jobsController')
 
 // @desc Get info of the user
 // @route GET /user
@@ -51,6 +52,9 @@ const updateUserInfo = asyncHandler(async (req, res) => {
         if (recruiter) {
             if (companyName) {
                 recruiter.companyName = companyName
+
+                //update company name for all jobs that the user created.
+                await Job.updateMany({ recruiterId: _id }, { companyName });
             }
             if (phoneNumber) {
                 recruiter.phoneNumber = phoneNumber
@@ -69,7 +73,7 @@ const updateUserInfo = asyncHandler(async (req, res) => {
 
             //may not be necessary - check later
             if (updatedRecruiuter) {
-                res.status(200).json({ message: 'User info updated!', _id, role })
+                res.status(200).json({ message: 'User info updated!' })
             } else {
                 res.status(400).json({ message: 'update request faild' })
             }
@@ -123,7 +127,9 @@ const deleteUser = asyncHandler(async (req, res) => {
             const deletedRecruiter = await Recruiter.findOneAndDelete({ userId: user._id }).exec()
             await cloudinary.uploader.destroy(deletedRecruiter.profilePicUrl.public_id)
             const deleteJobs = await Job.deleteMany({ recruiterId: user._id })
-            if (deletedRecruiter && deleteJobs) {
+            const deletedApplications = await Application.deleteMany({ recruiterId: user._id })
+
+            if (deletedRecruiter && deleteJobs && deletedApplications) {
                 res.cookie("token", "", {
                     path: "/",
                     httpOnly: true,
