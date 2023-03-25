@@ -30,7 +30,7 @@ const Jobs = ({ job }) => {
             <h4 className="form-title">{job?.jobTitle}</h4>
           </div>
 
-          <h6 className="title">{job?.companyName} </h6>
+          <h6 className="title" style={{ color: "#4540db" }}>{job?.companyName} </h6>
 
           <div>
             <div className="form-control">
