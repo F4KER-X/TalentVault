@@ -5,7 +5,12 @@ import "./Job/JobForm.css"
 
 
 const SearchBar = () => {
+  const [searchInput, setSearchInput] = useState("");
 
+  const handleSearchValue = (event) => {
+        const searchWord = event.target.value;
+        setSearchInput(searchWord);
+  };
 
   return (
     <>
@@ -14,9 +19,9 @@ const SearchBar = () => {
             <input 
             className='search-input'
             type="text"
-           // value={searchInput}
+            value={searchInput}
             placeholder='Search by Job Title'
-           // onChange={handleSearchValue}
+            onChange={handleSearchValue}
             />
 
             <button className='search-button'>
