@@ -13,7 +13,7 @@ const initialState = {
 
 export const getApplicationForUser = createAsyncThunk(
     'applications/getApplicationForUser',
-    async (_, thunkAPI) => {
+    async(_, thunkAPI) => {
         try {
             return await applicationService.getApplicationForUser()
         } catch (err) {
@@ -28,7 +28,7 @@ export const getApplicationForUser = createAsyncThunk(
 
 export const createNewApplication = createAsyncThunk(
     'applications/createNewApplication',
-    async (formData, thunkAPI) => {
+    async(formData, thunkAPI) => {
         try {
             return await applicationService.createNewApplication(formData)
         } catch (err) {
@@ -41,7 +41,7 @@ export const createNewApplication = createAsyncThunk(
 )
 export const getApplicationForJob = createAsyncThunk(
     'applications/getApplicationForJob',
-    async (id, thunkAPI) => {
+    async(id, thunkAPI) => {
         try {
             return await applicationService.getApplicationsForJob(id)
         } catch (err) {
@@ -52,6 +52,25 @@ export const getApplicationForJob = createAsyncThunk(
         }
     }
 )
+
+export const updateApplicationStatus = createAsyncThunk(
+    'applications/updateApplicationStatus',
+    async({ id, status }, thunkAPI) => {
+        try {
+            // Call your application service to update the status in your database
+            await applicationService.updateApplicationStatus(id, status);
+
+            // Return the updated status so you can use it in your reducer
+            return { id, status };
+        } catch (err) {
+            const message =
+                (err.response && err.response.data && err.response.data.message) ||
+                err.message ||
+                err.toString();
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
 
 
 const applicationSlice = createSlice({
@@ -131,4 +150,3 @@ export const selectIsLoading = (state) => state.application.isLoadingApp
 
 
 export default applicationSlice.reducer
-

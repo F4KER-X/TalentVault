@@ -9,11 +9,12 @@ import {
 import { FiInfo } from "react-icons/fi";
 
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
+import { useState } from "react";
+import { updateApplicationStatus } from "../redux/features/application/applicationSlice";
 
 const Applications = ({ application }) => {
-
 
   let btnColor = "btn-pending";
   switch (application?.status) {
@@ -38,6 +39,16 @@ const Applications = ({ application }) => {
     );
   }
 
+  const dispatch = useDispatch();
+  const [selectedStatus, setSelectedOption] = useState("hold");
+
+  function handleSelection(event) {
+    setSelectedOption(event.target.value);
+
+    console.log(application)
+
+    dispatch(updateApplicationStatus({ id: application?.jobId, status: selectedStatus }));
+  }
   const role = useSelector(selectRole);
 
   return (
@@ -84,7 +95,18 @@ const Applications = ({ application }) => {
                     View CV <FaDownload className="info" size={15} />
                   </Link>
                 </div>
-              </div>              
+              </div>  
+              <div>
+                <label htmlFor="applicant-style" className="applicant-style"> Accept or Reject Applicant :</label>
+              </div>
+              <div className="dropdown">
+                
+                <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} onChange={handleSelection}>
+                  <option value="accept">Accept</option>
+                  <option value="reject">Reject</option>
+                  <option value="hold">Hold</option>
+                </select>
+              </div>            
             </div>
             <div className="form-group"></div>
           </div>

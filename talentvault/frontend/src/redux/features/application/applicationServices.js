@@ -18,10 +18,17 @@ const getApplicationsForJob = async (id) => {
     return response.data
 
 }
+
+const updateApplicationStatus = async (id) => {
+    const response = await axios.get(`/applications/${id}`)
+    return response.data
+}
+
 const jobService = {
     getApplicationForUser,
     createNewApplication,
-    getApplicationsForJob
+    getApplicationsForJob,
+    updateApplicationStatus
 }
 
 export default jobService
