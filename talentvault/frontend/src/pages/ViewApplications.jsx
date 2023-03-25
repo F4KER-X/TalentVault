@@ -1,38 +1,62 @@
 import Navbar from "../components/Navbar";
-import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectID,
-  selectIsLoggedIn,
-  selectRole,
-} from "../redux/features/auth/authSlice";
-import { useEffect } from "react";
-import { getJobs } from "../redux/features/job/jobSlice";
+import { selectIsLoggedIn,} from "../redux/features/auth/authSlice";
+import { useEffect,useState } from "react";
 import { getApplicationForJob } from "../redux/features/application/applicationSlice";
 import { useParams } from "react-router-dom";
-
-
 import Loader from "../components/Loader";
 import Applications from "../components/Applications";
 
 function ViewApplications() {
   //UseRedirectLoggedOutUser("/login");
+
   const dispatch = useDispatch();
-
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const {jobId} = useParams();
 
-  const { applications, isLoading, isError, message } = useSelector(
+
+  //=====================pagination====================
+  const [currentPage, setCurrentPage] = useState(1);
+  const getPrevious = () => {
+    setCurrentPage(currentPage - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const getNext = () => {
+    setCurrentPage(currentPage + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const pageNumber = (number) => {
+    setCurrentPage(number);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+
+  const {id} = useParams();
+  const { applications, isLoading} = useSelector(
     (state) => state.application
   );
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getApplicationForJob(jobId));
-      console.log(jobId);
-      console.log(applications);
+      dispatch(getApplicationForJob(id));
+      console.log(id);
+      
     }
-  }, [dispatch, isLoggedIn, jobId]);
+  }, [dispatch, isLoggedIn,id]);
+
+
+  const jobsPerPage = 10;
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = applications.slice(indexOfFirstJob, indexOfLastJob);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(applications.length / jobsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const totalPages = Math.ceil(applications.length / jobsPerPage);
 
   return (
     <>
@@ -41,16 +65,51 @@ function ViewApplications() {
         <Navbar />
 
         <div className="top-container">
-          <h2>Applications for ____ job</h2>
+          <h2>Here Are Your Applicants!</h2>
         </div>
       </div>
 
-      <div className="container">
-        <div>
-          {applications.map((application, index) => (
+      <div className="pagination-container">
+        {applications?.length===0 ? (
+          <h5>No one has applied to this job yet!</h5>
+        ): (
+      <div>
+            <div>
+           {currentJobs.map((application, index) => (
             <Applications key={index} application={application} />
           ))}
-        </div>
+          </div>
+          <div className="pagination">
+              <button
+                className="prev"
+                disabled={currentPage === 1 ? true : false}
+                onClick={getPrevious}
+              >
+                Previous
+              </button>
+
+              {pageNumbers.map((number) => (
+                <button
+                  id="pageButton"
+                  key={number}
+                  className={currentPage === number ? "active" : ""}
+                  onClick={() => pageNumber(number)}
+                >
+                  {number}
+                </button>
+              ))}
+
+              <button
+                className="next"
+                disabled={currentPage === totalPages ? true : false}
+                onClick={getNext}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
+        
       </div>
     </>
   );
