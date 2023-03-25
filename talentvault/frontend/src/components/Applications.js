@@ -5,18 +5,16 @@ import {
   FaPhone,
   FaEnvelope,
   FaDownload,
-  FaUser
+  FaUser,
 } from "react-icons/fa";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
 import { Link } from "react-router-dom";
-import "./Applications.css"
+import "./Applications.css";
 const Applications = ({ application }) => {
-
   const role = useSelector(selectRole);
 
-
- let btnColor = "btn-pending";
+  let btnColor = "btn-pending";
   switch (application?.status) {
     case "Accepted":
       btnColor = "btn-accepted";
@@ -27,11 +25,16 @@ const Applications = ({ application }) => {
       break;
 
     default:
-      btnColor = "btn-pending"
+      btnColor = "btn-pending";
       break;
   }
- 
- /*   function ApplicationStatus( applicationStatus ) {
+
+  function ApplicationStatus({ btnColor }) {
+    return (
+      <div className={`job-status ${btnColor}`}>{application?.status}</div>
+    );
+  }
+  /*   function ApplicationStatus( applicationStatus ) {
     return (
        <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
        : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
@@ -39,38 +42,40 @@ const Applications = ({ application }) => {
     );
   }
      */
- 
 
   return (
-    
     <>
       <Wrapper>
         <div className="form">
           <div className="top">
-            <h4 className="form-title">{application?.jobTitle}</h4> 
+            <h4 className="form-title">{application?.jobTitle}</h4>
           </div>
 
           <h6 className="title">{application?.companyName}</h6>
 
           <div>
-            <div><FaUser/> insert applicant full name here</div>
-            <div> <FaPhone/> insert applicant phone number here</div>
-            <div> <FaEnvelope/> insert applicant email address</div>
-
-
-            
-            <div className="application-status"> {application?.status}</div>
-
-             <div>
-              {/* <ApplicationStatus applicationStatus={applicationStatus === "Accepted" ?  "Accepted" 
-                : applicationStatus === "Closed" ? "Closed" : "Pending"} />   */}
-            </div> 
-            <div className="buttons-2">
-              <div>
-                <Link className="btn">View CV <FaDownload className="info" size={15} /></Link>
-              </div>
+            <div>
+              <FaUser /> insert applicant full name here
+            </div>
+            <div>
+              {" "}
+              <FaPhone /> insert applicant phone number here
+            </div>
+            <div>
+              {" "}
+              <FaEnvelope /> insert applicant email address
             </div>
 
+            <div>
+              <ApplicationStatus btnColor={btnColor} />
+            </div>
+            <div className="buttons-2">
+              <div>
+                <Link className="btn">
+                  View CV <FaDownload className="info" size={15} />
+                </Link>
+              </div>
+            </div>
           </div>
           <div className="form-group"></div>
         </div>
