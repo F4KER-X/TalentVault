@@ -13,7 +13,7 @@ const initialState = {
 
 export const getApplicationForUser = createAsyncThunk(
     'applications/getApplicationForUser',
-    async(_, thunkAPI) => {
+    async (_, thunkAPI) => {
         try {
             return await applicationService.getApplicationForUser()
         } catch (err) {
@@ -28,7 +28,7 @@ export const getApplicationForUser = createAsyncThunk(
 
 export const createNewApplication = createAsyncThunk(
     'applications/createNewApplication',
-    async(formData, thunkAPI) => {
+    async (formData, thunkAPI) => {
         try {
             return await applicationService.createNewApplication(formData)
         } catch (err) {
@@ -41,7 +41,7 @@ export const createNewApplication = createAsyncThunk(
 )
 export const getApplicationForJob = createAsyncThunk(
     'applications/getApplicationForJob',
-    async(id, thunkAPI) => {
+    async (id, thunkAPI) => {
         try {
             return await applicationService.getApplicationsForJob(id)
         } catch (err) {
@@ -53,24 +53,19 @@ export const getApplicationForJob = createAsyncThunk(
     }
 )
 
-export const updateApplicationStatus = createAsyncThunk(
-    'applications/updateApplicationStatus',
-    async({ id, status }, thunkAPI) => {
+export const editApplicationStatus = createAsyncThunk(
+    'applications/editApplication',
+    async ({ id, formData }, thunkAPI) => {
         try {
-            // Call your application service to update the status in your database
-            await applicationService.updateApplicationStatus(id, status);
-
-            // Return the updated status so you can use it in your reducer
-            return { id, status };
+            return await applicationService.editApplicationStatus(id, formData)
         } catch (err) {
-            const message =
-                (err.response && err.response.data && err.response.data.message) ||
-                err.message ||
-                err.toString();
-            return thunkAPI.rejectWithValue(message);
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            return thunkAPI.rejectWithValue(message)
         }
     }
-);
+)
 
 
 const applicationSlice = createSlice({
@@ -138,6 +133,23 @@ const applicationSlice = createSlice({
                 state.isErrorApp = true
                 state.message = action.payload
                 toast.error(action.payload)
+            })
+            .addCase(editApplicationStatus.pending, (state) => {
+                state.isLoadingApp = true;
+            })
+            .addCase(editApplicationStatus.fulfilled, (state, action) => {
+                state.isLoadingApp = false;
+                state.isSuccessApp = true;
+                state.isErrorApp = false;
+                state.message = action.payload;
+                toast.success('Applicant has been updated! An automatic email has been dispatched to the applicant')
+            })
+            .addCase(editApplicationStatus.rejected, (state, action) => {
+                state.isLoadingApp = false;
+                state.isSuccessApp = false;
+                state.isErrorApp = true;
+                state.message = action.payload;
+                toast.error(action.payload);
             })
 
     }

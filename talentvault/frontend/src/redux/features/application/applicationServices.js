@@ -16,19 +16,23 @@ const createNewApplication = async (formData) => {
 const getApplicationsForJob = async (id) => {
     const response = await axios.get(`/applications/job/${id}`)
     return response.data
-
 }
 
-const updateApplicationStatus = async (id) => {
-    const response = await axios.get(`/applications/${id}`)
+//edit application status
+const editApplicationStatus = async (id, formData) => {
+    const response = await axios.patch(`/applications/${id}`, formData)
+    console.log(id);
+    console.log(formData);
     return response.data
+
 }
+
 
 const jobService = {
     getApplicationForUser,
     createNewApplication,
     getApplicationsForJob,
-    updateApplicationStatus
+    editApplicationStatus
 }
 
 export default jobService

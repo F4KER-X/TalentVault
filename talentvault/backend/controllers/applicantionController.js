@@ -29,7 +29,6 @@ const getApplicationForJob = asyncHandler(async (req, res) => {
             };
         })
     );
-    console.log(updatedApplications);
     return res.status(200).json(updatedApplications)
 })
 
@@ -59,7 +58,6 @@ const getApplicationForUser = asyncHandler(async (req, res) => {
         })
 
     );
-    console.log(updatedApplications);
     return res.status(200).json(updatedApplications)
 
 
@@ -93,8 +91,6 @@ const updateApplicatin = asyncHandler(async (req, res) => {
         } else {
             res.status(400).json({ message: 'Application update was not successful' })
         }
-
-
 
     } else {
         res.status(401).json({ message: 'Only recruiters can update an application' })

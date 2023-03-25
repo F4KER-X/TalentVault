@@ -12,12 +12,31 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
 import { useState } from "react";
-import { updateApplicationStatus } from "../redux/features/application/applicationSlice";
+import { editApplicationStatus } from "../redux/features/application/applicationSlice";
+
+
 
 const Applications = ({ application }) => {
 
+  const dispatch = useDispatch()
+
+  const handleEditClick = async (ev) => {
+    ev.preventDefault()
+
+    const formData = {
+      status: 'Accepted'
+    }
+    await dispatch(editApplicationStatus({ id: application?.applicationId, formData }))
+
+  }
+
+
+  console.log(application?.applicationId);
+
+
+
   let btnColor = "btn-pending";
-  switch (application?.status) {
+  switch (application?.applicationStatus) {
     case "Accepted":
       btnColor = "btn-accepted";
       break;
@@ -39,16 +58,9 @@ const Applications = ({ application }) => {
     );
   }
 
-  const dispatch = useDispatch();
   const [selectedStatus, setSelectedOption] = useState("hold");
 
-  function handleSelection(event) {
-    setSelectedOption(event.target.value);
 
-    console.log(application)
-
-    dispatch(updateApplicationStatus({ id: application?.jobId, status: selectedStatus }));
-  }
   const role = useSelector(selectRole);
 
   return (
@@ -72,14 +84,14 @@ const Applications = ({ application }) => {
                 {" "}
                 <FaEnvelope /> {application?.email}
               </div>
-              
-              
-              <div style={{marginTop:"10px"}}>
+
+
+              <div style={{ marginTop: "10px" }}>
                 <ApplicationStatus btnColor={btnColor} />
               </div>
               <div className="buttons-2">
                 <div>
-                  <Link
+                  {application?.resume ? <Link
                     className="btn"
                     to={application?.resume}
                     target="_blank"
@@ -91,22 +103,39 @@ const Applications = ({ application }) => {
                       margin: "0",
                       width: "150px",
                     }}
+                    onClick={handleEditClick}
                   >
                     View CV <FaDownload className="info" size={15} />
-                  </Link>
+                  </Link> : <> <Link
+                    className="btn"
+                    to={application?.resume}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0",
+                      width: "150px",
+                    }}
+                    onClick={handleEditClick}
+                  >
+                    View CV <FaDownload className="info" size={15} />
+                  </Link></>}
+
                 </div>
-              </div>  
+              </div>
               <div>
                 <label htmlFor="applicant-style" className="applicant-style"> Accept or Reject Applicant :</label>
               </div>
               <div className="dropdown">
-                
-                <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} onChange={handleSelection}>
+
+                <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} >
                   <option value="accept">Accept</option>
                   <option value="reject">Reject</option>
                   <option value="hold">Hold</option>
                 </select>
-              </div>            
+              </div>
             </div>
             <div className="form-group"></div>
           </div>
@@ -133,9 +162,9 @@ const Applications = ({ application }) => {
                 <FaEnvelope /> {application?.email}
               </div>
 
-             
-            
-              <div style={{marginTop:"10px"}} >
+
+
+              <div style={{ marginTop: "10px" }} >
                 <ApplicationStatus btnColor={btnColor} />
               </div>
               <div className="buttons-2">
