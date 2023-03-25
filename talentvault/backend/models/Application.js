@@ -21,7 +21,7 @@ const applicantionSchema = mongoose.Schema({
         enum: ['Pending', 'Accepted', 'Rejected'],
         default: 'Pending'
     },
-    isModified: {
+    modify: {
         type: Boolean,
         default: false
     }

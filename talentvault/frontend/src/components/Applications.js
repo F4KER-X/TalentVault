@@ -27,13 +27,18 @@ const Applications = ({ application }) => {
     setSelectedOption(status);
   };
 
+  console.log(application);
 
 
   const handleEditClick = async (ev) => {
     ev.preventDefault()
 
     const formData = {
-      status: selectedStatus
+      status: selectedStatus,
+      jobId: application?.jobId,
+      firstName: application?.firstName,
+      lastName: application?.lastName,
+      email: application?.email,
     }
     await dispatch(editApplicationStatus({ id: application?.applicationId, formData }))
     window.location.reload()
