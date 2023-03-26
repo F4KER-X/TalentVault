@@ -19,15 +19,13 @@ import { editApplicationStatus } from "../redux/features/application/application
 const Applications = ({ application }) => {
 
   const dispatch = useDispatch()
-  const [selectedStatus, setSelectedOption] = useState(application?.applicationStatus);
+  const [selectedStatus, setSelectedOption] = useState("Accepted");
 
 
   const handleSelection = (event) => {
     const status = event.target.value;
     setSelectedOption(status);
   };
-
-  console.log(application);
 
 
   const handleEditClick = async (ev) => {
@@ -40,10 +38,13 @@ const Applications = ({ application }) => {
       lastName: application?.lastName,
       email: application?.email,
     }
+
     await dispatch(editApplicationStatus({ id: application?.applicationId, formData }))
-    window.location.reload()
 
-
+    // Wait for 3 seconds before reloading the page
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000)
   }
 
   let btnColor = "btn-pending";
@@ -122,19 +123,19 @@ const Applications = ({ application }) => {
               {application?.isModified ? <></> : <><div>
                 <label htmlFor="applicant-style" className="applicant-style"> Accept or Reject Applicant :</label>
               </div>
-              <div className="dropdown"  style={{ display:"inline",margin: "auto",}}>
-                <div style={{float:"left"}} >
-                  <select className="dropdown-select" id="status-dropdown" defaultValue={application?.status} value={selectedStatus} onChange={handleSelection}>
-                    <option value="Accepted">ACCEPT</option>
-                    <option value="Rejected">REJECT</option>
-                  </select>
+                <div className="dropdown" style={{ display: "inline", margin: "auto", }}>
+                  <div style={{ float: "left" }} >
+                    <select className="dropdown-select" id="status-dropdown" value={selectedStatus} onChange={handleSelection}>
+                      <option value="Accepted">ACCEPT</option>
+                      <option value="Rejected">REJECT</option>
+                    </select>
                   </div>
 
-                  <div style={{float:"left", paddingLeft:"25px"}}>
+                  <div style={{ float: "left", paddingLeft: "25px" }}>
                     <button onClick={handleEditClick} className="confirm-btn">Confirm</button>
                   </div>
                 </div>
-                </>}
+              </>}
             </div>
             <div className="form-group"></div>
           </div>
