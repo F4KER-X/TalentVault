@@ -1,20 +1,19 @@
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useEffect, useState } from "react";
-import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
-import "../index.css";
+import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
+import { useEffect } from "react";
+import { getJobUser } from "../redux/features/job/jobSlice";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
-function Dashboard() {
+function ViewJobs() {
   UseRedirectLoggedOutUser();
-  UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
+  UseRedirectNotAuthorizedRole("/dashboard", "recruiter");
 
   const dispatch = useDispatch();
-
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,9 +37,9 @@ function Dashboard() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getJobs());
+      dispatch(getJobUser());
     }
-  }, [dispatch, isLoggedIn]); // role]);
+  }, [dispatch, isLoggedIn]);
 
   const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -60,45 +59,50 @@ function Dashboard() {
       <div>
         <Navbar />
         <div className="top-container">
-          <h2>Explore Our Jobs!</h2>
+          <h2>Your job postings</h2>
         </div>
       </div>
 
       <div className="pagination-container">
-        <div>
-          {currentJobs.map((job, index) => (
-            <Jobs key={index} job={job} />
-          ))}
-        </div>
+        {jobs?.length === 0 ? (
+          <h5>No jobs found. Create a new one!</h5>
+        ) : (
+          <div>
+            <div>
+              {currentJobs.map((job, index) => (
+                <Jobs key={index} job={job} />
+              ))}
+            </div>
+            <div className="pagination">
+              <button
+                className="prev"
+                disabled={currentPage === 1 ? true : false}
+                onClick={getPrevious}
+              >
+                Previous
+              </button>
 
-        <div className="pagination">
-          <button
-            className="prev"
-            disabled={currentPage === 1 ? true : false}
-            onClick={getPrevious}
-          >
-            Previous
-          </button>
+              {pageNumbers.map((number) => (
+                <button
+                  id="pageButton"
+                  key={number}
+                  className={currentPage === number ? "active" : ""}
+                  onClick={() => pageNumber(number)}
+                >
+                  {number}
+                </button>
+              ))}
 
-          {pageNumbers.map((number) => (
-            <button
-              id="pageButton"
-              key={number}
-              className={currentPage === number ? "active" : ""}
-              onClick={() => pageNumber(number)}
-            >
-              {number}
-            </button>
-          ))}
-
-          <button
-            className="next"
-            disabled={currentPage === totalPages ? true : false}
-            onClick={getNext}
-          >
-            Next
-          </button>
-        </div>
+              <button
+                className="next"
+                disabled={currentPage === totalPages ? true : false}
+                onClick={getNext}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   ) : (
@@ -106,4 +110,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default ViewJobs;

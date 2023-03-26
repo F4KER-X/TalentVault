@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Loader from "../components/Loader";
-import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
-import { SET_NAME, SET_PHOTO } from "../redux/features/auth/authSlice";
+import {
+  SET_COMPANY,
+  SET_LOGIN,
+  SET_NAME,
+  SET_PHOTO,
+} from "../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import DeleteModal from "../components/DeleteModal";
 
-import Navbar from "../components/Navbar";
 import {
   changePassword,
   deleteUser,
@@ -17,9 +20,13 @@ import {
   uploadFile,
   uploadPhoto,
 } from "../redux/features/auth/authService";
+import Navbar from "../components/Navbar";
+import "../assets/styling/profile.css";
+import "../index.css";
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function Profile() {
-  UserRedirectLoggedOutUser("/login");
+  UseRedirectLoggedOutUser();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -67,8 +74,9 @@ function Profile() {
       setProfilePicUrl(profilePicUrl?.URL);
       setFile(resume?.URL);
       setIsLoading(false);
-      dispatch(SET_NAME(firstName));
-      dispatch(SET_PHOTO(profilePicUrl?.URL));
+      dispatch(SET_NAME(data.firstName));
+      dispatch(SET_PHOTO(data.profilePicUrl.URL));
+      dispatch(SET_COMPANY(data.companyName));
     }
     getUserData();
   }, [dispatch]);
@@ -79,7 +87,8 @@ function Profile() {
   };
 
   //save button
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (ev) => {
+    ev.preventDefault();
     if (!firstName || !lastName)
       return toast.error("Please make sure all required fields aren't empty");
 
@@ -99,6 +108,7 @@ function Profile() {
       companyName,
     };
     await updateUserInfo(formData);
+    toast.success("User info updated successfully");
     setIsLoading(false);
     setIsEditMode(false);
   };
@@ -174,12 +184,13 @@ function Profile() {
   };
 
   //delete function
-  const idk = async () => {
+  const deleteAccount = () => {
     setIsLoading(true);
-    await dispatch(deleteUser);
+    dispatch(deleteUser);
     toast.success("Account deleted successfully");
-    setIsLoading(false);
     navigate("/register");
+    dispatch(SET_LOGIN(false));
+    setIsLoading(false);
     setShow(false);
   };
 
@@ -253,6 +264,7 @@ function Profile() {
 
   return (
     <div style={{ backgroundColor: "#f8f9fa" }}>
+      <Navbar />
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -260,9 +272,8 @@ function Profile() {
         crossOrigin="anonymous"
       />
       {isLoading && <Loader />}
-      <Navbar />
       <div>
-        <div className="container mt-5">
+        <div className="container pt-5">
           <div className="main-body">
             <div className="row gutters-sm">
               <div className="col-md-4 mb-3">
@@ -450,7 +461,7 @@ function Profile() {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-danger btn-lg mt-2"
+                  className="btn btn-danger btn-block mt-2"
                   onClick={() => handleClickDelete()}
                 >
                   Delete Account
@@ -458,7 +469,7 @@ function Profile() {
                 <DeleteModal
                   show={show}
                   handleClose={handleClose}
-                  handleDeleteItem={idk}
+                  handleDeleteItem={deleteAccount}
                   message={
                     "All information will be deleted, are you sure you want to proceed?"
                   }
@@ -567,7 +578,7 @@ function Profile() {
                             min="0"
                             className="form-control"
                             name="phoneNumber"
-                            value={phoneNumber}
+                            value={phoneNumber || ""}
                             placeholder="Phone Number"
                             onChange={handlePhoneNumberChange}
                           />
@@ -636,7 +647,7 @@ function Profile() {
                             <div className=" col-sm-3">
                               <button
                                 type="button"
-                                className="btn btn-outline-primary"
+                                className="btn btn-outline-primary resumebtn"
                                 onClick={handleDownloadFile}
                               >
                                 View file
@@ -661,17 +672,16 @@ function Profile() {
                         {isEditMode ? (
                           <>
                             <button
-                              className="btn"
-                              style={{
-                                backgroundColor: "#4540db",
-                                color: "white",
-                              }}
-                              onClick={() => handleSaveClick()}
+                              className="btn saveChanges"
+                              onClick={handleSaveClick}
                             >
                               Save Changes
                             </button>
                             <button
                               className="btn btn-secondary"
+                              style={{
+                                width: "250px",
+                              }}
                               onClick={() => handleCancelClick()}
                             >
                               Cancel Changes
@@ -679,11 +689,7 @@ function Profile() {
                           </>
                         ) : (
                           <button
-                            className="btn"
-                            style={{
-                              backgroundColor: "#4540db",
-                              color: "white",
-                            }}
+                            className="btn editProfile"
                             onClick={() => handleEditClick()}
                           >
                             Edit Profile
@@ -751,13 +757,7 @@ function Profile() {
                             />
                           </div>
                         </div>
-                        <button
-                          className="btn mt-3"
-                          style={{
-                            backgroundColor: "#4540db",
-                            color: "white",
-                          }}
-                        >
+                        <button className="btn mt-3 changePassword">
                           Change Password
                         </button>
                       </div>

@@ -1,17 +1,17 @@
-import "../index.css";
 import Wrapper from "../assets/styling/jobs";
 import {
   FaBriefcase,
-  FaBuilding,
   FaRegBuilding,
   FaMapMarkerAlt,
-  FaExternalLinkAlt,
-  FaRegEdit,
-  FaCheck,
 } from "react-icons/fa";
-import { AiOutlineDelete } from "react-icons/ai";
 import { FiInfo } from "react-icons/fi";
-const Jobs = (props) => {
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectRole } from "../redux/features/auth/authSlice";
+
+
+const Jobs = ({ job }) => {
+
   function JobStatus({ isOpen }) {
     return (
       <div className={`job-status ${isOpen ? "open" : "closed"}`}>
@@ -19,42 +19,57 @@ const Jobs = (props) => {
       </div>
     );
   }
+
+  const role = useSelector(selectRole);
+
   return (
     <>
       <Wrapper>
         <div className="form">
           <div className="top">
-            <h4 className="form-title">Insert Job Title Here</h4>
-            {/* <FaRegEdit className="edit" size={20} />
-            <AiOutlineDelete className="delete" size={20} /> */}
+            <h4 className="form-title">{job?.jobTitle}</h4>
           </div>
 
-          <h6 className="title">Insert company * City, Province </h6>
+          <h6 className="title" style={{ color: "#4540db" }}>{job?.companyName} </h6>
 
           <div>
             <div className="form-control">
-              <FaMapMarkerAlt /> City
+              <FaMapMarkerAlt /> {job?.jobLocation?.city}, {job?.jobLocation?.province}
             </div>
             <div className="form-control">
-              <FaRegBuilding /> Remote
+              <FaRegBuilding /> {job?.workType}
             </div>
 
             <div className="form-control">
-              <FaBriefcase /> Full time
+              <FaBriefcase /> {job?.jobType}
             </div>
             <div>
-              <JobStatus isOpen={true} />
+              <JobStatus isOpen={job?.status === 'Open' ? true : false} />
             </div>
             <div className="buttons-2">
               {/* <div href="" className="btn">
                 Apply <FaExternalLinkAlt className="apply" size={15} />
               </div> */}
-              <div href="" className="btn">
-                More Info <FiInfo className="info" size={15} />
+              <div>
+                {/* More Info <FiInfo className="info" size={15} /> */}
+                <Link className="btn" to={`/job/${job?._id}`} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>More Info <FiInfo className="info" size={15} /></Link>
               </div>
-              <div href="" className="btn-success">
-                Applied <FaCheck className="info" size={15} />
+              <div >
+                {role === "recruiter" && (
+                  <Link className="btn" to={`/application/${job?._id}`} style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: "10px",
+                    // optional: set the height of the parent div to make it take up the full height of the viewport
+                  }}>View Applications </Link>
+                )}
               </div>
+
             </div>
           </div>
           <div className="form-group"></div>

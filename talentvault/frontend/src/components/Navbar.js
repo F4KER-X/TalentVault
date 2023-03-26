@@ -1,30 +1,29 @@
-import Wrapper from "../assets/styling/Navbar";
+import NavbarCSS from '../assets/styling/Navbar.module.css'
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectName,
   selectPhoto,
   selectRole,
-  SET_LOGIN,
+  SET_CLEAR,
 } from "../redux/features/auth/authSlice";
 import { logoutUser } from "../redux/features/auth/authService";
-import { Link, useNavigate } from "react-router-dom";
-import user from "../assets/images/user.png";
-import edit from "../assets/images/edit.png";
-import inbox from "../assets/images/envelope.png";
-
+import { useNavigate } from "react-router-dom";
 import logoutt from "../assets/images/log-out.png";
-import UserRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import Logo from "./Logo_no_text";
-
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineHome } from "react-icons/ai"
 import { CiLogout } from "react-icons/ci"
 import { CgProfile } from "react-icons/cg"
 import { MdWorkOutline } from "react-icons/md"
+import { IoCreateOutline } from "react-icons/io5";
+import { SET_JOB } from '../redux/features/job/jobSlice';
+import { SET_APPLICATION } from '../redux/features/application/applicationSlice';
+
+
 
 const Navbar = () => {
-  UserRedirectLoggedOutUser("/login");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const firstName = useSelector(selectName);
@@ -38,7 +37,6 @@ const Navbar = () => {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
-        console.log(menuRef.current);
       }
     };
 
@@ -51,80 +49,87 @@ const Navbar = () => {
   const logout = async (e) => {
     e.preventDefault();
     await logoutUser();
-    await dispatch(SET_LOGIN(false));
+
+    dispatch(SET_JOB())
+    dispatch(SET_APPLICATION())
     navigate("/login");
+    dispatch(SET_CLEAR())
+
   };
   return (
-    <Wrapper>
-      <nav className="navbar-n">
-        <Logo className="logo" />
+    <>
+      <nav className={NavbarCSS.myNavbar}>
+        <Logo className={NavbarCSS.myLogo} />
 
-        <GiHamburgerMenu size={24} className="burger cursor-pointer" />
+        <GiHamburgerMenu size={24} className={`${NavbarCSS.myBurger} ${NavbarCSS.myCursorPointer}`} />
 
-        <div className="menu-container" ref={menuRef}>
+        <div ref={menuRef}>
           <div
-            className="menu-trigger"
+            className={NavbarCSS.myMenuTrigger}
             onClick={() => {
               setOpen(!open);
             }}
           >
             <img src={photo} alt=""></img>
           </div>
-          <div className={`dropdown-menu-n ${open ? "active" : "inactive"}`}>
-            <h3>
+          <div className={`${NavbarCSS.myDropdownMenu} ${open ? NavbarCSS.active : NavbarCSS.inactive}`}>
+            <h3 className={NavbarCSS.h3}>
               Hello {firstName}! <br />
-              <span>{role}</span>
+              <span >{role}</span>
             </h3>
-            <ul>
-              <DropdownItem
-                address={"/dashboard"}
-                icon={<AiOutlineHome />}
-                text={"Dashboard"}
-              />
+            <ul className={NavbarCSS.ul}>
+
               <DropdownItem
                 address={"/profile"}
                 icon={<CgProfile />}
                 text={"My Profile"}
               />
 
-              {role === "applicant" && (
-                <DropdownItem text={"My Jobs"} icon={<MdWorkOutline />} />
-              )}
+
+              {role === 'applicant' && (<DropdownItem
+                address={"/dashboard"}
+                icon={<AiOutlineHome />}
+                text={"Dashboard"}
+              />)}
+
+
+              {role === 'recruiter' && (<DropdownItem
+                address={"/job/create-job"}
+                icon={<IoCreateOutline />}
+                text={"Create A Job"}
+              />)}
+
               {role === "recruiter" && (
-                <DropdownItem text={"My postings"} icon={<MdWorkOutline />} />
+                <DropdownItem address={"/job/my-jobs"} text={"My Jobs"} icon={<MdWorkOutline />} />
               )}
-              {role === "admin" && (
-                <DropdownItem text={"Admin panel"} />
+              {role === "applicant" && (
+                <DropdownItem address={'/applications/my-applications'} text={"My applications"} icon={<MdWorkOutline />} />
               )}
               <LogoutBtn img={logoutt} />
             </ul>
           </div>
         </div>
       </nav>
-    </Wrapper>
+    </>
   );
-  function LogoutBtn(props) {
+  function LogoutBtn() {
     return (
-      <Wrapper>
-        <li className="dropdownItem">
-
-          <button className="logout" onClick={logout}>
-            <CiLogout /> Logout
-          </button>
-
-        </li>
-      </Wrapper>
+      <li className={NavbarCSS.myDropdownItem}>
+        <button className={NavbarCSS.myLogout} onClick={logout}>
+          <CiLogout /> Logout
+        </button>
+      </li>
     );
   }
 };
 
 function DropdownItem(props) {
   return (
-    <Wrapper>
-      <li className="dropdownItem">
-        <a href={props.address}> {props.icon} {props.text}</a>
-      </li>
-    </Wrapper>
+
+    <li className={NavbarCSS.myDropdownItem}>
+      <a className={NavbarCSS.atag} href={props.address}> {props.icon} {props.text}</a>
+    </li>
+
   );
 }
 

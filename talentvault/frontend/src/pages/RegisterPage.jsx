@@ -11,11 +11,16 @@ import {
 } from "../redux/features/auth/authService";
 import { useNavigate } from "react-router-dom";
 import {
+  SET_COMPANY,
+  SET_EMAIL,
+  SET_ID,
   SET_LOGIN,
   SET_NAME,
   SET_PHOTO,
+  SET_ROLE,
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
+import { store } from "../redux/store";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 
 //Local state
@@ -30,7 +35,8 @@ const initialState = {
 };
 
 function Register() {
-  UseRedirectLoggedInUser("/dashboard");
+  UseRedirectLoggedInUser();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,12 +54,14 @@ function Register() {
   } = formData;
 
   const handleInputChange = (ev) => {
+    ev.preventDefault();
     const { name, value } = ev.target;
     setformData({
       ...formData,
       [name]: value,
     });
   };
+
   const register = async (ev) => {
     ev.preventDefault();
 
@@ -96,13 +104,17 @@ function Register() {
     setIsLoading(true);
 
     try {
-      const user = await registerUser(userData);
+      const data = await registerUser(userData);
+      dispatch(SET_LOGIN(true));
+      dispatch(SET_NAME(data.firstName));
+      dispatch(SET_PHOTO(data.profilePicUrl.URL));
+      dispatch(SET_ROLE(data.role));
+      dispatch(SET_ID(data.id));
+      dispatch(SET_COMPANY(data.companyName));
+      dispatch(SET_EMAIL(data.email));
 
-      await dispatch(SET_LOGIN(true));
-      await dispatch(SET_NAME(user.firstName));
-      await dispatch(SET_PHOTO(user.profilePicUrl.URL));
-
-      navigate("/dashboard");
+      if (data.role === "recruiter") navigate("/job/my-jobs");
+      if (data.role === "applicant") navigate("/dashboard");
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);

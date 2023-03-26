@@ -3,7 +3,6 @@ import styled from "styled-components";
 const Wrapper = styled.section`
   * {
     user-select: none;
-    overflow: none;
   }
   display: grid;
   align-items: center;
@@ -13,31 +12,82 @@ const Wrapper = styled.section`
     margin-bottom: 1.38rem;
   }
   .form {
-    margin: auto;
-    max-width: 55vw;
+    overflow: none;
+    max-width: 800px;
     border-top: 5px solid var(--primary-500);
+  }
+
+  .job-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0.25rem;
+  }
+  
+  .jobDescriptionPara p {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .job-status.open {
+    color: green;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+  }
+
+  .job-status.closed {
+    color: red;
+    background-color: #f2dede;
+    border-color: #ebccd1;
   }
   .top {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
-  .form-control {
-    width: 95%;
-    border-radius: 5px;
-    border-width: 1px;
-    font-family: Roboto;
-    font-size: 15px;
-    margin: 2px 0;
+
+  .container {
+    display: flex;
+    flex-direction: column;
   }
-  .title {
-    margin-top: 0px;
-    font-size: 17px;
+
+  .couple {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 10px;
+    border-top: 1px solid #c0c0c0;
+  }
+  h4 {
+    font-weight: bold;
+    margin-top: 2rem;
+  }
+  .couple h5 {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .couple p {
+    text-align: none;
+    margin-top: 0;
+  }
+  ul {
+    padding-left: 20px;
+    list-style: disc;
+    margin-left: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  .title {
+    margin-top: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
     display: flex;
     flex-direction: row;
-    color: #4540db;
-    padding-left: 5px;
   }
   .desc {
     display: flex;
@@ -48,25 +98,6 @@ const Wrapper = styled.section`
     display: flex;
     flex-direction: row;
     margin: 1rem auto;
-  }
-  .job-status {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 0.25rem;
-    margin-top: 2px
-  }
-  .job-status.open {
-    color: green;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-  }
-  .job-status.closed {
-    color: red;
-    background-color: #f2dede;
-    border-color: #ebccd1;
   }
   .edit {
     margin-top: 6px;
@@ -85,12 +116,12 @@ const Wrapper = styled.section`
     margin-top: 6px;
   }
   .info {
-    margin-left: 6px;
+    margin-top: 6px;
   }
   p {
     margin: 0;
     margin-top: 1rem;
-    text-align: center;
+    text-align: left;
   }
   .btn {
     margin-right: 1rem;
@@ -100,16 +131,19 @@ const Wrapper = styled.section`
   .address {
     margin-bottom: 20px;
   }
+
   .form-title {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
   }
   .btn-success {
     margin-right: 1rem;
     padding: auto;
     margin-top: 1rem;
     background: #0f5132;
+
     cursor: pointer;
     color: var(--white);
+
     border: transparent;
     border-radius: var(--borderRadius);
     letter-spacing: var(--letterSpacing);

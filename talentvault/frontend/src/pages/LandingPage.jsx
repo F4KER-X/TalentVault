@@ -4,7 +4,7 @@ import Wrapper from "../assets/styling/LandingPage";
 import { Link } from "react-router-dom";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 const Landing = () => {
-  UseRedirectLoggedInUser("/dashboard");
+  UseRedirectLoggedInUser();
   return (
     <Wrapper>
       <nav>
