@@ -53,6 +53,20 @@ export const getApplicationForJob = createAsyncThunk(
     }
 )
 
+export const editApplicationStatus = createAsyncThunk(
+    'applications/editApplication',
+    async ({ id, formData }, thunkAPI) => {
+        try {
+            return await applicationService.editApplicationStatus(id, formData)
+        } catch (err) {
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 
 const applicationSlice = createSlice({
     name: "application",
@@ -120,6 +134,23 @@ const applicationSlice = createSlice({
                 state.message = action.payload
                 toast.error(action.payload)
             })
+            .addCase(editApplicationStatus.pending, (state) => {
+                state.isLoadingApp = true;
+            })
+            .addCase(editApplicationStatus.fulfilled, (state, action) => {
+                state.isLoadingApp = false;
+                state.isSuccessApp = true;
+                state.isErrorApp = false;
+                state.message = action.payload;
+                toast.success('Applicant has been updated! An automatic email has been dispatched to the applicant')
+            })
+            .addCase(editApplicationStatus.rejected, (state, action) => {
+                state.isLoadingApp = false;
+                state.isSuccessApp = false;
+                state.isErrorApp = true;
+                state.message = action.payload;
+                toast.error(action.payload);
+            })
 
     }
 })
@@ -131,4 +162,3 @@ export const selectIsLoading = (state) => state.application.isLoadingApp
 
 
 export default applicationSlice.reducer
-

@@ -1,17 +1,54 @@
 import "../index.css";
 import Wrapper from "../assets/styling/jobs";
 import {
-  FaEnvelopeOpenText,
-  FaMailBulk
+  FaPhone,
+  FaEnvelope,
+  FaDownload,
+  FaUser,
 } from "react-icons/fa";
-
 import { FiInfo } from "react-icons/fi";
+
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRole } from "../redux/features/auth/authSlice";
+import { useState } from "react";
+import { editApplicationStatus } from "../redux/features/application/applicationSlice";
+
+
 
 const Applications = ({ application }) => {
 
+  const dispatch = useDispatch()
+  const [selectedStatus, setSelectedOption] = useState("Accepted");
+
+
+  const handleSelection = (event) => {
+    const status = event.target.value;
+    setSelectedOption(status);
+  };
+
+
+  const handleEditClick = async (ev) => {
+    ev.preventDefault()
+
+    const formData = {
+      status: selectedStatus,
+      jobId: application?.jobId,
+      firstName: application?.firstName,
+      lastName: application?.lastName,
+      email: application?.email,
+    }
+
+    await dispatch(editApplicationStatus({ id: application?.applicationId, formData }))
+
+    // Wait for 3 seconds before reloading the page
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000)
+  }
+
   let btnColor = "btn-pending";
-  switch (application?.status) {
+  switch (application?.applicationStatus) {
     case "Accepted":
       btnColor = "btn-accepted";
       break;
@@ -21,52 +58,140 @@ const Applications = ({ application }) => {
       break;
 
     default:
-      btnColor = "btn-pending"
+      btnColor = "btn-pending";
       break;
   }
-  // function ApplicationStatus({ applicationStatus }) {
-  //     return (
-  //         <div className={`application-status ${applicationStatus == "Accepted" ?  "Accepted" 
-  //         : applicationStatus == "Closed" ? "Closed" : "Pending"}`}> 
+
+  function ApplicationStatus({ btnColor }) {
+    return (
+      <div className={`job-status ${btnColor}`}>
+        {application?.applicationStatus}
+      </div>
+    );
+  }
+
+
+  const role = useSelector(selectRole);
 
   return (
     <>
-      <Wrapper>
-        <div className="form">
-          <div className="top">
-            <h4 className="form-title">{application?.jobTitle}</h4>
-            {/* <FaRegEdit className="edit" size={20} />
-                <AiOutlineDelete className="delete" size={20} /> */}
-          </div>
-
-          <h6 className="title">{application?.companyName} </h6>
-
-          <div>
-            <div className="form-control">
-              <FaMailBulk /> {application?.jobStatus}
-              {/* <ApplicationStatus applicationStatus={"Accepted"}/> */}
-            </div>
-            <div className="form-control">
-              <FaEnvelopeOpenText /> {application?.status}
-            </div>
-
+      {role === "recruiter" ? (
+        <Wrapper>
+          <div className="form">
             <div>
-              {/* <JobStatus applicationStatus={applicationStatus === "Accepted" ?  "Accepted" 
-                : applicationStatus === "Closed" ? "Closed" : "Pending"} /> */}
-            </div>
-            <div className="buttons-2">
-              {/* <div href="" className="btn">
-                    Apply <FaExternalLinkAlt className="apply" size={15} />
-                  </div> */}
-              <div>
-                <Link className={btnColor} to={`/job/${application?._id}`}>More Info <FiInfo className="info" size={15} /></Link>
+              <div style={{ marginBottom: "10px", marginLeft: "10px" }}>
+                <FaUser /> {application?.firstName} {application?.lastName}
+              </div>
+              {application?.phoneNumber ? (
+                <div style={{ marginBottom: "10px", marginLeft: "10px" }}>
+                  {" "}
+                  <FaPhone /> {application?.phoneNumber}
+                </div>
+              ) : (
+                <></>
+              )}
+              <div style={{ marginBottom: "10px", marginLeft: "10px" }}>
+                {" "}
+                <FaEnvelope /> {application?.email}
               </div>
 
+
+              <div style={{ marginTop: "10px" }}>
+                <ApplicationStatus btnColor={btnColor} />
+              </div>
+              <div className="buttons-2">
+                <div>
+                  {application?.resume ? <Link
+                    className="btn"
+                    to={application?.resume}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0",
+                      width: "150px",
+                    }}
+                  >
+                    View CV <FaDownload className="info" size={15} />
+                  </Link> : <> </>}
+
+                </div>
+              </div>
+
+              {application?.isModified ? <></> : <><div>
+                <label htmlFor="applicant-style" className="applicant-style"> Accept or Reject Applicant :</label>
+              </div>
+                <div className="dropdown" style={{ display: "inline", margin: "auto", }}>
+                  <div style={{ float: "left" }} >
+                    <select className="dropdown-select" id="status-dropdown" value={selectedStatus} onChange={handleSelection}>
+                      <option value="Accepted">ACCEPT</option>
+                      <option value="Rejected">REJECT</option>
+                    </select>
+                  </div>
+
+                  <div style={{ float: "left", paddingLeft: "25px" }}>
+                    <button onClick={handleEditClick} className="confirm-btn">Confirm</button>
+                  </div>
+                </div>
+              </>}
             </div>
+            <div className="form-group"></div>
           </div>
-          <div className="form-group"></div>
-        </div>
-      </Wrapper>
+        </Wrapper>
+      ) : (
+        <Wrapper>
+          <div className="form">
+            <div className="top">
+              <h4 className="form-title" style={{ marginLeft: "10px" }}>
+                {application?.jobTitle}
+              </h4>
+            </div>
+
+            <h6 className="title" style={{ marginLeft: "10px" }}>
+              {application?.companyName}
+            </h6>
+
+            <div>
+              <div style={{ marginBottom: "10px", marginLeft: "10px" }}>
+                <FaUser /> {application?.firstName} {application?.lastName}
+              </div>
+              <div style={{ marginBottom: "10px", marginLeft: "10px" }}>
+                {" "}
+                <FaEnvelope /> {application?.email}
+              </div>
+
+
+
+              <div style={{ marginTop: "10px" }} >
+                <ApplicationStatus btnColor={btnColor} />
+              </div>
+              <div className="buttons-2">
+                <div>
+                  <div>
+                    {/* More Info <FiInfo className="info" size={15} /> */}
+                    <Link
+                      className="btn"
+                      to={`/job/${application?.jobId}`}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: "0",
+                        width: "150px",
+                      }}
+                    >
+                      More Info <FiInfo className="info" size={15} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="form-group"></div>
+          </div>
+        </Wrapper>
+      )}
     </>
   );
 };

@@ -17,14 +17,12 @@ import { CiLogout } from "react-icons/ci"
 import { CgProfile } from "react-icons/cg"
 import { MdWorkOutline } from "react-icons/md"
 import { IoCreateOutline } from "react-icons/io5";
-import UseRedirectLoggedOutUser from '../hook/useRedirectLoggedOutUser';
 import { SET_JOB } from '../redux/features/job/jobSlice';
 import { SET_APPLICATION } from '../redux/features/application/applicationSlice';
 
 
 
 const Navbar = () => {
-  UseRedirectLoggedOutUser()
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,10 +49,12 @@ const Navbar = () => {
   const logout = async (e) => {
     e.preventDefault();
     await logoutUser();
-    navigate("/login");
-    dispatch(SET_CLEAR())
+
     dispatch(SET_JOB())
     dispatch(SET_APPLICATION())
+    navigate("/login");
+    dispatch(SET_CLEAR())
+
   };
   return (
     <>
@@ -112,7 +112,7 @@ const Navbar = () => {
       </nav>
     </>
   );
-  function LogoutBtn(props) {
+  function LogoutBtn() {
     return (
       <li className={NavbarCSS.myDropdownItem}>
         <button className={NavbarCSS.myLogout} onClick={logout}>

@@ -20,6 +20,10 @@ const applicantionSchema = mongoose.Schema({
         type: String,
         enum: ['Pending', 'Accepted', 'Rejected'],
         default: 'Pending'
+    },
+    modify: {
+        type: Boolean,
+        default: false
     }
 
 }, {

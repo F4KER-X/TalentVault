@@ -16,13 +16,20 @@ const createNewApplication = async (formData) => {
 const getApplicationsForJob = async (id) => {
     const response = await axios.get(`/applications/job/${id}`)
     return response.data
+}
+
+const editApplicationStatus = async (id, formData) => {
+    const response = await axios.patch('/applications/' + id, formData)
+    return response.data
 
 }
+
+
 const jobService = {
     getApplicationForUser,
     createNewApplication,
-    getApplicationsForJob
+    getApplicationsForJob,
+    editApplicationStatus
 }
 
 export default jobService
-
