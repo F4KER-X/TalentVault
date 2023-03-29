@@ -7,7 +7,6 @@ import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
 import "../index.css";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
-import JobFilter from "../components/Job/JobFilter";
 import SearchBar from "../components/SearchBar";
 
 
@@ -69,9 +68,6 @@ function Dashboard() {
 
       <div>     
         <SearchBar/>
-      </div>
-      <div>
-        <JobFilter/>
       </div>
 
 
