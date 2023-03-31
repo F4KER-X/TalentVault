@@ -19,7 +19,7 @@ const SearchBar = ({jobs, setSearchResults}) => {
     const resultsArray = jobs.filter(
       (job) => 
       job.jobTitle.toLowerCase().includes(searchTerm) || job.companyName.toLowerCase().includes(searchTerm)
-    || job.jobLocation.city.toLowerCase().includes(searchTerm) || job.jobLocation.province.toLowerCase().includes(searchTerm) || job.workType.includes(searchTerm)
+    || job.jobLocation.city.toLowerCase().includes(searchTerm) || job.jobLocation.province.toLowerCase().includes(searchTerm) || job.workType.toLowerCase().includes(searchTerm)
     || job.jobType.toLowerCase().includes(searchTerm))
 
     setSearchResults(resultsArray)
