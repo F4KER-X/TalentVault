@@ -8,8 +8,7 @@ import Loader from "../components/Loader";
 import "../index.css";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import SearchBar from "../components/SearchBar";
-
-
+import Pagination from "../components/Pagination";
 
 function Dashboard() {
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
@@ -18,33 +17,30 @@ function Dashboard() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [currentPage,setCurrentPage]=useState(1);
-
-  const getPrevious  = () => {
-    setCurrentPage(currentPage - 1)
-  }
-
-  const getNext  = () => {
-    setCurrentPage(currentPage + 1)
-  }
+  const [searchResults, setSearchResults] = useState([])
 
   const { jobs, isLoading, isError, message } = useSelector(
     (state) => state.job
   );
 
+
   useEffect(() => {
-    if (isLoggedIn) {
+      if (isLoggedIn) {
       dispatch(getJobs());
     }
     if (isError) {
       console.log(message);
-    }
+    }  
   }, [dispatch, isError, isLoggedIn, message]);
 
+
+  const jobsToDisplay = searchResults.length > 0 ? searchResults : jobs;
 
   const jobsPerPage = 4;
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  const jobsToDisplayPaginated= jobsToDisplay.slice(indexOfFirstJob, indexOfLastJob);
 
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
@@ -67,42 +63,24 @@ function Dashboard() {
       </div>
 
       <div>     
-        <SearchBar/>
+        <SearchBar jobs={jobs} setSearchResults={setSearchResults} />
       </div>
 
 
       <div className="pagination-container">
         <div>
-          {currentJobs.map((job) => (
-            <Jobs key={job._id} job={job} />
-          ))} 
-        </div>
-
-        <div className="pagination">
-          <button  className="prev"
-          disabled={currentPage === 1 ? true : false} 
-          onClick={getPrevious}>
-          Previous
-          </button>
-
-                      
-          {pageNumbers.map((number) => (
-            <button
-              key={number}
-              className={currentPage === number ? "active" : ""}
-              onClick={() => setCurrentPage(number)}
-            >
-              {number}
-            </button>
+         {jobsToDisplayPaginated.map((job) => (
+          <Jobs key={job._id} job={job} />
           ))}
+        </div> 
 
-           <button  className="next"
-           disabled={currentPage === totalPages ? true : false} 
-           onClick={getNext}>
-           Next
-          </button>
-        </div>
-      </div>
+        <Pagination
+        jobsPerPage={jobsPerPage}
+        totalJobs={jobsToDisplay.length}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        />
+      </div> 
     </>
   );
 }
