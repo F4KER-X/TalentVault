@@ -643,18 +643,3 @@ ul {
   background-color: var(--backgroundColor);
 }
 
-/* =============Report Bug Page======================================*/
-.btn-bug{
-  background-color: #4540db;
-  color: white;
-  width: 1ref;
-  border-radius: 5px;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-bug:hover{
-  background: var(--primary-700);
-  box-shadow: var(--shadow-3);
-}
