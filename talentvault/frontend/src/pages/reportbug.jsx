@@ -9,6 +9,8 @@ import FormRow from "../components/FormRow";
 import {validateEmail } from "../redux/features/auth/authService";
 
 //install in terminal npm i @emailjs/browser
+//email is talentvaultteam@gmail.com
+//password: talent.123
 
 const ReportBug = () => {
     const form = useRef();
@@ -20,21 +22,22 @@ const ReportBug = () => {
   
       emailjs
         .sendForm(
-        'service_0jwozuo', 
-        'template_xow7q13', 
+        'service_qx16pfs', 
+        'template_srv0x6h', 
         form.current, 
-        'j-8eFQTP8WbH07FID'
+        'o14Oeq98MTA3ABs4x'
         )
         .then(
             (result) => {
                 console.log(result.text);
                 toast.success("Message sent succesfully");
-                e.target.reset();
             }, 
             (error) => {
                 console.log(error.text);
             }
         );
+        e.target.reset();
+
     };
 
     return (
