@@ -2,7 +2,6 @@ import React from 'react'
 import { FaSearch } from "react-icons/fa";
 import "./Job/JobForm.css"
 
-
 const SearchBar = ({jobs, setSearchResults}) => {
 
   const handleSubmit = (e) => e.preventDefault()
