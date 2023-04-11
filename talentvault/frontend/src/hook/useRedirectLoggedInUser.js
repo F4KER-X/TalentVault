@@ -1,27 +1,26 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SET_LOGIN } from "../redux/features/auth/authSlice";
+import { selectIsLoggedIn, selectRole, SET_LOGIN } from "../redux/features/auth/authSlice";
 import { getLoginStatus } from '../redux/features/auth/authService'
 
 const UseRedirectLoggedInUser = (path) => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const role = useSelector(selectRole)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     useEffect(() => {
-        const redirectLoggedInUser = async () => {
-            const isLoggedIn = await getLoginStatus()
-            dispatch(SET_LOGIN(isLoggedIn))
-
-            if (isLoggedIn) {
-                navigate(path)
+        if (isLoggedIn) {
+            if (role === 'applicant') {
+                navigate('/dashboard')
+                return
+            }
+            if (role === 'recruiter') {
+                navigate('/job/my-jobs')
                 return
             }
         }
-        redirectLoggedInUser()
-
-
-    }, [navigate, path, dispatch])
+    }, [navigate, path, isLoggedIn, role])
 
 }
 

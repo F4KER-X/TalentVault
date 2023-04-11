@@ -20,10 +20,14 @@ const applicantionSchema = mongoose.Schema({
         type: String,
         enum: ['Pending', 'Accepted', 'Rejected'],
         default: 'Pending'
+    },
+    modify: {
+        type: Boolean,
+        default: false
     }
 
 }, {
-    timestamp: true
+    timestamps: true
 })
 
 module.exports = mongoose.model('Application', applicantionSchema)

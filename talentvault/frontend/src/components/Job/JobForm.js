@@ -199,7 +199,7 @@ const JobForm = ({
               </div>
               <br />
 
-              <div className="jobdescriptiondiv">
+              <div className="jobdescriptiondiv jobDescriptionPara">
                 <label>Job Description</label>
                 <ReactQuill
                   theme="snow"

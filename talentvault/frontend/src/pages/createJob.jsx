@@ -4,14 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import JobForm from "../components/Job/JobForm";
 import Loader from "../components/Loader";
-
 import Navbar from "../components/Navbar";
-
-import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
-import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
+import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 
 const initialState = {
   recruiterId: "",
@@ -100,18 +97,20 @@ const CreateJob = () => {
     }
     if (formData.maxSalary <= formData.minSalary) {
       setSalaryError(true);
-      return toast.error("Max salary can not be less or equals to Min salary");
+      return toast.error(
+        "Max salary can not be less or equals to Min salary!!"
+      );
     }
     setError(false);
     setSalaryError(false);
-    await dispatch(addJob(formData));
+    dispatch(addJob(formData));
 
     navigate("/dashboard");
   };
   return (
     <div>
       {isLoading && <Loader />}
-      <Navbar></Navbar>
+      <Navbar />
 
       <h3 style={{ textAlign: "center", marginTop: "20px" }}>
         Create your Job

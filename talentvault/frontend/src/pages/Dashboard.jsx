@@ -9,9 +9,12 @@ import "../index.css";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function Dashboard() {
+  UseRedirectLoggedOutUser();
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
+
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -19,24 +22,19 @@ function Dashboard() {
   const [currentPage,setCurrentPage]=useState(1);
   const [searchResults, setSearchResults] = useState([])
 
-  const { jobs, isLoading, isError, message } = useSelector(
-    (state) => state.job
-  );
+  const { jobs, isLoadingJob } = useSelector((state) => state.job);
 
 
   useEffect(() => {
       if (isLoggedIn) {
       dispatch(getJobs());
     }
-    if (isError) {
-      console.log(message);
-    }  
-  }, [dispatch, isError, isLoggedIn, message]);
-
+  }, [dispatch, isLoggedIn]); // role]);
 
   const jobsToDisplay = searchResults.length > 0 ? searchResults : jobs;
 
   const jobsPerPage = 4;
+
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
@@ -46,16 +44,15 @@ function Dashboard() {
   for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
     pageNumbers.push(i);
   }
-  const totalPages= Math.ceil(jobs.length/jobsPerPage);
+
+  const totalPages = Math.ceil(jobs.length / jobsPerPage);
 
 
-  return (
+  return isLoggedIn ? (
     <>
-      {isLoading && <Loader />}
-
+      {isLoadingJob && <Loader />}
       <div>
         <Navbar />
-
         <div className="top-container">
           <h2>Find Your Dream Job!</h2>
           <h4>It's only a click away</h4>
@@ -82,6 +79,8 @@ function Dashboard() {
         />
       </div> 
     </>
+  ) : (
+    <></>
   );
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import "../assets/styling/profile.css";
 
 const DeleteModal = ({ show, handleClose, handleDeleteItem, message }) => {
   return (
@@ -17,7 +18,11 @@ const DeleteModal = ({ show, handleClose, handleDeleteItem, message }) => {
         <Button variant="danger" onClick={handleDeleteItem}>
           Delete Permanently
         </Button>
-        <Button variant="primary" onClick={handleClose}>
+        <Button
+          className="cancelButton"
+          variant="primary"
+          onClick={handleClose}
+        >
           Cancel
         </Button>
       </Modal.Footer>

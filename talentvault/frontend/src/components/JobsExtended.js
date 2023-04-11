@@ -16,6 +16,7 @@ import { deleteJob, getOneJob, editJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRole, selectID } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
+import { createNewApplication, getApplicationForJob, getApplicationForUser } from "../redux/features/application/applicationSlice";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-toastify";
@@ -31,7 +32,7 @@ const JobsExtended = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   //states
-  const [isLoading, setIsLoading] = useState(false)
+  //const [isLoading1, setIsLoading] = useState(false)
   const [jobTitle, setJobTitle] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [maxSalary, setMaxSalary] = useState(0);
@@ -44,25 +45,35 @@ const JobsExtended = () => {
   const [workType, setWorkType] = useState("");
   const [editMode, setEditMode] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
+  const [isApplied, setIsApplied] = useState(false)
 
-
-
-  const { job, isError, message } = useSelector((state) => state.job)
+  const { job, isLoadingJob } = useSelector((state) => state.job)
+  const { applications, isLoadingApp } = useSelector(
+    (state) => state.application
+  );
 
   //fetching job data
   useEffect(() => {
     if (isLoggedIn) {
-      setIsLoading(true)
       dispatch(getOneJob(id))
+      dispatch(getApplicationForJob(id))
+      window.scrollTo(0, 0);
     }
 
-    if (isError) {
-      toast.error(message)
-    }
+  }, [dispatch, id, isLoggedIn, setIsOwner])
 
-    setIsLoading(false)
 
-  }, [dispatch, id, isLoggedIn, isError, message, setIsOwner])
+  let found = false;
+  if (role === 'applicant') {
+    applications.forEach(function (application) {
+      if (application.jobId === id && application.applicantId === userId) {
+        found = true;
+      }
+    });
+  }
+
+
+
 
   //setting all states
   useEffect(() => {
@@ -90,6 +101,16 @@ const JobsExtended = () => {
         {isOpen ? "Open" : "Closed"}
       </div>
     );
+  }
+
+  //application apply
+  const applyApplication = async (ev) => {
+    ev.preventDefault()
+    const formData = {
+      jobId: id
+    }
+    await dispatch(createNewApplication(formData));
+    setIsApplied(true)
   }
 
   //edit button
@@ -141,9 +162,7 @@ const JobsExtended = () => {
     if (formData.maxSalary <= formData.minSalary) {
       return toast.error("Max salary can not be less or equals to Min salary");
     }
-    setIsLoading(true)
-    dispatch(editJob({ id, formData }))
-    setIsLoading(false)
+    await dispatch(editJob({ id, formData }))
     setEditMode(false)
   }
 
@@ -185,7 +204,7 @@ const JobsExtended = () => {
   const confirmDelete = (id) => {
     confirmAlert({
       title: "Delete Job",
-      message: "Are you sure to do this.",
+      message: "All data and applications will be deleted, are you sure you want to continue? ",
       buttons: [
         {
           label: "Delete",
@@ -199,7 +218,7 @@ const JobsExtended = () => {
   };
   return (
     <>
-      {isLoading && <Loader />}
+      {(isLoadingJob || isLoadingApp) && <Loader />}
 
       {/* below is the normal form */}
 
@@ -346,9 +365,14 @@ const JobsExtended = () => {
 
             {role === "applicant" && !editMode && (
               <div className="buttons-1">
-                <button className="btn" style={{ marginLeft: "0", marginTop: "15px" }}>
-                  Apply <FaExternalLinkAlt className="" size={15} />
-                </button>
+                {status === 'Closed' ?
+                  <button className="btn" style={{ marginLeft: "0", marginTop: "15px", backgroundColor: '#f2dede', color: 'red' }} disabled>
+                    {found || isApplied ? 'Applied' : 'Apply'} <FaExternalLinkAlt className="" size={15} />
+                  </button> :
+                  <button className="btn" style={{ marginLeft: "0", marginTop: "15px" }} disabled={found || isApplied} onClick={applyApplication}>
+                    {found || isApplied ? 'Applied' : 'Apply'} <FaExternalLinkAlt className="" size={15} />
+                  </button>
+                }
 
               </div>
             )}

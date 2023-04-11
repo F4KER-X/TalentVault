@@ -44,9 +44,6 @@ const registerUser = asyncHandler(async (req, res) => {
         email, password: hashedPwd, role
     })
 
-    //generate token
-
-
     if (user) {
         //now create either applicant or recruiter
         const token = generateToken(user._id, user.role, user.email)
@@ -78,6 +75,10 @@ const registerUser = asyncHandler(async (req, res) => {
                     firstName,
                     lastName,
                     profilePicUrl,
+                    companyName,
+                    email: user.email,
+                    id: user.id,
+                    role,
                     token
                 })
             }
@@ -105,6 +106,9 @@ const registerUser = asyncHandler(async (req, res) => {
                     firstName,
                     lastName,
                     profilePicUrl,
+                    email: user.email,
+                    id: user.id,
+                    role,
                     token
                 })
             }
@@ -148,7 +152,7 @@ const loginUser = asyncHandler(async (req, res) => {
         userProfile = await Applicant.findOne({ userId: user._id }).lean().exec()
     }
 
-    const { firstName, lastName, profilePicUrl } = userProfile
+    const { firstName, lastName, profilePicUrl, companyName } = userProfile
 
     if (user && correctPwd) {
         res.cookie("token", token, {
@@ -159,7 +163,7 @@ const loginUser = asyncHandler(async (req, res) => {
             secure: true,
         })
         res.status(200).json({
-            message: 'Login succussfull', firstName, lastName, profilePicUrl, token
+            message: 'Login succussfull', firstName, lastName, profilePicUrl, token, role: user.role, companyName, id: user._id, email: user.email
         })
     } else {
         res.status(400).json({ message: 'Invalid email or password' })
@@ -185,10 +189,24 @@ const loggedinStatus = asyncHandler(async (req, res) => {
     }
 
     //verify token
-    const verified = jwt.verify(token, process.env.JWT_SECRET)
-
-    if (verified)
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
         return res.json(true)
+    } catch (err) {
+        if (err instanceof jwt.TokenExpiredError) {
+            return res.json(false)
+        } else {
+            console.log(err);
+        }
+    }
+
+
+
+
+
+
+
+
 })
 
 //Generate JWT token
