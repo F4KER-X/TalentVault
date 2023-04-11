@@ -9,9 +9,7 @@ const Application = require("../models/Application");
 const getAllJobs = asyncHandler(async (req, res) => {
   //search for all jobs
   const jobsData = await Job.find().sort({ createdAt: -1 }).lean().exec()
-  if (jobsData.length === 0) {
-    return res.status(404).json({ message: "No jobs found" });
-  }
+
   //return the jobs
   res.status(200).json(jobsData)
 })

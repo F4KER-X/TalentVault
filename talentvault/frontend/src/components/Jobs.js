@@ -6,7 +6,12 @@ import {
 } from "react-icons/fa";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectRole } from "../redux/features/auth/authSlice";
+
+
 const Jobs = ({ job }) => {
+
   function JobStatus({ isOpen }) {
     return (
       <div className={`job-status ${isOpen ? "open" : "closed"}`}>
@@ -14,6 +19,9 @@ const Jobs = ({ job }) => {
       </div>
     );
   }
+
+  const role = useSelector(selectRole);
+
   return (
     <>
       <Wrapper>
@@ -22,7 +30,7 @@ const Jobs = ({ job }) => {
             <h4 className="form-title">{job?.jobTitle}</h4>
           </div>
 
-          <h6 className="title">{job?.companyName} </h6>
+          <h6 className="title" style={{ color: "#4540db" }}>{job?.companyName} </h6>
 
           <div>
             <div className="form-control">
@@ -44,7 +52,22 @@ const Jobs = ({ job }) => {
               </div> */}
               <div>
                 {/* More Info <FiInfo className="info" size={15} /> */}
-                <Link className="btn" to={`/job/${job?._id}`}>More Info <FiInfo className="info" size={15} /></Link>
+                <Link className="btn" to={`/job/${job?._id}`} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>More Info <FiInfo className="info" size={15} /></Link>
+              </div>
+              <div >
+                {role === "recruiter" && (
+                  <Link className="btn" to={`/application/${job?._id}`} style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: "10px",
+                    // optional: set the height of the parent div to make it take up the full height of the viewport
+                  }}>View Applications </Link>
+                )}
               </div>
 
             </div>

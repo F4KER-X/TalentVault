@@ -10,7 +10,6 @@ import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
 import Footer from "../components/Footer";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
-import { store } from "../redux/store";
 
 const initialState = {
   recruiterId: "",
@@ -99,11 +98,13 @@ const CreateJob = () => {
     }
     if (formData.maxSalary <= formData.minSalary) {
       setSalaryError(true);
-      return toast.error("Max salary can not be less or equals to Min salary");
+      return toast.error(
+        "Max salary can not be less or equals to Min salary!!"
+      );
     }
     setError(false);
     setSalaryError(false);
-    await dispatch(addJob(formData));
+    dispatch(addJob(formData));
 
     navigate("/dashboard");
   };

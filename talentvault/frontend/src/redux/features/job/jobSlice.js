@@ -5,9 +5,9 @@ import jobServices from "./jobServices";
 const initialState = {
   job: null,
   jobs: [],
-  isError: false,
-  isSuccess: false,
-  isLoading: false,
+  isErrorJob: false,
+  isSuccessJob: false,
+  isLoadingJob: false,
   message: "",
 };
 
@@ -74,7 +74,6 @@ export const getOneJob = createAsyncThunk(
   }
 );
 
-
 //edit job
 export const editJob = createAsyncThunk(
   "jobs/editJob",
@@ -105,10 +104,6 @@ export const getJobUser = createAsyncThunk(
   }
 )
 
-export const clearAllJobs = () => {
-  initialState.job = { ...initialState.job, jobs: [] };
-}
-
 const jobSlice = createSlice({
   name: "job",
   initialState,
@@ -116,120 +111,117 @@ const jobSlice = createSlice({
     SET_JOB(state) {
       state.job = null;
       state.jobs = []
-      state.isError = false
-      state.isSuccess = false
-      state.isLoading = false
+      state.isErrorJob = false
+      state.isSuccessJob = false
+      state.isLoadingJob = false
       state.message = ""
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(addJob.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingJob = true;
       })
       .addCase(addJob.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
+        state.isLoadingJob = false;
+        state.isSuccessJob = true;
+        state.isErrorJob = false;
         state.jobs.push(action.payload);
         toast.success("Job created successfully");
       })
       .addCase(getJobs.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoadingJob = false;
+        state.isSuccessJob = false;
+        state.isErrorJob = true;
+        state.messageJob = action.payload;
         toast.error(action.payload);
       })
       .addCase(getJobs.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingJob = true;
       })
       .addCase(getJobs.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
+        state.isLoadingJob = false;
+        state.isSuccessJob = true;
+        state.isErrorJob = false;
         state.jobs = action.payload;
       })
       .addCase(addJob.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
+        state.isLoadingJob = false;
+        state.isSuccessJob = false;
+        state.isErrorJob = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
       .addCase(deleteJob.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingJob = true;
       })
       .addCase(deleteJob.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
+        state.isLoadingJob = false;
+        state.isSuccessJob = true;
+        state.isErrorJob = false;
         toast.success("Job deleted successfully");
       })
       .addCase(deleteJob.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
+        state.isLoadingJob = false;
+        state.isSuccessJob = false;
+        state.isErrorJob = true;
         state.message = action.payload;
-        toast.error(action.payload.message);
+        toast.error(action.payload);
       })
       .addCase(getOneJob.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingJob = true;
       })
       .addCase(getOneJob.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
+        state.isLoadingJob = false;
+        state.isSuccessJob = true;
+        state.isErrorJob = false;
         state.job = action.payload
       })
       .addCase(getOneJob.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
+        state.isLoadingJob = false;
+        state.isSuccessJob = false;
+        state.isErrorJob = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
       .addCase(editJob.pending, (state) => {
-        state.isLoading = true;
+        state.isLoadingJob = true;
       })
       .addCase(editJob.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
+        state.isLoadingJob = false;
+        state.isSuccessJob = true;
+        state.isErrorJob = false;
         state.message = action.payload;
         toast.success(action.payload.message)
       })
       .addCase(editJob.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = true;
+        state.isLoadingJob = false;
+        state.isSuccessJob = false;
+        state.isErrorJob = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
       .addCase(getJobUser.pending, (state) => {
-        state.isLoading = true
+        state.isLoadingJob = true
       })
       .addCase(getJobUser.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.isError = false
+        state.isLoadingJob = false
+        state.isSuccessJob = true
+        state.isErrorJob = false
         state.jobs = action.payload
       })
       .addCase(getJobUser.rejected, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = false
-        state.isError = true
+        state.isLoadingJob = false
+        state.isSuccessJob = false
+        state.isErrorJob = true
         state.message = action.payload
         toast.error(action.payload)
       })
   },
 });
 
-// eslint-disable-next-line no-empty-pattern
 export const { SET_JOB } = jobSlice.actions;
 
-export const selectIsLoading = (state) => state.job.isLoading;
-export const selectJob = (state) => state.job.job
-export const selectJobs = (state) => state.job.jobs
+export const selectIsLoading = (state) => state.job.isLoadingJob;
 
 export default jobSlice.reducer;

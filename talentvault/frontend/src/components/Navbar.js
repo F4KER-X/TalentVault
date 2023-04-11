@@ -17,13 +17,12 @@ import { CiLogout } from "react-icons/ci"
 import { CgProfile } from "react-icons/cg"
 import { MdWorkOutline } from "react-icons/md"
 import { IoCreateOutline } from "react-icons/io5";
-import UseRedirectLoggedOutUser from '../hook/useRedirectLoggedOutUser';
 import { SET_JOB } from '../redux/features/job/jobSlice';
+import { SET_APPLICATION } from '../redux/features/application/applicationSlice';
 
 
 
 const Navbar = () => {
-  UseRedirectLoggedOutUser()
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,9 +49,12 @@ const Navbar = () => {
   const logout = async (e) => {
     e.preventDefault();
     await logoutUser();
-    dispatch(SET_CLEAR())
+
     dispatch(SET_JOB())
+    dispatch(SET_APPLICATION())
     navigate("/login");
+    dispatch(SET_CLEAR())
+
   };
   return (
     <>
@@ -83,6 +85,7 @@ const Navbar = () => {
                 text={"My Profile"}
               />
 
+
               {role === 'applicant' && (<DropdownItem
                 address={"/dashboard"}
                 icon={<AiOutlineHome />}
@@ -100,7 +103,7 @@ const Navbar = () => {
                 <DropdownItem address={"/job/my-jobs"} text={"My Jobs"} icon={<MdWorkOutline />} />
               )}
               {role === "applicant" && (
-                <DropdownItem text={"My applications"} icon={<MdWorkOutline />} />
+                <DropdownItem address={'/applications/my-applications'} text={"My applications"} icon={<MdWorkOutline />} />
               )}
               <LogoutBtn img={logoutt} />
             </ul>
@@ -109,7 +112,7 @@ const Navbar = () => {
       </nav>
     </>
   );
-  function LogoutBtn(props) {
+  function LogoutBtn() {
     return (
       <li className={NavbarCSS.myDropdownItem}>
         <button className={NavbarCSS.myLogout} onClick={logout}>

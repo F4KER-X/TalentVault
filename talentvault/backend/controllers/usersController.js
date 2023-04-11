@@ -7,7 +7,8 @@ const { validPassword } = require('./userValidation')
 const Job = require('../models/Job')
 const cloudinary = require('../Utils/cloudinary')
 const Application = require('../models/Application')
-const { getJobsByUser } = require('./jobsController')
+
+
 
 // @desc Get info of the user
 // @route GET /user

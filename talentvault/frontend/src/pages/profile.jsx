@@ -23,8 +23,10 @@ import {
 import Navbar from "../components/Navbar";
 import "../assets/styling/profile.css";
 import "../index.css";
+import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function Profile() {
+  UseRedirectLoggedOutUser();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -576,7 +578,7 @@ function Profile() {
                             min="0"
                             className="form-control"
                             name="phoneNumber"
-                            value={phoneNumber}
+                            value={phoneNumber || ""}
                             placeholder="Phone Number"
                             onChange={handlePhoneNumberChange}
                           />

@@ -1,20 +1,16 @@
-import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import Jobs from "../components/Jobs";
+import { useEffect, useState } from "react";
+import { getApplicationForUser } from "../redux/features/application/applicationSlice";
 import Loader from "../components/Loader";
-import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useEffect } from "react";
-import { getJobUser } from "../redux/features/job/jobSlice";
+import Applications from "../components/Applications";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
-function ViewJobs() {
+function Application() {
   UseRedirectLoggedOutUser();
-  UseRedirectNotAuthorizedRole("/dashboard", "recruiter");
-
+  UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -33,44 +29,45 @@ function ViewJobs() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const { jobs, isLoadingJob } = useSelector((state) => state.job);
+  const { applications, isLoadingApp } = useSelector(
+    (state) => state.application
+  );
 
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(getJobUser());
-    }
-  }, [dispatch, isLoggedIn]);
+    dispatch(getApplicationForUser());
+  }, [dispatch]);
 
   const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = applications.slice(indexOfFirstJob, indexOfLastJob);
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(applications.length / jobsPerPage); i++) {
     pageNumbers.push(i);
   }
 
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);
+  const totalPages = Math.ceil(applications.length / jobsPerPage);
 
-  return isLoggedIn ? (
+  return (
     <>
-      {isLoadingJob && <Loader />}
+      {isLoadingApp && <Loader />}
       <div>
         <Navbar />
+
         <div className="top-container">
-          <h2>Your job postings</h2>
+          <h2>Your current applications</h2>
         </div>
       </div>
 
       <div className="pagination-container">
-        {jobs?.length === 0 ? (
+        {applications?.length === 0 ? (
           <h5>No jobs found. Create a new one!</h5>
         ) : (
           <div>
             <div>
-              {currentJobs.map((job, index) => (
-                <Jobs key={index} job={job} />
+              {currentJobs.map((application, index) => (
+                <Applications key={index} application={application} />
               ))}
             </div>
             <div className="pagination">
@@ -105,9 +102,7 @@ function ViewJobs() {
         )}
       </div>
     </>
-  ) : (
-    <></>
   );
 }
 
-export default ViewJobs;
+export default Application;
