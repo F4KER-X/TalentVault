@@ -1,0 +1,608 @@
+{
+  "stats": {
+    "suites": 13,
+    "tests": 12,
+    "passes": 11,
+    "pending": 0,
+    "failures": 1,
+    "start": "2023-04-11T15:00:00.310Z",
+    "end": "2023-04-11T15:00:03.413Z",
+    "duration": 3103,
+    "testsRegistered": 12,
+    "passPercent": 91.66666666666666,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "fed17797-b908-477c-9bd4-40b06d197697",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "1bc55a2f-d162-46fb-b09d-a546a526988a",
+          "title": "Auth Routes",
+          "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\authRoutes.test.js",
+          "file": "\\test\\authRoutes.test.js",
+          "beforeHooks": [],
+          "afterHooks": [
+            {
+              "title": "\"after each\" hook in \"Auth Routes\"",
+              "fullTitle": "Auth Routes \"after each\" hook in \"Auth Routes\"",
+              "timedOut": false,
+              "duration": 0,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "if (testUserData && testUserData.email) {\n  await deleteUserByEmail(testUserData.email);\n}",
+              "err": {},
+              "uuid": "8527c9f6-f5e2-4250-82d2-a4d5ae42b0dc",
+              "parentUUID": "1bc55a2f-d162-46fb-b09d-a546a526988a",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "430afce5-768c-474b-b94d-fddb86e046f2",
+              "title": "POST /auth/signup",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\authRoutes.test.js",
+              "file": "\\test\\authRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should return a 400 status code if email is not provided",
+                  "fullTitle": "Auth Routes POST /auth/signup should return a 400 status code if email is not provided",
+                  "timedOut": false,
+                  "duration": 40,
+                  "state": "passed",
+                  "speed": "medium",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai\n  .request(app)\n  .post(\"/auth/signup\")\n  .send({ password: \"testPassword\", role: \"recruiter\" })\n  .end((err, res) => {\n    expect(res).to.have.status(400);\n    expect(res.body).to.have.property(\n      \"message\",\n      \"Email was not provided\"\n    );\n    done();\n  });",
+                  "err": {},
+                  "uuid": "c25ea265-c5ed-470d-b65d-89308380c163",
+                  "parentUUID": "430afce5-768c-474b-b94d-fddb86e046f2",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "c25ea265-c5ed-470d-b65d-89308380c163"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 40,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "4d8924f0-bf1c-494e-bc0b-666e1022c6be",
+              "title": "Auth Routes",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\authRoutes.test.js",
+              "file": "\\test\\authRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [],
+              "suites": [
+                {
+                  "uuid": "e82fd8db-bd63-48a3-af40-6eb0372bfaa7",
+                  "title": "POST /auth/signup",
+                  "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\authRoutes.test.js",
+                  "file": "\\test\\authRoutes.test.js",
+                  "beforeHooks": [],
+                  "afterHooks": [],
+                  "tests": [
+                    {
+                      "title": "should register a new applicant with valid data",
+                      "fullTitle": "Auth Routes Auth Routes POST /auth/signup should register a new applicant with valid data",
+                      "timedOut": false,
+                      "duration": 1294,
+                      "state": "failed",
+                      "speed": null,
+                      "pass": false,
+                      "fail": true,
+                      "pending": false,
+                      "context": null,
+                      "code": "const response = await request(app).post(\"/auth/signup\").send({\n  email: \"testapplicant@example.com\",\n  password: \"testpassword\",\n  role: \"applicant\",\n  firstName: \"Test\",\n  lastName: \"Applicant\",\n});\nexpect(response.status).to.be.oneOf([200, 400]);\nexpect(response.body).to.have.property(\n  \"message\",\n  \"Applicant was created successfully!\"\n);\nexpect(response.body).to.have.property(\"token\");\ntestUserData = response.body; // Move this line inside the test case",
+                      "err": {
+                        "message": "AssertionError: expected { Object (message) } to have property 'message' of 'Applicant was created successfully!', but got 'testapplicant@example.com is already …'",
+                        "estack": "AssertionError: expected { Object (message) } to have property 'message' of 'Applicant was created successfully!', but got 'testapplicant@example.com is already …'\n    at Context.<anonymous> (test\\authRoutes.test.js:51:39)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                        "diff": "- testapplicant@example.com is already registered\n+ Applicant was created successfully!\n"
+                      },
+                      "uuid": "aef68fe0-5461-4f49-be56-bbdf867fad3b",
+                      "parentUUID": "e82fd8db-bd63-48a3-af40-6eb0372bfaa7",
+                      "isHook": false,
+                      "skipped": false
+                    },
+                    {
+                      "title": "should not register a user with an already registered email",
+                      "fullTitle": "Auth Routes Auth Routes POST /auth/signup should not register a user with an already registered email",
+                      "timedOut": false,
+                      "duration": 101,
+                      "state": "passed",
+                      "speed": "slow",
+                      "pass": true,
+                      "fail": false,
+                      "pending": false,
+                      "context": null,
+                      "code": "const response = await request(app).post(\"/auth/signup\").send({\n  email: \"testapplicant@example.com\",\n  password: \"testpassword\",\n  role: \"applicant\",\n  firstName: \"Test\",\n  lastName: \"Applicant\",\n});\nexpect(response.status).to.equal(400);\nexpect(response.body).to.have.property(\n  \"message\",\n  \"testapplicant@example.com is already registered\"\n);",
+                      "err": {},
+                      "uuid": "d5fa53a8-0fa0-4cb4-8722-43ea20d3cd1a",
+                      "parentUUID": "e82fd8db-bd63-48a3-af40-6eb0372bfaa7",
+                      "isHook": false,
+                      "skipped": false
+                    }
+                  ],
+                  "suites": [],
+                  "passes": [
+                    "d5fa53a8-0fa0-4cb4-8722-43ea20d3cd1a"
+                  ],
+                  "failures": [
+                    "aef68fe0-5461-4f49-be56-bbdf867fad3b"
+                  ],
+                  "pending": [],
+                  "skipped": [],
+                  "duration": 1395,
+                  "root": false,
+                  "rootEmpty": false,
+                  "_timeout": 2000
+                },
+                {
+                  "uuid": "724a9170-83f2-4505-b4cb-ddea7e101c11",
+                  "title": "POST /auth/login",
+                  "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\authRoutes.test.js",
+                  "file": "\\test\\authRoutes.test.js",
+                  "beforeHooks": [],
+                  "afterHooks": [],
+                  "tests": [
+                    {
+                      "title": "should login a user with correct email and password",
+                      "fullTitle": "Auth Routes Auth Routes POST /auth/login should login a user with correct email and password",
+                      "timedOut": false,
+                      "duration": 262,
+                      "state": "passed",
+                      "speed": "slow",
+                      "pass": true,
+                      "fail": false,
+                      "pending": false,
+                      "context": null,
+                      "code": "const response = await request(app).post(\"/auth/login\").send({\n  email: \"testapplicant@example.com\",\n  password: \"testpassword\",\n});\nexpect(response.status).to.equal(200);\nexpect(response.body).to.have.property(\"message\", \"Login succussfull\");\nexpect(response.body).to.have.property(\"token\");",
+                      "err": {},
+                      "uuid": "6f4bb95d-4fa5-4adc-b0b5-17a0be049007",
+                      "parentUUID": "724a9170-83f2-4505-b4cb-ddea7e101c11",
+                      "isHook": false,
+                      "skipped": false
+                    },
+                    {
+                      "title": "should not login a user with an incorrect password",
+                      "fullTitle": "Auth Routes Auth Routes POST /auth/login should not login a user with an incorrect password",
+                      "timedOut": false,
+                      "duration": 266,
+                      "state": "passed",
+                      "speed": "slow",
+                      "pass": true,
+                      "fail": false,
+                      "pending": false,
+                      "context": null,
+                      "code": "const response = await request(app).post(\"/auth/login\").send({\n  email: \"testapplicant@example.com\",\n  password: \"wrongpassword\",\n});\nexpect(response.status).to.equal(400);\nexpect(response.body).to.have.property(\n  \"message\",\n  \"Invalid email or password\"\n);",
+                      "err": {},
+                      "uuid": "10415739-af4a-4702-82ee-27729874c46e",
+                      "parentUUID": "724a9170-83f2-4505-b4cb-ddea7e101c11",
+                      "isHook": false,
+                      "skipped": false
+                    }
+                  ],
+                  "suites": [],
+                  "passes": [
+                    "6f4bb95d-4fa5-4adc-b0b5-17a0be049007",
+                    "10415739-af4a-4702-82ee-27729874c46e"
+                  ],
+                  "failures": [],
+                  "pending": [],
+                  "skipped": [],
+                  "duration": 528,
+                  "root": false,
+                  "rootEmpty": false,
+                  "_timeout": 2000
+                },
+                {
+                  "uuid": "b839a801-71b9-4495-80f9-c0e41b5a7567",
+                  "title": "GET /auth/logout",
+                  "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\authRoutes.test.js",
+                  "file": "\\test\\authRoutes.test.js",
+                  "beforeHooks": [],
+                  "afterHooks": [],
+                  "tests": [
+                    {
+                      "title": "should log out a logged-in user",
+                      "fullTitle": "Auth Routes Auth Routes GET /auth/logout should log out a logged-in user",
+                      "timedOut": false,
+                      "duration": 1,
+                      "state": "passed",
+                      "speed": "fast",
+                      "pass": true,
+                      "fail": false,
+                      "pending": false,
+                      "context": null,
+                      "code": "try {\n  if (testUserData && testUserData.token) {\n    const response = await request(app)\n      .get(\"/auth/logout\")\n      .set(\"Cookie\", `token=${testUserData.token}`);\n    expect(response.status).to.equal(200);\n    expect(response.body).to.have.property(\n      \"message\",\n      \"Successfully Logged Out\"\n    );\n  } else {\n    console.log(\"No token found for the logged-in user\");\n  }\n} catch (error) {\n  console.log(\"Error in logout test:\", error.message);\n}",
+                      "err": {},
+                      "uuid": "aa2f55b7-e028-412b-a311-8212f9e4c71f",
+                      "parentUUID": "b839a801-71b9-4495-80f9-c0e41b5a7567",
+                      "isHook": false,
+                      "skipped": false
+                    }
+                  ],
+                  "suites": [],
+                  "passes": [
+                    "aa2f55b7-e028-412b-a311-8212f9e4c71f"
+                  ],
+                  "failures": [],
+                  "pending": [],
+                  "skipped": [],
+                  "duration": 1,
+                  "root": false,
+                  "rootEmpty": false,
+                  "_timeout": 2000
+                }
+              ],
+              "passes": [],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 0,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "0ed96149-a052-456c-aa6d-a6f7321ea5b6",
+          "title": "Auth Routes",
+          "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\jobsRoutes.test.js",
+          "file": "\\test\\jobsRoutes.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Auth Routes\"",
+              "fullTitle": "Auth Routes \"before all\" hook in \"Auth Routes\"",
+              "timedOut": false,
+              "duration": 825,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Register and login as a recruiter to obtain the token\nconst recruiter = {\n  email: \"recruiter@example.com\",\n  password: \"recruiterPassword\",\n  role: \"recruiter\",\n};\nawait request(app).post(\"/auth/signup\").send({\n  email: recruiter.email,\n  password: recruiter.password,\n  role: recruiter.role,\n  isRecruiter: true,\n});\nconst loginResponse = await request(app)\n  .post(\"/auth/login\")\n  .send({ email: recruiter.email, password: recruiter.password });\nrecruiterToken = await loginUser();\n// Add a job to the database and obtain its ID\nconst jobResponse = await request(app)\n  .post(\"/jobs\")\n  .set(\"Authorization\", `Bearer ${recruiterToken}`)\n  .send({\n    // Add the required job details\n  });\njobId = jobResponse.body._id;",
+              "err": {},
+              "uuid": "868b43db-b993-46ba-a213-9b47521acfea",
+              "parentUUID": "0ed96149-a052-456c-aa6d-a6f7321ea5b6",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"Auth Routes\"",
+              "fullTitle": "Auth Routes \"after all\" hook in \"Auth Routes\"",
+              "timedOut": false,
+              "duration": 93,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await deleteUserByEmail(\"recruiter@example.com\");",
+              "err": {},
+              "uuid": "d255a97e-22bc-4416-b109-28d2056ef01b",
+              "parentUUID": "0ed96149-a052-456c-aa6d-a6f7321ea5b6",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "64e7676b-4f31-4fa6-8ab5-46edf2ccf42a",
+              "title": "GET /jobs",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\jobsRoutes.test.js",
+              "file": "\\test\\jobsRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should return all jobs",
+                  "fullTitle": "Auth Routes GET /jobs should return all jobs",
+                  "timedOut": false,
+                  "duration": 24,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Add jobs to the database\nconst response = await request(app).get(\"/jobs\");\nexpect(response.status).to.be.oneOf([200, 401]);\nexpect(response.body).to.have.property(\"message\");\n// Add more specific assertions if needed",
+                  "err": {},
+                  "uuid": "ce2ad1fc-380e-45af-8a95-188e4f476d76",
+                  "parentUUID": "64e7676b-4f31-4fa6-8ab5-46edf2ccf42a",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "ce2ad1fc-380e-45af-8a95-188e4f476d76"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 24,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "b732ab00-903f-4004-9acf-50c6ed3fd5c0",
+              "title": "POST /jobs",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\jobsRoutes.test.js",
+              "file": "\\test\\jobsRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should create a new job with valid data",
+                  "fullTitle": "Auth Routes POST /jobs should create a new job with valid data",
+                  "timedOut": false,
+                  "duration": 33,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Login as a recruiter and obtain the token\nconst response = await request(app)\n  .post(\"/jobs\")\n  .set(\"Authorization\", `Bearer ${recruiterToken}`)\n  .send({\n    // Add the required job details\n  });\nexpect(response.status).to.be.oneOf([200, 401]);\nexpect(response.body).to.have.property(\"message\");\n// Add more specific assertions if needed",
+                  "err": {},
+                  "uuid": "bc94e28d-a83b-4ed3-ae67-02d1c5c80695",
+                  "parentUUID": "b732ab00-903f-4004-9acf-50c6ed3fd5c0",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "bc94e28d-a83b-4ed3-ae67-02d1c5c80695"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 33,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "f06ac3a2-a358-474a-b527-046614f964fc",
+              "title": "GET /jobs/:id",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\jobsRoutes.test.js",
+              "file": "\\test\\jobsRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should return the job with the given ID",
+                  "fullTitle": "Auth Routes GET /jobs/:id should return the job with the given ID",
+                  "timedOut": false,
+                  "duration": 20,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Add a job to the database and obtain its ID\nconst response = await request(app).get(`/jobs/${jobId}`);\nexpect(response.status).to.be.oneOf([200, 401]);\nexpect(response.body).to.have.property(\"message\");\n// Add more specific assertions if needed",
+                  "err": {},
+                  "uuid": "659b0e85-78c9-4c32-972e-2ac08e0b3378",
+                  "parentUUID": "f06ac3a2-a358-474a-b527-046614f964fc",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "659b0e85-78c9-4c32-972e-2ac08e0b3378"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 20,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "3a2d9d92-2515-445b-bec5-1254cffa718b",
+              "title": "PATCH /jobs/:id",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\jobsRoutes.test.js",
+              "file": "\\test\\jobsRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should update the job with the given ID and valid data",
+                  "fullTitle": "Auth Routes PATCH /jobs/:id should update the job with the given ID and valid data",
+                  "timedOut": false,
+                  "duration": 33,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Login as a recruiter and obtain the token\n// Add a job to the database and obtain its ID\nconst response = await request(app)\n  .patch(`/jobs/${jobId}`)\n  .set(\"Authorization\", `Bearer ${recruiterToken}`)\n  .send({\n    // Add the updated job details\n  });\nexpect(response.status).to.be.oneOf([200, 401]);\nexpect(response.body).to.have.property(\"message\");\n// Add more specific assertions if needed",
+                  "err": {},
+                  "uuid": "86c2724b-4d35-44bb-a423-a589d81ef3fa",
+                  "parentUUID": "3a2d9d92-2515-445b-bec5-1254cffa718b",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "86c2724b-4d35-44bb-a423-a589d81ef3fa"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 33,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "d66f13c5-b7e4-4e27-8f2d-deac00cfc7de",
+              "title": "DELETE /jobs/:id",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\jobsRoutes.test.js",
+              "file": "\\test\\jobsRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should delete the job with the given ID",
+                  "fullTitle": "Auth Routes DELETE /jobs/:id should delete the job with the given ID",
+                  "timedOut": false,
+                  "duration": 45,
+                  "state": "passed",
+                  "speed": "medium",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Login as a recruiter and obtain the token\n// Add a job to the database and obtain its ID\nconst response = await request(app)\n  .delete(`/jobs/${jobId}`)\n  .set(\"Authorization\", `Bearer ${recruiterToken}`);\nexpect(response.status).to.be.oneOf([200, 401]);\nexpect(response.body).to.have.property(\"message\");\n// Add more specific assertions if needed",
+                  "err": {},
+                  "uuid": "0d779bde-e113-4e4b-b60d-04de35ba06c3",
+                  "parentUUID": "d66f13c5-b7e4-4e27-8f2d-deac00cfc7de",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "0d779bde-e113-4e4b-b60d-04de35ba06c3"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 45,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "b69e0579-74cf-4896-af9b-ab60c47637f2",
+              "title": "GET /jobs/user-jobs",
+              "fullFile": "C:\\Users\\ali-n\\OneDrive - Concordia University - Canada\\Documents\\TalentVault\\TalentVaultRepo\\talentvault\\backend\\test\\jobsRoutes.test.js",
+              "file": "\\test\\jobsRoutes.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should return all jobs for the logged-in recruiter",
+                  "fullTitle": "Auth Routes GET /jobs/user-jobs should return all jobs for the logged-in recruiter",
+                  "timedOut": false,
+                  "duration": 18,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Login as a recruiter and obtain the token\nconst response = await request(app)\n  .get(\"/jobs/user-jobs\")\n  .set(\"Authorization\", `Bearer ${recruiterToken}`);\nexpect(response.status).to.be.oneOf([200, 401]);\nexpect(response.body).to.have.property(\"message\");\n// Add more specific assertions if needed",
+                  "err": {},
+                  "uuid": "77947a43-9467-480e-9cd9-d5ada880154c",
+                  "parentUUID": "b69e0579-74cf-4896-af9b-ab60c47637f2",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "77947a43-9467-480e-9cd9-d5ada880154c"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 18,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
