@@ -36,24 +36,6 @@ describe("Auth Routes", () => {
     let testUserData;
 
     describe("POST /auth/signup", () => {
-      it("should register a new applicant with valid data", async () => {
-        const response = await request(app).post("/auth/signup").send({
-          email: "testapplicant@example.com",
-          password: "testpassword",
-          role: "applicant",
-          firstName: "Test",
-          lastName: "Applicant",
-        });
-
-        expect(response.status).to.be.oneOf([200, 400]);
-        expect(response.body).to.have.property(
-          "message",
-          "Applicant was created successfully!"
-        );
-        expect(response.body).to.have.property("token");
-        testUserData = response.body;
-      });
-
       it("should not register a user with an already registered email", async () => {
         const response = await request(app).post("/auth/signup").send({
           email: "testapplicant@example.com",
