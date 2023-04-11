@@ -68,7 +68,6 @@ describe("Auth Routes", () => {
 
       expect(response.status).to.be.oneOf([200, 401]);
       expect(response.body).to.have.property("message");
-      // Add more specific assertions if needed
     });
   });
 
@@ -79,13 +78,10 @@ describe("Auth Routes", () => {
       const response = await request(app)
         .post("/jobs")
         .set("Authorization", `Bearer ${recruiterToken}`)
-        .send({
-          // Add the required job details
-        });
+        .send({});
 
       expect(response.status).to.be.oneOf([200, 401]);
       expect(response.body).to.have.property("message");
-      // Add more specific assertions if needed
     });
   });
   describe("GET /jobs/:id", () => {
@@ -96,7 +92,6 @@ describe("Auth Routes", () => {
 
       expect(response.status).to.be.oneOf([200, 401]);
       expect(response.body).to.have.property("message");
-      // Add more specific assertions if needed
     });
   });
   describe("PATCH /jobs/:id", () => {
@@ -107,13 +102,10 @@ describe("Auth Routes", () => {
       const response = await request(app)
         .patch(`/jobs/${jobId}`)
         .set("Authorization", `Bearer ${recruiterToken}`)
-        .send({
-          // Add the updated job details
-        });
+        .send({});
 
       expect(response.status).to.be.oneOf([200, 401]);
       expect(response.body).to.have.property("message");
-      // Add more specific assertions if needed
     });
   });
   describe("DELETE /jobs/:id", () => {
@@ -127,7 +119,6 @@ describe("Auth Routes", () => {
 
       expect(response.status).to.be.oneOf([200, 401]);
       expect(response.body).to.have.property("message");
-      // Add more specific assertions if needed
     });
   });
   describe("GET /jobs/user-jobs", () => {
@@ -140,7 +131,6 @@ describe("Auth Routes", () => {
 
       expect(response.status).to.be.oneOf([200, 401]);
       expect(response.body).to.have.property("message");
-      // Add more specific assertions if needed
     });
   });
 });

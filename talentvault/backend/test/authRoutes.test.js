@@ -29,8 +29,6 @@ describe("Auth Routes", () => {
           done();
         });
     });
-
-    // Add more tests for other validation cases
   });
 
   describe("Auth Routes", () => {
@@ -53,7 +51,7 @@ describe("Auth Routes", () => {
           "Applicant was created successfully!"
         );
         expect(response.body).to.have.property("token");
-        testUserData = response.body; // Move this line inside the test case
+        testUserData = response.body;
       });
 
       it("should not register a user with an already registered email", async () => {
