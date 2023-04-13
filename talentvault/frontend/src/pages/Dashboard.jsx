@@ -19,14 +19,13 @@ function Dashboard() {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const [currentPage,setCurrentPage]=useState(1);
-  const [searchResults, setSearchResults] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchResults, setSearchResults] = useState([]);
 
   const { jobs, isLoadingJob } = useSelector((state) => state.job);
 
-
   useEffect(() => {
-      if (isLoggedIn) {
+    if (isLoggedIn) {
       dispatch(getJobs());
     }
   }, [dispatch, isLoggedIn]); // role]);
@@ -38,15 +37,10 @@ function Dashboard() {
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
-  const jobsToDisplayPaginated= jobsToDisplay.slice(indexOfFirstJob, indexOfLastJob);
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(jobs.length / jobsPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);
-
+  const jobsToDisplayPaginated = jobsToDisplay.slice(
+    indexOfFirstJob,
+    indexOfLastJob
+  );
 
   return isLoggedIn ? (
     <>
@@ -59,25 +53,24 @@ function Dashboard() {
         </div>
       </div>
 
-      <div>     
+      <div>
         <SearchBar jobs={jobs} setSearchResults={setSearchResults} />
       </div>
 
-
       <div className="pagination-container">
         <div>
-         {jobsToDisplayPaginated.map((job) => (
-          <Jobs key={job._id} job={job} />
+          {jobsToDisplayPaginated.map((job) => (
+            <Jobs key={job._id} job={job} />
           ))}
-        </div> 
+        </div>
 
         <Pagination
-        jobsPerPage={jobsPerPage}
-        totalJobs={jobsToDisplay.length}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+          jobsPerPage={jobsPerPage}
+          totalJobs={jobsToDisplay.length}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
-      </div> 
+      </div>
     </>
   ) : (
     <></>

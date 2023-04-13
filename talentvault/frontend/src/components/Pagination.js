@@ -24,6 +24,7 @@ function Pagination(props) {
 
       {pageNumbers.map((number) => (
         <button
+          id="pageButton"
           key={number}
           className={currentPage === number ? "active" : ""}
           onClick={() => handleClick(number)}

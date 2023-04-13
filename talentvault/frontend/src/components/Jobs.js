@@ -9,16 +9,15 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectRole } from "../redux/features/auth/authSlice";
 
-
+//job status
+function JobStatus({ isOpen }) {
+  return (
+    <div className={`job-status ${isOpen ? "open" : "closed"}`}>
+      {isOpen ? "Open" : "Closed"}
+    </div>
+  );
+}
 const Jobs = ({ job }) => {
-
-  function JobStatus({ isOpen }) {
-    return (
-      <div className={`job-status ${isOpen ? "open" : "closed"}`}>
-        {isOpen ? "Open" : "Closed"}
-      </div>
-    );
-  }
 
   const role = useSelector(selectRole);
 

@@ -20,7 +20,6 @@ import {
   SET_ROLE,
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
-import { store } from "../redux/store";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 
 //Local state

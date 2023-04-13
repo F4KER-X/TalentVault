@@ -19,7 +19,7 @@ const UseRedirectLoggedOutUser = () => {
             }
         }
         loginStatus();
-    }, [])
+    }, [dispatch, navigate])
 
 }
 

@@ -14,7 +14,14 @@ import { selectRole } from "../redux/features/auth/authSlice";
 import { useState } from "react";
 import { editApplicationStatus } from "../redux/features/application/applicationSlice";
 
-
+//get application status color
+// function ApplicationStatus({ btnColor, application }) {
+//   return (
+//     <div className={`job-status ${btnColor}`}>
+//       {application?.applicationStatus}
+//     </div>
+//   );
+// }
 
 const Applications = ({ application }) => {
 
@@ -41,13 +48,13 @@ const Applications = ({ application }) => {
 
     await dispatch(editApplicationStatus({ id: application?.applicationId, formData }))
 
-    // Wait for 3 seconds before reloading the page
+    // Wait for 2 seconds before reloading the page
     setTimeout(() => {
       window.location.reload()
     }, 2000)
   }
 
-  let btnColor = "btn-pending";
+  let btnColor = "";
   switch (application?.applicationStatus) {
     case "Accepted":
       btnColor = "btn-accepted";
@@ -60,14 +67,6 @@ const Applications = ({ application }) => {
     default:
       btnColor = "btn-pending";
       break;
-  }
-
-  function ApplicationStatus({ btnColor }) {
-    return (
-      <div className={`job-status ${btnColor}`}>
-        {application?.applicationStatus}
-      </div>
-    );
   }
 
 
@@ -97,7 +96,9 @@ const Applications = ({ application }) => {
 
 
               <div style={{ marginTop: "10px" }}>
-                <ApplicationStatus btnColor={btnColor} />
+                <div className={`job-status ${btnColor}`}>
+                  {application?.applicationStatus}
+                </div>
               </div>
               <div className="buttons-2">
                 <div>
@@ -162,10 +163,10 @@ const Applications = ({ application }) => {
                 <FaEnvelope /> {application?.email}
               </div>
 
-
-
               <div style={{ marginTop: "10px" }} >
-                <ApplicationStatus btnColor={btnColor} />
+                <div className={`job-status ${btnColor}`}>
+                  {application?.applicationStatus}
+                </div>
               </div>
               <div className="buttons-2">
                 <div>
