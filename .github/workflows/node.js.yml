@@ -26,7 +26,7 @@ jobs:
 
     - name: Install backend dependencies
       run: npm ci
-      working-directory: backend
+      working-directory: talentvault/backend
 
     #- name: Build
     #  run: npm run build
@@ -34,7 +34,7 @@ jobs:
       
     - name: Run tests
       run: npm test
-      working-directory: backend
+      working-directory: talentvault/backend
       env:
         CI: true
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
