@@ -13,6 +13,7 @@ import JobsExtended from "./components/JobsExtended";
 import About from "./pages/About";
 import Application from './pages/Application';
 import ViewJobs from "./pages/ViewJobs";
+import ReportBug from "./pages/reportbug";
 import { useEffect } from "react";
 import { getLoginStatus } from "./redux/features/auth/authService";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
@@ -50,6 +51,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/job/create-job" element={<CreateJob />} />
         <Route path="/job/my-jobs" element={<ViewJobs />} />
+        <Route path="/reportbug" element={<ReportBug />} />
         <Route path="*" element={<Error />} />
 
       </Routes>

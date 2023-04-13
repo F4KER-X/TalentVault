@@ -783,12 +783,13 @@ ul {
 }
 
 .prev {
-    color: #4540db;
-    font-weight: bold;
-    font-family: Roboto;
-    font-size: 16px;
-    padding: 12px 16px;
-    text-transform: uppercase;
-    border: none;
-    background-color: var(--backgroundColor);
+  color: #4540db;
+  font-weight: bold;
+  font-family: Roboto;
+  font-size: 16px;
+  padding: 12px 16px;
+  text-transform: uppercase;
+  border: none;
+  background-color: var(--backgroundColor);
 }
+
