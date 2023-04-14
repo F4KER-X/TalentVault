@@ -234,7 +234,7 @@ const uploadPhoto = asyncHandler(async (req, res) => {
         .json({ message: "Only PNG and JPG format are allowed" });
     }
 
-    maxSize = 2097152;
+    const maxSize = 2097152;
     if (file.size > maxSize) {
       return res
         .status(400)
@@ -277,7 +277,7 @@ const uploadFile = asyncHandler(async (req, res) => {
       return res.status(400).json({ message: "Only PDF format is allowed" });
     }
 
-    maxSize = 2097152;
+    const maxSize = 2097152;
     if (file.size > maxSize) {
       return res
         .status(400)
@@ -327,8 +327,6 @@ const deleteUserByEmail = asyncHandler(async (email) => {
 
   await User.deleteOne({ email });
 });
-
-//   module.exports.deleteUserByEmail = deleteUserByEmail;
 
 module.exports = {
   getUserInfo,

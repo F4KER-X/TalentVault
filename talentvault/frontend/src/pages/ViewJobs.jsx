@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
 import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
-import { useEffect } from "react";
 import { getJobUser } from "../redux/features/job/jobSlice";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";

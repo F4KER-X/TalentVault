@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import notfound from "../assets/images/notfound.svg";
 import Wrapper from "../assets/styling/ErrorPage";
 
-const Error = () => {
+const ErrorPage = () => {
   return (
     <Wrapper className="full-page">
       <div>
@@ -16,4 +16,4 @@ const Error = () => {
     </Wrapper>
   );
 };
-export default Error;
+export default ErrorPage;
