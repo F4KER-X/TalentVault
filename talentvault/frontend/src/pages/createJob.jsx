@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
+import Footer from "../components/Footer";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 
 const initialState = {
@@ -108,6 +109,7 @@ const CreateJob = () => {
     navigate("/dashboard");
   };
   return (
+    <>
     <div>
       {isLoading && <Loader />}
       <Navbar />
@@ -125,6 +127,8 @@ const CreateJob = () => {
         salaryError={salaryError}
       />
     </div>
+    <Footer/>
+    </>
   );
 };
 export default CreateJob;
