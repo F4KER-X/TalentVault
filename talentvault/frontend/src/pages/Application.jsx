@@ -9,8 +9,10 @@ import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import Pagination from "../components/Pagination";
 
 function Application() {
+  // Redirect to login if user is not logged in
   UseRedirectLoggedOutUser();
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
+  // Get applications from redux store
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);

@@ -13,6 +13,7 @@ import Pagination from "../components/Pagination";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 
 function Dashboard() {
+  // Redirect to login if user is not logged in
   UseRedirectLoggedOutUser();
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
 

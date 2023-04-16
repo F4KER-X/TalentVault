@@ -110,24 +110,24 @@ const CreateJob = () => {
   };
   return (
     <>
-    <div>
-      {isLoading && <Loader />}
-      <Navbar />
+      <div>
+        {isLoading && <Loader />}
+        <Navbar />
 
-      <h3 style={{ textAlign: "center", marginTop: "20px" }}>
-        Create your Job
-      </h3>
-      <JobForm
-        job={job}
-        jobDescription={jobDescription}
-        setJobDescription={setJobDescription}
-        handleInputChange={handleInputChange}
-        saveJob={saveJob}
-        error={error}
-        salaryError={salaryError}
-      />
-    </div>
-    <Footer/>
+        <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+          Create your Job
+        </h3>
+        <JobForm
+          job={job}
+          jobDescription={jobDescription}
+          setJobDescription={setJobDescription}
+          handleInputChange={handleInputChange}
+          saveJob={saveJob}
+          error={error}
+          salaryError={salaryError}
+        />
+      </div>
+      <Footer />
     </>
   );
 };
