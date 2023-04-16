@@ -25,11 +25,11 @@ const editApplicationStatus = async (id, formData) => {
 }
 
 
-const jobService = {
+const applicationService = {
     getApplicationForUser,
     createNewApplication,
     getApplicationsForJob,
     editApplicationStatus
 }
 
-export default jobService
+export default applicationService

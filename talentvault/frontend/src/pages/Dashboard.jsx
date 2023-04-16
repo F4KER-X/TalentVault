@@ -6,7 +6,6 @@ import { getJobs } from "../redux/features/job/jobSlice";
 import Jobs from "../components/Jobs";
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
-
 import "../index.css";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import SearchBar from "../components/SearchBar";

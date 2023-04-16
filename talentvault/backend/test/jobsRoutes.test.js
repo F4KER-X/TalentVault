@@ -39,10 +39,6 @@ describe("Auth Routes", () => {
       isRecruiter: true,
     });
 
-    const loginResponse = await request(app)
-      .post("/auth/login")
-      .send({ email: recruiter.email, password: recruiter.password });
-
     recruiterToken = await loginUser();
 
     // Add a job to the database and obtain its ID

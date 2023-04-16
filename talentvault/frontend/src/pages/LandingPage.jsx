@@ -1,9 +1,9 @@
 import main from "../assets/images/main.svg";
 import Logo from "../components/Logo";
-import Wrapper from "../assets/styling/LandingPage";
+import Wrapper from "../assets/styling/WrapperLandingPage";
 import { Link } from "react-router-dom";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
-const Landing = () => {
+const LandingPage = () => {
   UseRedirectLoggedInUser();
   return (
     <Wrapper>
@@ -38,4 +38,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default LandingPage;

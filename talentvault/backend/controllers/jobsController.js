@@ -123,51 +123,33 @@ const updateJob = asyncHandler(async (req, res) => {
   if (!_id.equals(job.recruiterId))
     return res.status(401).json({ message: "Not authorized to edit this job" });
 
-  const {
-    jobTitle,
-    maxSalary,
-    minSalary,
-    jobDescription,
-    jobType,
-    jobRequirements,
-    jobLocation,
-    status,
-    workType,
-  } = req.body;
+  const jobData = req.body;
+  const jobLocation = jobData.jobLocation;
 
-  if (jobTitle) job.jobTitle = jobTitle;
-
-  if (maxSalary) job.maxSalary = maxSalary;
-
-  if (minSalary) job.minSalary = minSalary;
-
-  if (jobDescription) job.jobDescription = jobDescription;
-
-  if (jobType) job.jobType = jobType;
-
-  if (jobRequirements) job.jobRequirements = jobRequirements;
-
-  if (status) job.status = status;
-
-  if (workType) job.workType = workType;
-
-  if (jobLocation) {
-    if (jobLocation.city) {
-      job.jobLocation.city = jobLocation.city;
+  Object.entries(jobData).forEach(([key, value]) => {
+    if (key === "jobLocation") {
+      if (jobLocation) {
+        if (jobLocation.city) {
+          job.jobLocation.city = jobLocation.city;
+        }
+        if (jobLocation.province) {
+          job.jobLocation.province = jobLocation.province;
+        }
+      }
+    } else {
+      job[key] = value;
     }
-    if (jobLocation.province) {
-      job.jobLocation.province = jobLocation.province;
-    }
-  }
+  });
 
   const updatedJob = await job.save();
 
   if (updatedJob) {
-    res.status(200).json({ message: "Job updated succussfully" });
+    res.status(200).json({ message: "Job updated successfully" });
   } else {
     res.status(400).json({ message: "Job update was not successful" });
   }
 });
+
 
 // @desc DELETE job
 // @route DELETE /jobs/:id

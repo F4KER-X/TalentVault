@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "../components/Logo_no_text";
 import FormRow from "../components/FormRow";
 import "../index.css";
-import Wrapper from "../assets/styling/RegisterPage";
+import Wrapper from "../assets/styling/WrapperRegisterPage";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -24,7 +24,7 @@ const initialState = {
   password: "",
 };
 
-export default function Login() {
+export default function LoginPage() {
   UseRedirectLoggedInUser();
 
   const dispatch = useDispatch();

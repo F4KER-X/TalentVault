@@ -82,21 +82,25 @@ const getApplicationForUser = asyncHandler(async (req, res) => {
 // @access Private
 const updateApplicatin = asyncHandler(async (req, res) => {
   const { _id, role } = req.user;
-  if (role === "recruiter") {
-    const application = await Application.findById(req.params["id"]).exec();
 
-    if (!application) {
-      return res.status(404).json({ message: "Application does not exist" });
-    }
+  if (role !== "recruiter") {
+    return res.status(401).json({ message: "Only recruiters can update an application" });
+  }
 
-    if (!_id.equals(application.recruiterId)) {
-      return res
-        .status(401)
-        .json({ message: "Not authorized to edit this application" });
-    }
+  const application = await Application.findById(req.params["id"]).exec();
 
-    const { status, email, firstName, lastName, jobId } = req.body;
-    if (status) application.status = status;
+  if (!application) {
+    return res.status(404).json({ message: "Application does not exist" });
+  }
+
+  if (!_id.equals(application.recruiterId)) {
+    return res.status(401).json({ message: "Not authorized to edit this application" });
+  }
+
+  const { status, email, firstName, lastName, jobId } = req.body;
+
+  if (status) {
+    application.status = status;
     application.modify = true;
 
     const updatedApplication = await application.save();
@@ -108,6 +112,7 @@ const updateApplicatin = asyncHandler(async (req, res) => {
         subject: `Application Updated - ${firstName} ${lastName}`,
         text: `Dear ${firstName},\n\nWe wanted to inform you that there has been an update to your application for the job with ID: ${jobId}. The recruiter has made some changes to your application, and we wanted to bring them to your attention.\n\nPlease log in to our platform to view the updated details of your application. If you have any questions or concerns, please do not hesitate to reach out to us or the recruiter directly.\n\nThank you for your continued interest in this position, and we wish you the best of luck in your job search.\n\nBest regards,\n\nTalentVault Team`,
       };
+
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
@@ -115,18 +120,16 @@ const updateApplicatin = asyncHandler(async (req, res) => {
           console.log("Email sent: " + info.response);
         }
       });
-      res.status(200).json({ message: "Application updated" });
+
+      return res.status(200).json({ message: "Application updated" });
     } else {
-      res
-        .status(400)
-        .json({ message: "Application update was not successful" });
+      return res.status(400).json({ message: "Application update was not successful" });
     }
   } else {
-    res
-      .status(401)
-      .json({ message: "Only recruiters can update an application" });
+    return res.status(400).json({ message: "No update to be made" });
   }
 });
+
 
 const createNewApplication = asyncHandler(async (req, res) => {
   const { _id, role } = req.user;

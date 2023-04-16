@@ -1,4 +1,4 @@
-import Wrapper from "../assets/styling/jobs";
+import Wrapper from "../assets/styling/WrapperJobs";
 import {
   FaBriefcase,
   FaRegBuilding,

@@ -57,11 +57,6 @@ function ViewApplications() {
                 <Applications key={index} application={application} />
               ))}
             </div>
-            <div>
-              {appsToDisplayPaginated.map((applications, index) => (
-                <Applications key={index} job={applications} />
-              ))}
-            </div>
 
             <Pagination
               jobsPerPage={appsPerPage}

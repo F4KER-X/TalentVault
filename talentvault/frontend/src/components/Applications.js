@@ -1,5 +1,5 @@
 import "../index.css";
-import Wrapper from "../assets/styling/jobs";
+import Wrapper from "../assets/styling/WrapperJobs";
 import {
   FaPhone,
   FaEnvelope,

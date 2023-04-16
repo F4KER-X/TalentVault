@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Wrapper from "../assets/styling/RegisterPage";
+import Wrapper from "../assets/styling/WrapperRegisterPage";
 import Logo from "../components/Logo_no_text";
 import FormRow from "../components/FormRow";
 import "../index.css";
@@ -33,7 +33,7 @@ const initialState = {
   role: "applicant",
 };
 
-function Register() {
+function RegisterPage() {
   UseRedirectLoggedInUser();
 
   const dispatch = useDispatch();
@@ -217,4 +217,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;

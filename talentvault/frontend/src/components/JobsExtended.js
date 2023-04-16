@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { selectIsLoggedIn, selectRole, selectID } from "../redux/features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import Wrapper from "../assets/styling/JobsExtended";
+import Wrapper from "../assets/styling/WrapperJobsExtended";
 import ReactQuill from "react-quill";
 import Loader from "./Loader";
 import DOMPurify from 'dompurify'
@@ -44,7 +44,6 @@ const JobsExtended = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   //states
-  //const [isLoading1, setIsLoading] = useState(false)
   const [jobTitle, setJobTitle] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [maxSalary, setMaxSalary] = useState(0);
@@ -199,19 +198,19 @@ const JobsExtended = () => {
   const requirementList = requirements?.split(",");
 
   //delete job
-  const handleDelJob = async (id) => {
+  const handleDelJob = async () => {
     const promise = await dispatch(deleteJob(id));
     if (promise.meta.requestStatus === "fulfilled") navigate("/dashboard");
   };
 
-  const confirmDelete = (id) => {
+  const confirmDelete = () => {
     confirmAlert({
       title: "Delete Job",
       message: "All data and applications will be deleted, are you sure you want to continue? ",
       buttons: [
         {
           label: "Delete",
-          onClick: () => handleDelJob(id),
+          onClick: () => handleDelJob(),
         },
         {
           label: "Cancel",
