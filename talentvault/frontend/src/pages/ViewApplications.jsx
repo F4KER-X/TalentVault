@@ -10,8 +10,10 @@ import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
 import Pagination from "../components/Pagination";
 
 function ViewApplications() {
+  // Redirect to login if user is not logged in
   UseRedirectLoggedOutUser();
   const dispatch = useDispatch();
+  // Get applications from redux store
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   //=====================pagination====================

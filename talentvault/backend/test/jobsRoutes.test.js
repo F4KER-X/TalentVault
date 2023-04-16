@@ -41,13 +41,10 @@ describe("Auth Routes", () => {
 
     recruiterToken = await loginUser();
 
-    // Add a job to the database and obtain its ID
     const jobResponse = await request(app)
       .post("/jobs")
       .set("Authorization", `Bearer ${recruiterToken}`)
-      .send({
-        // Add the required job details
-      });
+      .send({});
 
     jobId = jobResponse.body._id;
   });
@@ -69,8 +66,6 @@ describe("Auth Routes", () => {
 
   describe("POST /jobs", () => {
     it("should create a new job with valid data", async () => {
-      // Login as a recruiter and obtain the token
-
       const response = await request(app)
         .post("/jobs")
         .set("Authorization", `Bearer ${recruiterToken}`)

@@ -26,15 +26,16 @@ const initialState = {
 
 export default function LoginPage() {
   UseRedirectLoggedInUser();
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setformData] = useState(initialState);
 
   const { email, password } = formData;
 
+  // Handle input change
   const handleInputChange = (ev) => {
     const { name, value } = ev.target;
     setformData({
@@ -42,7 +43,7 @@ export default function LoginPage() {
       [name]: value,
     });
   };
-
+  // Handle login
   const login = async (ev) => {
     ev.preventDefault();
 
@@ -59,8 +60,10 @@ export default function LoginPage() {
       password,
     };
 
+    // Login user
     setIsLoading(true);
     try {
+      
       const data = await loginUser(userData);
       dispatch(SET_LOGIN(true));
       dispatch(SET_NAME(data.firstName));
@@ -72,7 +75,7 @@ export default function LoginPage() {
 
       if (data.role === "recruiter") navigate("/job/my-jobs");
       if (data.role === "applicant") navigate("/dashboard");
-
+      
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

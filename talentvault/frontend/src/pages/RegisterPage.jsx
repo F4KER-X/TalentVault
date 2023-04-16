@@ -60,13 +60,14 @@ function RegisterPage() {
       [name]: value,
     });
   };
-
+  // Tryiing to register user
   const register = async (ev) => {
     ev.preventDefault();
 
     if (!firstName || !email || !password || !lastName || !confirmpassword) {
       return toast.error("All fields are required");
     }
+    // If role is recruiter, check if all fields are filled
     if (
       role === "recruiter" &&
       (!firstName ||
