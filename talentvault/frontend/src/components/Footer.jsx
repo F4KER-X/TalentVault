@@ -6,32 +6,9 @@ import {
   faTwitter,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const navigate = useNavigate();
-
-  const navigateToAbout = () => {
-    // 👇️ navigate to /contacts
-    navigate("/about");
-  };
-
-  const navigateToSignIn = () => {
-    // 👇️ navigate to /contacts
-    navigate("/login");
-  };
-
-  const navigateToSignUp = () => {
-    // 👇️ navigate to /contacts
-    navigate("/register");
-  };
-
-  //for the report bug page
-  const navigateToReportBug = () => {
-    // 👇️ navigate to /contacts
-    navigate("/reportbug");
-  };
-
   return (
     <div className="footerwrapper">
       <div className="main-footer">
@@ -50,13 +27,13 @@ const Footer = () => {
               <ul className="footer-links">
                 <p className="titlefooter"> General</p>
                 <li>
-                  <a onClick={navigateToAbout}>About Us</a>
+                  <Link>HOME</Link>
                 </li>
                 <li>
-                  <a onClick={navigateToSignIn}>Sign In</a>
+                  <Link>About Us</Link>
                 </li>
                 <li>
-                  <a onClick={navigateToSignUp}>Sign Up</a>
+                  <Link>BLOG</Link>
                 </li>
               </ul>
             </div>
@@ -65,13 +42,13 @@ const Footer = () => {
               <ul className="footer-links">
                 <p className="titlefooter">Help</p>
                 <li>
-                  <a onClick={navigateToReportBug}>Report Bug</a>
+                  <Link to="/reportbug">Report Bug</Link>
                 </li>
                 <li>
-                  <a>FAQ</a>
+                  <Link>FAQ</Link>
                 </li>
                 <li>
-                  <a>Leave a Review</a>
+                  <Link>Leave a Review</Link>
                 </li>
               </ul>
             </div>

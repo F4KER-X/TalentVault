@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 
 
 export const validateEmail = (email) => {
-    return email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    return email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
 }
 
 //register user
