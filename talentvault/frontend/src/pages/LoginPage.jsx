@@ -18,7 +18,6 @@ import {
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
-import { store } from "../redux/store";
 
 const initialState = {
   email: "",

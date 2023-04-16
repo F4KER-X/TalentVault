@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
+import { selectIsLoggedIn, selectRole, selectID } from "../redux/features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import Wrapper from "../assets/styling/JobsExtended";
 import ReactQuill from "react-quill";
@@ -14,13 +14,25 @@ import {
 } from "react-icons/fa";
 import { deleteJob, getOneJob, editJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectRole, selectID } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
-import { createNewApplication, getApplicationForJob, getApplicationForUser } from "../redux/features/application/applicationSlice";
+import { createNewApplication, getApplicationForJob } from "../redux/features/application/applicationSlice";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-toastify";
 import Navbar from "./Navbar";
+
+
+//job status
+function JobStatus({ isOpen, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className={`job-status ${isOpen ? "open" : "closed"}`}
+    >
+      {isOpen ? "Open" : "Closed"}
+    </div>
+  );
+}
 
 const JobsExtended = () => {
   const role = useSelector(selectRole);
@@ -92,16 +104,7 @@ const JobsExtended = () => {
 
 
 
-  function JobStatus({ isOpen, onClick }) {
-    return (
-      <div
-        onClick={onClick}
-        className={`job-status ${isOpen ? "open" : "closed"}`}
-      >
-        {isOpen ? "Open" : "Closed"}
-      </div>
-    );
-  }
+
 
   //application apply
   const applyApplication = async (ev) => {
