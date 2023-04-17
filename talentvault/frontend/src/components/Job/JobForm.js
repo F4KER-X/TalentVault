@@ -6,7 +6,7 @@ import { selectCompany, selectID } from "../../redux/features/auth/authSlice";
 import Card from "../Card/Card";
 import "./JobForm.css";
 import FormRow from "../FormRow";
-import Wrapper from "../../assets/styling/CreateJob";
+import Wrapper from "../../assets/styling/WrapperCreateJob";
 
 const JobForm = ({
   job,

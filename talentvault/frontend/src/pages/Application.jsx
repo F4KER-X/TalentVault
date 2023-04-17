@@ -6,28 +6,16 @@ import Loader from "../components/Loader";
 import Applications from "../components/Applications";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 import UseRedirectLoggedOutUser from "../hook/useRedirectLoggedOutUser";
+import Pagination from "../components/Pagination";
 
 function Application() {
+  // Redirect to login if user is not logged in
   UseRedirectLoggedOutUser();
   UseRedirectNotAuthorizedRole("/job/my-jobs", "applicant");
+  // Get applications from redux store
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  const getPrevious = () => {
-    setCurrentPage(currentPage - 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const getNext = () => {
-    setCurrentPage(currentPage + 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const pageNumber = (number) => {
-    setCurrentPage(number);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   const { applications, isLoadingApp } = useSelector(
     (state) => state.application
@@ -37,17 +25,17 @@ function Application() {
     dispatch(getApplicationForUser());
   }, [dispatch]);
 
-  const jobsPerPage = 10;
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = applications.slice(indexOfFirstJob, indexOfLastJob);
+  const appsToDisplay = applications;
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(applications.length / jobsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const appsPerPage = 4;
 
-  const totalPages = Math.ceil(applications.length / jobsPerPage);
+  const indexOfLastApp = currentPage * appsPerPage;
+  const indexOfFirstApp = indexOfLastApp - appsPerPage;
+
+  const appsToDisplayPaginated = appsToDisplay.slice(
+    indexOfFirstApp,
+    indexOfLastApp
+  );
 
   return (
     <>
@@ -66,38 +54,16 @@ function Application() {
         ) : (
           <div>
             <div>
-              {currentJobs.map((application, index) => (
+              {appsToDisplayPaginated.map((application, index) => (
                 <Applications key={index} application={application} />
               ))}
             </div>
-            <div className="pagination">
-              <button
-                className="prev"
-                disabled={currentPage === 1 ? true : false}
-                onClick={getPrevious}
-              >
-                Previous
-              </button>
-
-              {pageNumbers.map((number) => (
-                <button
-                  id="pageButton"
-                  key={number}
-                  className={currentPage === number ? "active" : ""}
-                  onClick={() => pageNumber(number)}
-                >
-                  {number}
-                </button>
-              ))}
-
-              <button
-                className="next"
-                disabled={currentPage === totalPages ? true : false}
-                onClick={getNext}
-              >
-                Next
-              </button>
-            </div>
+            <Pagination
+              jobsPerPage={appsPerPage}
+              totalJobs={appsToDisplay.length}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
         )}
       </div>

@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import { selectCompany, selectID } from "../redux/features/auth/authSlice";
 import { addJob, selectIsLoading } from "../redux/features/job/jobSlice";
 import "../index.css";
+import Footer from "../components/Footer";
 import UseRedirectNotAuthorizedRole from "../hook/useRedirectNotAuthorizedRole";
 
 const initialState = {
@@ -63,8 +64,8 @@ const CreateJob = () => {
       recruiterId: id,
       jobTitle,
       companyName: company,
-      maxSalary,
-      minSalary,
+      maxSalary: parseInt(maxSalary),
+      minSalary: parseInt(minSalary),
       jobDescription,
       jobType: jobType || "Full-time",
       jobRequirements,
@@ -108,23 +109,26 @@ const CreateJob = () => {
     navigate("/dashboard");
   };
   return (
-    <div>
-      {isLoading && <Loader />}
-      <Navbar />
+    <>
+      <div>
+        {isLoading && <Loader />}
+        <Navbar />
 
-      <h3 style={{ textAlign: "center", marginTop: "20px" }}>
-        Create your Job
-      </h3>
-      <JobForm
-        job={job}
-        jobDescription={jobDescription}
-        setJobDescription={setJobDescription}
-        handleInputChange={handleInputChange}
-        saveJob={saveJob}
-        error={error}
-        salaryError={salaryError}
-      />
-    </div>
+        <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+          Create your Job
+        </h3>
+        <JobForm
+          job={job}
+          jobDescription={jobDescription}
+          setJobDescription={setJobDescription}
+          handleInputChange={handleInputChange}
+          saveJob={saveJob}
+          error={error}
+          salaryError={salaryError}
+        />
+      </div>
+      <Footer />
+    </>
   );
 };
 export default CreateJob;

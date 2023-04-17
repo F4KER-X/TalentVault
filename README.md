@@ -11,9 +11,9 @@ TalentVault is a web application that simplifies the job application process usi
 ## Progress
 
 - [x] Sprint 1
-- [ ] Sprint 2
-- [ ] Sprint 3
-- [ ] Sprint 4
+- [x] Sprint 2
+- [x] Sprint 3
+- [x] Sprint 4
 
 ## Team Members
 
@@ -32,7 +32,6 @@ TalentVault is a web application that simplifies the job application process usi
 
 ▪️ ReactJS
 
-▪️ NextJS
 
 ### 🔳 Back-end Technologies
 

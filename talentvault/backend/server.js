@@ -4,12 +4,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/dbConnection");
-const cookieParser = require('cookie-parser')
+const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/errorHandler");
 const { logger, logEvents } = require("./middleware/logger");
 const bodyParser = require("body-parser");
-
-
 
 const app = express();
 
@@ -17,11 +15,13 @@ const PORT = process.env.PORT;
 
 //Middlewares
 app.use(logger);
-app.use(cookieParser())
-app.use(cors({
-  credentials: true,
-  origin: 'http://localhost:3000',
-}));
+app.use(cookieParser());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -41,7 +41,6 @@ app.use("/user", require("./routes/userRoutes"));
 app.use("/jobs", require("./routes/jobRoutes"));
 
 app.use("/applications", require("./routes/applicationRoutes"));
-
 
 app.all("*", (req, res) => {
   res.status(404);
@@ -68,3 +67,4 @@ mongoose.connection.on("error", (err) => {
     "mongoErrLog.log"
   );
 });
+module.exports = app;

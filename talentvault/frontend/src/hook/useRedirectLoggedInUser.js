@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectIsLoggedIn, selectRole, SET_LOGIN } from "../redux/features/auth/authSlice";
-import { getLoginStatus } from '../redux/features/auth/authService'
+import { selectIsLoggedIn, selectRole } from "../redux/features/auth/authSlice";
 
 const UseRedirectLoggedInUser = (path) => {
     const navigate = useNavigate()

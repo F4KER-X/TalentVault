@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { selectIsLoggedIn } from "../redux/features/auth/authSlice";
+import { selectIsLoggedIn, selectRole, selectID } from "../redux/features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import Wrapper from "../assets/styling/JobsExtended";
+import Wrapper from "../assets/styling/WrapperJobsExtended";
 import ReactQuill from "react-quill";
 import Loader from "./Loader";
 import DOMPurify from 'dompurify'
@@ -14,13 +14,25 @@ import {
 } from "react-icons/fa";
 import { deleteJob, getOneJob, editJob } from "../redux/features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectRole, selectID } from "../redux/features/auth/authSlice";
 import { AiOutlineDelete } from "react-icons/ai";
-import { createNewApplication, getApplicationForJob, getApplicationForUser } from "../redux/features/application/applicationSlice";
+import { createNewApplication, getApplicationForJob } from "../redux/features/application/applicationSlice";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-toastify";
 import Navbar from "./Navbar";
+
+
+//job status
+function JobStatus({ isOpen, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className={`job-status ${isOpen ? "open" : "closed"}`}
+    >
+      {isOpen ? "Open" : "Closed"}
+    </div>
+  );
+}
 
 const JobsExtended = () => {
   const role = useSelector(selectRole);
@@ -32,7 +44,6 @@ const JobsExtended = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   //states
-  //const [isLoading1, setIsLoading] = useState(false)
   const [jobTitle, setJobTitle] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [maxSalary, setMaxSalary] = useState(0);
@@ -92,16 +103,7 @@ const JobsExtended = () => {
 
 
 
-  function JobStatus({ isOpen, onClick }) {
-    return (
-      <div
-        onClick={onClick}
-        className={`job-status ${isOpen ? "open" : "closed"}`}
-      >
-        {isOpen ? "Open" : "Closed"}
-      </div>
-    );
-  }
+
 
   //application apply
   const applyApplication = async (ev) => {
@@ -196,19 +198,19 @@ const JobsExtended = () => {
   const requirementList = requirements?.split(",");
 
   //delete job
-  const handleDelJob = async (id) => {
+  const handleDelJob = async () => {
     const promise = await dispatch(deleteJob(id));
     if (promise.meta.requestStatus === "fulfilled") navigate("/dashboard");
   };
 
-  const confirmDelete = (id) => {
+  const confirmDelete = () => {
     confirmAlert({
       title: "Delete Job",
       message: "All data and applications will be deleted, are you sure you want to continue? ",
       buttons: [
         {
           label: "Delete",
-          onClick: () => handleDelJob(id),
+          onClick: () => handleDelJob(),
         },
         {
           label: "Cancel",

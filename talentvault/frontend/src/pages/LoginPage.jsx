@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "../components/Logo_no_text";
 import FormRow from "../components/FormRow";
 import "../index.css";
-import Wrapper from "../assets/styling/RegisterPage";
+import Wrapper from "../assets/styling/WrapperRegisterPage";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,24 +18,24 @@ import {
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
-import { store } from "../redux/store";
 
 const initialState = {
   email: "",
   password: "",
 };
 
-export default function Login() {
+export default function LoginPage() {
   UseRedirectLoggedInUser();
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setformData] = useState(initialState);
 
   const { email, password } = formData;
 
+  // Handle input change
   const handleInputChange = (ev) => {
     const { name, value } = ev.target;
     setformData({
@@ -43,7 +43,7 @@ export default function Login() {
       [name]: value,
     });
   };
-
+  // Handle login
   const login = async (ev) => {
     ev.preventDefault();
 
@@ -60,8 +60,10 @@ export default function Login() {
       password,
     };
 
+    // Login user
     setIsLoading(true);
     try {
+      
       const data = await loginUser(userData);
       dispatch(SET_LOGIN(true));
       dispatch(SET_NAME(data.firstName));
@@ -73,7 +75,7 @@ export default function Login() {
 
       if (data.role === "recruiter") navigate("/job/my-jobs");
       if (data.role === "applicant") navigate("/dashboard");
-
+      
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

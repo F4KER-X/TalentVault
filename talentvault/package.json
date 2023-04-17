@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^1.3.4",
@@ -14,6 +15,7 @@
   "scripts": {
     "server": "npm run start --prefix backend --ignore frontend",
     "frontend": "npm start --prefix frontend",
-    "start": "concurrently --kill-others-on-fail \" npm run server\" \"npm run frontend\""
+    "start": "concurrently --kill-others-on-fail \" npm run server\" \"npm run frontend\"",
+    "test": "npm test --prefix backend"
   }
 }

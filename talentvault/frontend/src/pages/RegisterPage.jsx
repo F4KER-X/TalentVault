@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Wrapper from "../assets/styling/RegisterPage";
+import Wrapper from "../assets/styling/WrapperRegisterPage";
 import Logo from "../components/Logo_no_text";
 import FormRow from "../components/FormRow";
 import "../index.css";
@@ -20,7 +20,6 @@ import {
   SET_ROLE,
 } from "../redux/features/auth/authSlice";
 import Loader from "../components/Loader";
-import { store } from "../redux/store";
 import UseRedirectLoggedInUser from "../hook/useRedirectLoggedInUser";
 
 //Local state
@@ -34,7 +33,7 @@ const initialState = {
   role: "applicant",
 };
 
-function Register() {
+function RegisterPage() {
   UseRedirectLoggedInUser();
 
   const dispatch = useDispatch();
@@ -61,13 +60,14 @@ function Register() {
       [name]: value,
     });
   };
-
+  // Tryiing to register user
   const register = async (ev) => {
     ev.preventDefault();
 
     if (!firstName || !email || !password || !lastName || !confirmpassword) {
       return toast.error("All fields are required");
     }
+    // If role is recruiter, check if all fields are filled
     if (
       role === "recruiter" &&
       (!firstName ||
@@ -218,4 +218,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;
